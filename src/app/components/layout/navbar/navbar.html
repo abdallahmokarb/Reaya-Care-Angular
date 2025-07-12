@@ -1,0 +1,188 @@
+<nav
+  dir="rtl"
+  class="bg-transparent fixed z-[100] w-full max-w-[1920px] bg-white/50 shadow-xl backdrop-blur duration-300 ease-in-out dark:bg-black/50"
+>
+  <div
+    class="mx-auto flex flex-row h-[75px] w-full items-center justify-between px-4 py-4 text-[1rem] font-medium text-slate-900 dark:text-slate-300"
+  >
+    <div class="mt-2 text-xl font-bold">رعاية | Care</div>
+
+    <ul class="hidden md:flex gap-6 text-[16px] font-medium flex-row">
+      <li>
+        <a
+          [routerLink]="['/']"
+          class="hover:text-blue-600"
+          routerLinkActive="text-blue-700"
+          >الرئيسية</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/doctors']"
+          class="hover:text-blue-600"
+          routerLinkActive="text-blue-700"
+          >الأطباء</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/appointments']"
+          class="hover:text-blue-600"
+          routerLinkActive="text-blue-700"
+          >الحجوزات</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/services']"
+          class="hover:text-blue-600"
+          routerLinkActive="text-blue-700"
+          >الخدمات</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/about']"
+          class="hover:text-blue-600"
+          routerLinkActive="text-blue-700"
+          >من نحن</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/contact']"
+          class="hover:text-blue-600"
+          routerLinkActive="text-blue-700"
+          >اتصل بنا</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/help-center']"
+          class="hover:text-blue-600"
+          routerLinkActive="text-blue-700"
+          >الدعم الفني</a
+        >
+      </li>
+    </ul>
+
+    <div class="flex items-center gap-2 flex-row-reverse">
+      <a
+        [routerLink]="['/dashboard']"
+        class="relative rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-blue-600"
+        routerLinkActive="text-blue-700"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-5 w-5 inline-block ml-1"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"
+          />
+        </svg>
+        مركز الدخول الموحد
+      </a>
+
+      <button
+        type="button"
+        class="text-black hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-white rounded-full focus:outline-none focus:ring-0 text-sm p-2.5"
+        (click)="toggleDarkMode()"
+        title="تغيير الوضع"
+      >
+        <ng-container *ngIf="!darkMode(); else lightTheme">
+          <svg class="w-5 h-5 fill-gray-500" viewBox="0 0 20 20">
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            />
+          </svg>
+        </ng-container>
+        <ng-template #lightTheme>
+          <svg class="w-5 h-5 fill-white" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+            />
+          </svg>
+        </ng-template>
+      </button>
+    </div>
+
+    <button class="md:hidden" (click)="toggleMobMenu()">
+      <svg
+        class="w-6 h-6 text-black dark:text-white"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    *ngIf="isMobMenuOpen()"
+    class="md:hidden px-4 pb-4 pt-2 text-sm text-gray-900 dark:text-gray-300 space-y-2 text-right"
+  >
+    <a
+      [routerLink]="['/']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >الرئيسية</a
+    >
+    <a
+      [routerLink]="['/doctors']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >الأطباء</a
+    >
+    <a
+      [routerLink]="['/appointments']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >الحجوزات</a
+    >
+    <a
+      [routerLink]="['/services']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >الخدمات</a
+    >
+    <a
+      [routerLink]="['/about']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >من نحن</a
+    >
+    <a
+      [routerLink]="['/contact']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >اتصل بنا</a
+    >
+    <a
+      [routerLink]="['/help-center']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >الدعم الفني</a
+    >
+    <a
+      [routerLink]="['/dashboard']"
+      class="block hover:text-blue-600"
+      routerLinkActive="text-blue-700"
+      >بوابة المرضى</a
+    >
+  </div>
+</nav>

@@ -1,0 +1,118 @@
+<!-- Sidebar Container -->
+<aside
+  class="fixed top-0 z-50 h-screen w-64 bg-white/25 dark:bg-black/25 border border-gray-400/50 dark:border-gray-700/50 shadow-lg backdrop-blur-md transition-transform duration-300 ease-in-out"
+>
+  <div
+    class="relative flex flex-col h-full p-6 space-y-6 text-sm text-black dark:text-white"
+  >
+    <!-- Close Button -->
+    <button
+      (click)="toggleSidebar()"
+      class="absolute top-3 px-3 py-2 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+    >
+      ✕
+    </button>
+
+    <!-- Logo -->
+    <a
+      href="/"
+      class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
+    >
+      care co
+    </a>
+
+    <!-- Navigation Links -->
+    <nav class="space-y-3 text-[15px] font-medium">
+      <a
+        [routerLink]="['/',   'dashboard']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        DASHBOARD
+      </a>
+
+      <a
+        [routerLink]="['/',   'dashboard/1']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        DASHBOARD
+      </a>
+      <a
+        [routerLink]="['/',   'dashboard/2']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        DASHBOARD
+      </a>
+      <a
+        [routerLink]="['/',   'dashboard/3']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        DASHBOARD
+      </a>
+      <a
+        [routerLink]="['/',   'dashboard/4']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        mainpage_3
+      </a>
+      <a
+        [routerLink]="['/',   'dashboard/5']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        department
+      </a>
+      <a
+        [routerLink]="['/',   'dashboard/6']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        help-center
+      </a>
+    </nav>
+
+    <div class="flex-grow"></div>
+    <div class="flex items-center gap-4"></div>
+
+    <div class="flex align-center justify-center">
+      <!-- Theme Toggle -->
+      <button
+        type="button"
+        class="text-black cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-white rounded-full focus:outline-none focus:ring-0 text-sm p-2.5"
+        (click)="toggleDarkMode()"
+        title="Toggle Dark Mode"
+      >
+        <ng-container *ngIf="!darkMode(); else lightTheme">
+          <svg class="w-5 h-5 fill-gray-500" viewBox="0 0 20 20">
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            ></path>
+          </svg>
+        </ng-container>
+        <ng-template #lightTheme>
+          <svg class="w-5 h-5 fill-white" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+            ></path>
+          </svg>
+        </ng-template>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- Toggle Sidebar Button -->
+<button
+  *ngIf="!isSidebarOpen()"
+  (click)="toggleSidebar()"
+  class="fixed top-4 z-50 p-3 px-3 py-2 bg-blue-700 text-2xl cursor-pointer rounded"
+  aria-label="Open Sidebar"
+>
+  ☰
+</button>
