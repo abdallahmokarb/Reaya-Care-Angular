@@ -1,11 +1,9 @@
-<!-- Sidebar Container -->
 <aside
   class="fixed top-0 z-50 h-screen w-64 bg-white/25 dark:bg-black/25 border border-gray-400/50 dark:border-gray-700/50 shadow-lg backdrop-blur-md transition-transform duration-300 ease-in-out"
 >
   <div
     class="relative flex flex-col h-full p-6 space-y-6 text-sm text-black dark:text-white"
   >
-    <!-- Close Button -->
     <button
       (click)="toggleSidebar()"
       class="absolute top-3 px-3 py-2 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
@@ -13,22 +11,20 @@
       ✕
     </button>
 
-    <!-- Logo -->
     <a
       href="/"
       class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
     >
-      care co
+      Care | رعاية
     </a>
 
-    <!-- Navigation Links -->
     <nav class="space-y-3 text-[15px] font-medium">
       <a
         [routerLink]="['/',   'dashboard']"
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
-        DASHBOARD
+        dashboard
       </a>
 
       <a
@@ -36,35 +32,35 @@
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
-        DASHBOARD
+        dashboard
       </a>
       <a
         [routerLink]="['/',   'dashboard/2']"
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
-        DASHBOARD
+        dashboard
       </a>
       <a
         [routerLink]="['/',   'dashboard/3']"
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
-        DASHBOARD
+        dashboard
       </a>
       <a
         [routerLink]="['/',   'dashboard/4']"
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
-        mainpage_3
+        dashboard
       </a>
       <a
         [routerLink]="['/',   'dashboard/5']"
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
-        department
+        dashboard
       </a>
       <a
         [routerLink]="['/',   'dashboard/6']"
@@ -79,7 +75,6 @@
     <div class="flex items-center gap-4"></div>
 
     <div class="flex align-center justify-center">
-      <!-- Theme Toggle -->
       <button
         type="button"
         class="text-black cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-white rounded-full focus:outline-none focus:ring-0 text-sm p-2.5"
@@ -107,7 +102,6 @@
   </div>
 </aside>
 
-<!-- Toggle Sidebar Button -->
 <button
   *ngIf="!isSidebarOpen()"
   (click)="toggleSidebar()"

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Navbar } from './navbar/navbar';
 import { Footer } from './footer/footer';
-import { Sidebar } from './navbar/sidebar/sidebar';
+import { Sidebar } from './sidebar/sidebar';
 import { MiniFooter } from './mini-footer';
 import { Component } from '@angular/core';
 
