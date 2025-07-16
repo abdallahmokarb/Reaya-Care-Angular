@@ -14,5 +14,9 @@ body {
 }
 
 @theme {
-  --font-care: care, sans-serif;
+  --color-primary: #40ad56;
+  --color-secondary: #007438;
+  --color-tertiary: #f0f0f0;
+  --color-text: #333333;
+  --color-text-secondary: #666666;
 }
