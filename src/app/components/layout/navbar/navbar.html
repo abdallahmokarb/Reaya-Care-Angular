@@ -5,63 +5,71 @@
   <div
     class="mx-auto flex flex-row h-[75px] w-full items-center justify-between px-4 py-4 text-[1rem] font-medium text-slate-900 dark:text-slate-300"
   >
-    <div class="mt-2 text-xl font-bold">رعاية | Care</div>
+    <div class="mt-2 text-xl font-extrabold text-green-600">رعاية | Care</div>
 
     <ul class="hidden md:flex gap-6 text-[16px] font-medium flex-row">
       <li>
         <a
           [routerLink]="['/']"
-          class="hover:text-blue-600"
-          routerLinkActive="text-blue-700"
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
           >الرئيسية</a
         >
       </li>
       <li>
         <a
           [routerLink]="['/doctors']"
-          class="hover:text-blue-600"
-          routerLinkActive="text-blue-700"
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
           >الأطباء</a
         >
       </li>
       <li>
         <a
           [routerLink]="['/appointments']"
-          class="hover:text-blue-600"
-          routerLinkActive="text-blue-700"
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
+          >التخصصات الطبية</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/appointments']"
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
           >الحجوزات</a
         >
       </li>
       <li>
         <a
           [routerLink]="['/services']"
-          class="hover:text-blue-600"
-          routerLinkActive="text-blue-700"
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
           >الخدمات</a
         >
       </li>
       <li>
         <a
           [routerLink]="['/about']"
-          class="hover:text-blue-600"
-          routerLinkActive="text-blue-700"
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
           >من نحن</a
         >
       </li>
       <li>
         <a
           [routerLink]="['/contact']"
-          class="hover:text-blue-600"
-          routerLinkActive="text-blue-700"
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
           >اتصل بنا</a
         >
       </li>
       <li>
         <a
           [routerLink]="['/help-center']"
-          class="hover:text-blue-600"
-          routerLinkActive="text-blue-700"
-          >الدعم الفني</a
+          class="hover:text-green-600"
+          routerLinkActive="text-green-700"
+          >مركز الدعم</a
         >
       </li>
     </ul>
@@ -69,8 +77,30 @@
     <div class="flex items-center gap-2 flex-row-reverse">
       <a
         [routerLink]="['/dashboard']"
-        class="relative rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-blue-600"
-        routerLinkActive="text-blue-700"
+        class="relative rounded-full border border-neutral-200 px-4 py-2 text-[9px] md:text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-green-600"
+        routerLinkActive="text-green-700"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="{1.5}"
+          stroke="currentColor"
+          class="h-5 w-5 inline-block ml-1"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+          />
+        </svg>
+
+        دخول المرضى
+      </a>
+      <a
+        [routerLink]="['/dashboard']"
+        class="relative rounded-full border border-neutral-200 px-4 py-2 text-[9px] md:text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-green-600"
+        routerLinkActive="text-green-700"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +116,7 @@
             d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"
           />
         </svg>
-        مركز الدخول الموحد
+        بوابة الاطباء
       </a>
 
       <button
@@ -138,51 +168,51 @@
   >
     <a
       [routerLink]="['/']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
       >الرئيسية</a
     >
     <a
       [routerLink]="['/doctors']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
       >الأطباء</a
     >
     <a
       [routerLink]="['/appointments']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
       >الحجوزات</a
     >
     <a
       [routerLink]="['/services']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
       >الخدمات</a
     >
     <a
       [routerLink]="['/about']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
       >من نحن</a
     >
     <a
       [routerLink]="['/contact']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
       >اتصل بنا</a
     >
     <a
       [routerLink]="['/help-center']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
-      >الدعم الفني</a
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
+      >مركز الدعم</a
     >
     <a
       [routerLink]="['/dashboard']"
-      class="block hover:text-blue-600"
-      routerLinkActive="text-blue-700"
-      >بوابة المرضى</a
+      class="block hover:text-green-600"
+      routerLinkActive="text-green-700"
+      >مركز الدخول الموحد</a
     >
   </div>
 </nav>
