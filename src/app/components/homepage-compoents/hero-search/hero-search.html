@@ -1,0 +1,244 @@
+<div
+  class="min-h-screen bg-cover bg-center bg-no-repeat"
+  style="
+    background-image: url('https://static.vecteezy.com/system/resources/previews/029/771/915/non_2x/portrait-of-doctor-with-stethoscope-in-the-hospital-experienced-senior-medical-doctor-smiling-and-looking-at-camera-free-photo.jpeg');
+  "
+>
+  <div
+    class="bg-black/50 min-h-screen flex flex-col items-center justify-center px-4 py-12"
+  >
+    <h1
+      class="md:text-5xl text-2xl font-black pt-[120px] text-center text-white mb-8"
+    >
+      اهلا بكم في رعاية، حيث تبدأ رحلتك نحو صحة أفضل
+      <h2 class="pt-5">نجمع بين الخبرة الطبية والذكاء الاصطناعي من أجلك</h2>
+    </h1>
+    <div
+      class="w-full max-w-5xl rounded-2xl shadow-2xl p-8 bg-white/10 backdrop-blur-lg dark:bg-black/10 text-gray-900 dark:text-white"
+    >
+      <!-- text header -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">
+          {{ activeTab === 'find' ? 'احجز دكتور' : 'ابدا مكالمة مع دكتور الان'
+          }}
+        </h1>
+      </div>
+
+      <!-- tabs btns -->
+      <div class="flex border-b border-gray-300 dark:border-gray-600 mb-6">
+        <button
+          class="py-2 px-4 font-medium border-b-4 transition cursor-pointer"
+          [ngClass]="{
+            'border-green-500 text-green-600 dark:text-green-400': activeTab === 'find',
+            'border-transparent dark:text-gray-300 text-gray-800  hover:text-green-500': activeTab !== 'find'
+          }"
+          (click)="setActiveTab('find')"
+        >
+          احجز دكتور
+        </button>
+        <button
+          class="py-2 px-4 font-medium border-b-4 transition cursor-pointer"
+          [ngClass]="{
+            'border-green-500 text-green-600 dark:text-green-400': activeTab === 'video',
+            'border-transparent dark:text-gray-300 text-gray-800 hover:text-green-500': activeTab !== 'video'
+          }"
+          (click)="setActiveTab('video')"
+        >
+          مكالمة دكتور
+          <span
+            class="bg-green-500 text-[11px] text-white rounded-xl px-2.5 py-1"
+            >جديد</span
+          >
+        </button>
+        <button
+          class="py-2 px-4 font-medium border-b-4 transition cursor-pointer"
+          [ngClass]="{
+            'border-green-500 text-green-600 dark:text-green-400': activeTab === 'homeVisit',
+            'border-transparent dark:text-gray-300 text-gray-800 hover:text-green-500': activeTab !== 'homeVisit'
+          }"
+          (click)="setActiveTab('homeVisit')"
+        >
+          حجز زيارة منزلية
+          <span class="bg-red-500 text-[11px] text-white rounded-xl px-2.5 py-1"
+            >قريباً</span
+          >
+        </button>
+      </div>
+
+      <div class="min-h-[160px] transition-all">
+        <!-- find doc tab -->
+        <div
+          *ngIf="activeTab === 'find'"
+          class="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
+          <div>
+            <label class="block font-semibold mb-1"> التخصص الطبي</label>
+            <select class="form-control">
+              <option>اختر التخصص</option>
+              <option>طب الأسنان</option>
+              <option>الجراحة</option>
+              <option>أمراض القلب</option>
+              <option>طب الأعصاب</option>
+              <option>الأمراض الجلدية</option>
+              <option>طب العيون</option>
+              <option>الأنف والأذن والحنجرة</option>
+              <option>طب الأطفال</option>
+              <option>النساء والتوليد</option>
+              <option>الباطنة</option>
+              <option>العظام</option>
+              <option>المسالك البولية</option>
+              <option>الصدرية</option>
+              <option>الأورام</option>
+              <option>الغدد الصماء</option>
+              <option>التغذية العلاجية</option>
+              <option>العلاج الطبيعي</option>
+              <option>الطب النفسي</option>
+              <option>جراحة المخ والأعصاب</option>
+              <option>التحاليل الطبية</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-1">المحافظة </label>
+            <select class="form-control">
+              <option>اختر المحافظة</option>
+              <option>القاهرة</option>
+              <option>الجيزة</option>
+              <option>أسيوط</option>
+              <option>المنيا</option>
+              <option>الإسكندرية</option>
+              <option>الدقهلية</option>
+              <option>البحر الأحمر</option>
+              <option>البحيرة</option>
+              <option>الفيوم</option>
+              <option>الغربية</option>
+              <option>الإسماعيلية</option>
+              <option>المنوفية</option>
+              <option>القليوبية</option>
+              <option>الوادي الجديد</option>
+              <option>السويس</option>
+              <option>أسوان</option>
+              <option>بني سويف</option>
+              <option>بورسعيد</option>
+              <option>دمياط</option>
+              <option>جنوب سيناء</option>
+              <option>كفر الشيخ</option>
+              <option>مطروح</option>
+              <option>الأقصر</option>
+              <option>قنا</option>
+              <option>شمال سيناء</option>
+              <option>الشرقية</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-1">او ابحث باسم الدكتور</label>
+            <input
+              type="text"
+              placeholder="اكتب اسم الدكتور"
+              class="form-control"
+            />
+          </div>
+
+          <div class="flex items-end">
+            <button
+              class="bg-green-600 text-white px-6 py-3 w-full rounded-lg hover:bg-green-700 transition cursor-pointer"
+            >
+              ابحث عن دكتور
+            </button>
+          </div>
+        </div>
+
+        <!-- video call tab -->
+        <div
+          *ngIf="activeTab === 'video'"
+          class="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
+          <div>
+            <label class="block font-semibold mb-1"> التخصص الطبي</label>
+            <select class="form-control">
+              <option>اختر التخصص</option>
+              <option>طب الأسنان</option>
+              <option>الجراحة</option>
+              <option>أمراض القلب</option>
+              <option>طب الأعصاب</option>
+              <option>الأمراض الجلدية</option>
+              <option>طب العيون</option>
+              <option>الأنف والأذن والحنجرة</option>
+              <option>طب الأطفال</option>
+              <option>النساء والتوليد</option>
+              <option>الباطنة</option>
+              <option>العظام</option>
+              <option>المسالك البولية</option>
+              <option>الصدرية</option>
+              <option>الأورام</option>
+              <option>الغدد الصماء</option>
+              <option>التغذية العلاجية</option>
+              <option>العلاج الطبيعي</option>
+              <option>الطب النفسي</option>
+              <option>جراحة المخ والأعصاب</option>
+              <option>التحاليل الطبية</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-1">المحافظة </label>
+            <select class="form-control">
+              <option>اختر المحافظة</option>
+              <option>القاهرة</option>
+              <option>الجيزة</option>
+              <option>أسيوط</option>
+              <option>المنيا</option>
+              <option>الإسكندرية</option>
+              <option>الدقهلية</option>
+              <option>البحر الأحمر</option>
+              <option>البحيرة</option>
+              <option>الفيوم</option>
+              <option>الغربية</option>
+              <option>الإسماعيلية</option>
+              <option>المنوفية</option>
+              <option>القليوبية</option>
+              <option>الوادي الجديد</option>
+              <option>السويس</option>
+              <option>أسوان</option>
+              <option>بني سويف</option>
+              <option>بورسعيد</option>
+              <option>دمياط</option>
+              <option>جنوب سيناء</option>
+              <option>كفر الشيخ</option>
+              <option>مطروح</option>
+              <option>الأقصر</option>
+              <option>قنا</option>
+              <option>شمال سيناء</option>
+              <option>الشرقية</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-1">او ابحث باسم الدكتور</label>
+            <input
+              type="text"
+              placeholder="اكتب اسم الدكتور"
+              class="form-control"
+            />
+          </div>
+
+          <div class="flex items-end">
+            <button
+              class="bg-green-600 text-white px-6 py-3 w-full rounded-lg hover:bg-green-700 transition cursor-pointer"
+            >
+              ابدأ مكالمة الفيديو
+            </button>
+          </div>
+        </div>
+        <!-- home visit tab -->
+        <div
+          *ngIf="activeTab === 'homeVisit'"
+          class="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
+          <h1>عفوا .. حجز زيارة منزلية غير متاحة حاليا</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
