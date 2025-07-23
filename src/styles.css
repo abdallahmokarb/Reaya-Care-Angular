@@ -16,3 +16,24 @@ body {
 @theme {
   --font-care: care, sans-serif;
 }
+
+@plugin "@tailwindcss/forms";
+
+@layer components {
+  [dir="rtl"] .form-select {
+    background-position: left 0.5rem center;
+  }
+  /* For those who use it direct */
+
+  [dir="rtl"] select {
+    background-position: left 0.5rem center;
+  }
+
+  .form-control {
+    @apply mt-2 h-12 w-full rounded-lg p-2 text-black dark:bg-black/20 dark:text-white;
+  }
+
+  .form-btn {
+    @apply mt-3 flex h-12 w-full flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-blue-700 to-blue-900 px-2 text-center text-xl text-white shadow-blue-500 duration-300 hover:bg-blue-700 focus:translate-y-1 disabled:cursor-not-allowed disabled:bg-gradient-to-t disabled:from-gray-400 disabled:to-gray-600;
+  }
+}
