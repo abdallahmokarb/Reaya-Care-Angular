@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
 import { AllDoctors } from './pages/all-doctors/all-doctors';
+ 
 
 export const routes: Routes = [
   {
@@ -9,6 +10,24 @@ export const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full',
   },
+
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/auth/login/login').then((m) => m.LoginComponent),
+  },
+
+ 
+  {path: 'register',
+    loadComponent: () =>
+      import('./pages/auth/register/register').then((m) => m.RegisterComponent),
+  },
+  {
+    path: 'appointment',
+    loadComponent: () =>
+      import('./components/appointment/appointment').then((m) => m.AppointmentComponent),
+  },
+
 
   {
     path: 'auth',
@@ -40,15 +59,54 @@ export const routes: Routes = [
 
       {
         path: 'dashboard',
-        loadComponent: () =>
-          import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
+        children: [
+          {
+            path: 'doctor',
+            loadComponent: () =>
+              import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
+          },
+        ],
       },
 
       {
-        path: 'all-doctors',
+        path: 'dashboard',
+        children: [
+          {
+            path: 'patient',
+            loadComponent: () =>
+              import('./pages/dashboard-patient/dashboard-patient').then(
+                (m) => m.DashboardPatient
+              ),
+          },
+        ],
+      },
+
+      {
+        path: 'dashboard/patient',
+        children: [
+          {
+            path: 'test',
+            loadComponent: () =>
+              import('./pages/dashboard-patient/test-page/test-page').then(
+                (m) => m.TestPage
+              ),
+          },
+        ],
+      },
+      {
+        path: 'dashboard/patient/profile',
+        loadComponent: () =>
+          import('./components/patient-profile/patient-profile').then(
+            (m) => m.PatientProfile
+          ),
+      },
+
+      {
+         path: 'all-doctors',
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
+ 
     ],
   },
 

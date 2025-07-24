@@ -1,3 +1,115 @@
-<div>
-  <h2 class="text-2xl font-bold mb-4 text-center">Register</h2>
-</div>
+
+<div class="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat" style="background-image: url('https://static.vecteezy.com/system/resources/previews/029/771/915/non_2x/portrait-of-doctor-with-stethoscope-in-the-hospital-experienced-senior-medical-doctor-smiling-and-looking-at-camera-free-photo.jpeg');">
+  <div class="flex flex-col md:flex-row rounded-lg overflow-hidden max-w-6xl w-full justify-center mt-30">
+    
+    <div class="w-full md:w-1/2 flex items-center justify-center p-10">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-full max-w-5xl space-y-8 bg-white/20 dark:bg-black/20 backdrop-blur-lg rounded-lg p-10">
+        <!-- Full Name & Username side by side -->
+        <div class="flex gap-10">
+          <!-- Full Name -->
+          <div class="w-1/2">
+            <label for="fullName" class="relative block w-full">
+              <input
+                type="text"
+                id="fullName"
+                formControlName="fullName"
+                placeholder=""
+                class="peer mt-0.5 w-full px-4 py-4 rounded-2xl border-gray-300 shadow-sm text-lg dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+              />
+              <span class="absolute inset-y-0 start-3 -translate-y-5 px-2 text-base font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5 dark:bg-gray-900 dark:text-white z-10">
+                الاسم الكامل
+              </span>
+            </label>
+            <div *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched" class="text-red-500 text-xs mt-2 relative z-20">
+              الاسم مطلوب
+            </div>
+          </div>
+          <!-- Username -->
+          <div class="w-1/2">
+            <label for="username" class="relative block w-full">
+              <input
+                type="text"
+                id="username"
+                formControlName="username"
+                placeholder=""
+                class="peer mt-0.5 w-full px-4 py-4 rounded-2xl border-gray-300 shadow-sm text-lg dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+              />
+              <span class="absolute inset-y-0 start-3 -translate-y-5 px-2 text-base font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5 dark:bg-gray-900 dark:text-white z-10">
+                اسم المستخدم
+              </span>
+            </label>
+            <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-red-500 text-xs mt-2 relative z-20">
+              اسم المستخدم مطلوب
+            </div>
+          </div>
+        </div>
+        <!-- Email -->
+        <div>
+          <label for="email" class="relative block w-full">
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder=""
+              class="peer mt-0.5 w-full px-4 py-4 rounded-2xl border-gray-300 shadow-sm text-lg dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+            />
+            <span class="absolute inset-y-0 start-3 -translate-y-5 px-2 text-base font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5 dark:bg-gray-900 dark:text-white z-10">
+              البريد الإلكتروني
+            </span>
+          </label>
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-xs mt-2 relative z-20">
+            بريد إلكتروني صحيح مطلوب
+          </div>
+        </div>
+        <!-- Phone -->
+        <div>
+          <label for="phone" class="relative block w-full">
+            <input
+              type="tel"
+              id="phone"
+              formControlName="phone"
+              placeholder=""
+              class="peer mt-0.5 w-full px-4 py-4 rounded-2xl border-gray-300 shadow-sm text-lg dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+            />
+            <span class="absolute inset-y-0 start-3 -translate-y-5 px-2 text-base font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5 dark:bg-gray-900 dark:text-white z-10">
+              رقم الهاتف
+            </span>
+          </label>
+          <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="text-red-500 text-xs mt-2 relative z-20">
+            رقم الهاتف مطلوب
+          </div>
+        </div>
+        <!-- Password -->
+        <div>
+          <label for="password" class="relative block w-full">
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              placeholder=""
+              class="peer mt-0.5 w-full px-4 py-4 rounded-2xl border-gray-300 shadow-sm text-lg dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+            />
+            <span class="absolute inset-y-0 start-3 -translate-y-5 px-2 text-base font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5 dark:bg-gray-900 dark:text-white z-10">
+              كلمة المرور
+            </span>
+          </label>
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500 text-xs mt-2 relative z-20">
+            كلمة المرور مطلوبة (6 أحرف على الأقل)
+          </div>
+        </div>
+        <!-- User Type Toggle -->
+        <div class="flex items-center gap-2">
+          <label class="font-medium dark:text-gray-200">طبيب</label>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="isDoctor" class="sr-only peer" />
+            <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-checked:bg-green-600 transition-all"></div>
+            <div class="absolute left-1 top-1 w-4 h-4 bg-white dark:bg-gray-900 rounded-full peer-checked:translate-x-5 transition-transform"></div>
+          </label>
+          <label class="font-medium dark:text-gray-200"> مريض</label>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="registerForm.invalid" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">تسجيل</button>
+      </form>
+    </div>
+  </div>
+
