@@ -106,6 +106,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
+
+      {
+         path: 'about',
+        loadComponent: () =>
+          import('./pages/about/about').then((m) => m.About),
+      },
  
     ],
   },
