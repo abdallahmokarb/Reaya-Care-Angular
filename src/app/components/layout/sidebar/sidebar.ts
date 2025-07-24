@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
   templateUrl: './sidebar.html',
   imports: [CommonModule, RouterModule],
 })

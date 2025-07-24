@@ -18,157 +18,150 @@
       href="/"
       class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
     >
-
       Re3aya | رعاية
-
     </a>
 
     <nav class="space-y-3 text-[15px] font-medium">
       <a
-
         [routerLink]="['/',   'dashboard']"
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
-        dashboard
-
+        رعاية | Care
       </a>
 
-      رعاية | Care
-    </a>
-
-    <nav class="space-y-1 text-[15px] font-medium mt-4">
-      <!-- doctor -->
-      <ng-container *ngIf="dashboardType() === 'doctor'">
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor']"
-          routerLinkActive="text-green-600 font-bold"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          لوحة الدكتور
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/appointments']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          مواعيدي
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/patients']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          حجوزات المرضى
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/timeslots']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          مواعيدي المتاحة
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/timeslots']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          الروشته الالكترونيه
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/timeslots']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          فيديو كول للمرضي
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/profile']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          ملفي الشخصي
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/profile']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          مركز الدفع الالكتروني
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/doctor/profile']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          مركز المساعدة
-        </a>
-      </ng-container>
-
-
-      <!-- patient -->
-      <ng-container *ngIf="dashboardType() === 'patient'">
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/patient']"
-          routerLinkActive="text-green-600 font-bold"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          لوحة المريض
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/patient/appointments']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          حجوزتي
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/patient/profile']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          الملف الشخصي
-        </a>
-        <a
-          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-          [routerLink]="['/dashboard/patient/settings']"
-          routerLinkActive="text-green-600 font-bold"
-        >
-          الإعدادات
-        </a>
-      </ng-container>
-    </nav>
-
-    <!-- space -->
-    <div class="flex-grow"></div>
-
-    <div class="flex justify-center">
-      <button
-        type="button"
-        class="text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full p-2.5 transition"
-        (click)="toggleDarkMode()"
-        title="تبديل الوضع الليلي"
-      >
-        <ng-container *ngIf="!darkMode(); else lightTheme">
-          <svg class="w-5 h-5 fill-gray-500" viewBox="0 0 20 20">
-            <path
-              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-            ></path>
-          </svg>
+      <nav class="space-y-1 text-[15px] font-medium mt-4">
+        <!-- doctor -->
+        <ng-container *ngIf="dashboardType() === 'doctor'">
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor']"
+            routerLinkActive="text-green-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            لوحة الدكتور
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/appointments']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            مواعيدي
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/patients']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            حجوزات المرضى
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/timeslots']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            مواعيدي المتاحة
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/timeslots']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            الروشته الالكترونيه
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/timeslots']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            فيديو كول للمرضي
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/profile']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            ملفي الشخصي
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/profile']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            مركز الدفع الالكتروني
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/doctor/profile']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            مركز المساعدة
+          </a>
         </ng-container>
-        <ng-template #lightTheme>
-          <svg class="w-5 h-5 fill-white" viewBox="0 0 20 20">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-            ></path>
-          </svg>
-        </ng-template>
-      </button>
-    </div>
+
+        <!-- patient -->
+        <ng-container *ngIf="dashboardType() === 'patient'">
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/patient']"
+            routerLinkActive="text-green-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            لوحة المريض
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/patient/appointments']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            حجوزتي
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/patient/profile']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            الملف الشخصي
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/patient/settings']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            الإعدادات
+          </a>
+        </ng-container>
+      </nav>
+
+      <!-- space -->
+      <div class="flex-grow"></div>
+
+      <div class="flex justify-center">
+        <button
+          type="button"
+          class="text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full p-2.5 transition"
+          (click)="toggleDarkMode()"
+          title="تبديل الوضع الليلي"
+        >
+          <ng-container *ngIf="!darkMode(); else lightTheme">
+            <svg class="w-5 h-5 fill-gray-500" viewBox="0 0 20 20">
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+              ></path>
+            </svg>
+          </ng-container>
+          <ng-template #lightTheme>
+            <svg class="w-5 h-5 fill-white" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              ></path>
+            </svg>
+          </ng-template>
+        </button>
+      </div>
+    </nav>
   </div>
 </aside>
 

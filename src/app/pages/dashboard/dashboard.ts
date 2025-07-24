@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
- import { Chart } from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule],
   templateUrl: './dashboard.html',
 })
 export class Dashboard implements AfterViewInit {
