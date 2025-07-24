@@ -19,8 +19,8 @@
       <!-- text header -->
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">
-          {{ activeTab === 'find' ? 'احجز دكتور' : 'ابدا مكالمة مع دكتور الان'
-          }}
+          {{ activeTab === 'find' ? 'احجز دكتور' : activeTab === 'video' ? 'ابدأ
+          مكالمة مع دكتور الآن' : 'احجز زيارة منزلية مع ممرض / ممرضة' }}
         </h1>
       </div>
 
