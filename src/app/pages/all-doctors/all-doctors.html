@@ -1,0 +1,186 @@
+<div class="doctor-page px-6 pt-24">
+  <!-- Header Banner -->
+  <section class="header-banner bg-cover bg-center text-right text-black py-24">
+    <div class="pr-12">
+      <h2 class="text-3xl font-bold mb-2">صفحة الأطباء</h2>
+      <p class="text-lg">الرئيسية / الأطباء</p>
+    </div>
+  </section>
+
+  <!-- Filter Toggle for Small Screens -->
+  <div class="mt-4 lg:hidden text-right">
+    <button (click)="toggleFilters()" class="bg-blue-500 text-white px-4 py-2 rounded">
+      عرض/إخفاء الفلاتر
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content grid grid-cols-1 lg:grid-cols-12 gap-4 mt-8">
+
+    <!-- Sidebar Filters -->
+    <div id="filterSidebar" class="col-span-12 lg:col-span-3 bg-white rounded-xl shadow p-4 space-y-6 
+            fixed top-0 right-0 h-full overflow-y-auto z-50 w-64 lg:static lg:w-auto 
+            transform lg:transform-none transition-transform duration-300 ease-in-out 
+            translate-x-full lg:translate-x-0">
+      
+      <!-- Close button for small screens -->
+      <div class="flex justify-end lg:hidden">
+        <button (click)="toggleFilters()" class="close-filter-btn text-red-500 font-bold text-xl">×</button>
+      </div>
+
+      <!-- Available Times -->
+      <div>
+        <h5 class="text-lg font-semibold mb-2">المواعيد المتاحة</h5>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="custom-checkbox">
+            <span>اليوم</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="custom-checkbox">
+            <span>غداً</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="custom-checkbox">
+            <span>أي يوم</span>
+          </label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Gender -->
+      <div>
+        <h5 class="text-lg font-semibold mb-2">الجنس</h5>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="custom-checkbox">
+            <span>ذكر</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="custom-checkbox">
+            <span>أنثى</span>
+          </label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Price Filter -->
+      <div>
+        <label class="font-semibold mb-2 block">السعر (جنيه)</label>
+        <div id="price-slider" class="bg-gray-200 h-2 rounded"></div>
+        <div class="flex justify-between text-sm mt-2">
+          <span id="price-min">0</span>
+          <span id="price-max">500</span>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Service Type -->
+      <div>
+        <h5 class="text-lg font-semibold mb-2">نوع الخدمة</h5>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="custom-checkbox">
+            <span>في العيادة</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="custom-checkbox">
+            <span>استشارة أونلاين</span>
+          </label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Specialization Select -->
+      <div>
+        <label for="specializationSelect" class="block mb-2 font-semibold">التخصصات</label>
+        <select id="specializationSelect" class="w-full border rounded p-2">
+          <option selected disabled>اختر التخصص</option>
+          <option value="1">أطفال</option>
+          <option value="2">باطنة</option>
+          <option value="3">جلدية</option>
+        </select>
+      </div>
+      <hr>
+
+      <!-- Government Select -->
+      <div>
+        <label for="governmentSelect" class="block mb-2 font-semibold">المحافظة</label>
+        <select id="governmentSelect" class="w-full border rounded p-2">
+          <option selected disabled>اختر المحافظة</option>
+          <option value="1">القاهرة</option>
+          <option value="2">الجيزة</option>
+          <option value="3">الإسكندرية</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Doctors Section -->
+    <div class="col-span-12 lg:col-span-9 bg-light p-4 rounded-xl">
+
+      <div class="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded mb-4">
+        <p class="mb-2 sm:mb-0">تم العثور على 250 طبيب</p>
+        <div class="flex items-center gap-2">
+          <label for="orderBy" class="mb-0">الترتيب حسب:</label>
+          <select class="border rounded p-1" name="orderBy" id="orderBy">
+            <option value="rating">الأعلى تقييماً</option>
+            <option value="fees">الأرخص سعراً</option>
+            <option value="timeslot">أقرب موعد متاح</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cards-section bg-white rounded-xl p-4">
+        <!-- Doctor cards will appear here -->
+        <div id="doctorCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  p-4">
+          @for (doctor of doctors; track $index) {
+            <div class="doctor-card ">
+              <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.image + ')'">
+                <div class="doctor-rating">
+                  <span class="stars">
+                    <i class="fas fa-star"></i> {{ doctor.rating }}
+                  </span>
+                </div>
+                <!-- <img src="assets/images/Doc1.jpg" alt="Doctor" /> -->
+              </div>
+              <!-- Doctor Info -->
+              <div class="doctor-info flex-1 space-y-1 text-right">
+                <!-- Name & Availability -->
+                <div class="flex justify-between items-center text-right">
+                  <h3 class="text-lg font-bold text-gray-800">{{ doctor.name }}</h3>
+                  <span class="text-sm text-green-600 font-medium">{{ doctor.availability }}</span>
+                </div>
+
+                <!-- Specialization -->
+                <p class="text-sm text-gray-600">{{ doctor.specialization }}</p>
+
+                <!-- Service Type & Location -->
+                <div class="flex justify-between text-sm text-gray-500">
+                  <span>{{ doctor.serviceType }}</span>
+                  <span>{{ doctor.location }}</span>
+                </div>
+
+                <!-- Price -->
+                <div class="doctor-price">سعر الكشف : {{ doctor.price }} جنيه</div>
+
+                <!-- Button -->
+                <div class="pt-2">
+                  <button class="w-full text-white py-1.5 px-4 rounded-lg book-btn">
+                    احجز الآن
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
