@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
+// import { DoctorListComponent } from './pages/doctor/doctor-list/doctor-list';
 
 export const routes: Routes = [
   {
@@ -8,13 +9,13 @@ export const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full',
   },
-<<<<<<< HEAD
-=======
+
   {
     path: 'login',
     loadComponent: () =>
       import('./pages/auth/login/login').then((m) => m.LoginComponent),
   },
+
  
   {path: 'register',
     loadComponent: () =>
@@ -25,7 +26,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/appointment/appointment').then((m) => m.AppointmentComponent),
   },
->>>>>>> 118c175 (feat: initialize Angular application with basic structure and configurations)
+
 
   {
     path: 'auth',
@@ -57,17 +58,54 @@ export const routes: Routes = [
 
       {
         path: 'dashboard',
-        loadComponent: () =>
-          import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
+        children: [
+          {
+            path: 'doctor',
+            loadComponent: () =>
+              import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
+          },
+        ],
       },
-<<<<<<< HEAD
-=======
+
+      {
+        path: 'dashboard',
+        children: [
+          {
+            path: 'patient',
+            loadComponent: () =>
+              import('./pages/dashboard-patient/dashboard-patient').then(
+                (m) => m.DashboardPatient
+              ),
+          },
+        ],
+      },
+
+      {
+        path: 'dashboard/patient',
+        children: [
+          {
+            path: 'test',
+            loadComponent: () =>
+              import('./pages/dashboard-patient/test-page/test-page').then(
+                (m) => m.TestPage
+              ),
+          },
+        ],
+      },
+      {
+        path: 'dashboard/patient/profile',
+        loadComponent: () =>
+          import('./components/patient-profile/patient-profile').then(
+            (m) => m.PatientProfile
+          ),
+      },
+
       {
         path: 'dashboard/profile',
         loadComponent: () =>
           import('./components/patient-profile/patient-profile').then((m) => m.PatientProfile),
       }
->>>>>>> 118c175 (feat: initialize Angular application with basic structure and configurations)
+
     ],
   },
 ];

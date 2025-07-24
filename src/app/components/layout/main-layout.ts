@@ -15,15 +15,20 @@ import { Component } from '@angular/core';
       class="min-h-screen flex flex-col bg-white dark:bg-black text-black dark:text-white"
     >
       <ng-container *ngIf="isDashboardRoute(); else mainNavbar">
-        <app-sidebar />
+        <div class="flex flex-grow min-h-screen">
+          <app-sidebar class="md:w-64 md:shrink-0  " />
+          <main class="flex-grow p-4">
+            <router-outlet></router-outlet>
+          </main>
+        </div>
       </ng-container>
+
       <ng-template #mainNavbar>
         <app-navbar />
+        <main class="flex-grow cir_grident min-h-screen">
+          <router-outlet></router-outlet>
+        </main>
       </ng-template>
-
-      <main class="flex-grow cir_grident min-h-screen">
-        <router-outlet></router-outlet>
-      </main>
 
       <ng-container *ngIf="isDashboardRoute(); else mainFooter">
         <app-mini-footer />

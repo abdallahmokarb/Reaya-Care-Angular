@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-<div class="relative min-h-screen overflow-hidden">login</div>
-=======
+
 <div class="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-12">
   <div
     dir="rtl"
@@ -12,12 +10,13 @@
     </div>
 
     <!-- نموذج تسجيل الدخول -->
+
     <div class="w-1/2 p-8">
       <h2 class="text-3xl font-bold mb-2 text-center">مرحبًا بك</h2>
       <p class="text-gray-600 text-center mb-6">تسجيل الدخول</p>
 
       <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-        <!-- البريد الإلكتروني -->
+
         <div class="mb-4">
           <label for="email" class="block mb-2 text-sm font-medium text-gray-700">البريد الإلكتروني</label>
           <input
@@ -31,7 +30,7 @@
           />
         </div>
 
-        <!-- كلمة المرور -->
+
         <div class="mb-4">
           <label for="password" class="block mb-2 text-sm font-medium text-gray-700">كلمة المرور</label>
           <input
@@ -45,7 +44,7 @@
           />
         </div>
 
-        <!-- تذكرني -->
+
         <div class="flex items-center mb-4">
           <input
             id="remember"
@@ -57,7 +56,7 @@
           <label for="remember" class="text-sm text-gray-700">تذكرني</label>
         </div>
 
-        <!-- زر الدخول -->
+
         <button
           type="submit"
           class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
@@ -68,11 +67,12 @@
         <!-- رابط التسجيل -->
         <p class="text-sm text-center mt-4 text-gray-600">
           ليس لديك حساب؟
+
           <a routerLink="/register" class="text-blue-600 hover:underline">أنشئ حساب جديد</a>
+
         </p>
       </form>
     </div>
   </div>
 </div>
 
->>>>>>> 118c175 (feat: initialize Angular application with basic structure and configurations)

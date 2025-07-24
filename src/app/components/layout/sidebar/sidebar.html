@@ -1,12 +1,15 @@
 <aside
   class="fixed top-0 z-50 h-screen w-64 bg-white/25 dark:bg-black/25 border border-gray-400/50 dark:border-gray-700/50 shadow-lg backdrop-blur-md transition-transform duration-300 ease-in-out"
+  [ngClass]="{'translate-x-full': !isSidebarOpen()}"
+  dir="rtl"
 >
   <div
     class="relative flex flex-col h-full p-6 space-y-6 text-sm text-black dark:text-white"
   >
+    <!-- toggle Sidebar -->
     <button
       (click)="toggleSidebar()"
-      class="absolute top-3 px-3 py-2 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+      class="absolute top-3 left-3 px-3 py-2 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
     >
       ✕
     </button>
@@ -15,83 +18,110 @@
       href="/"
       class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
     >
-<<<<<<< HEAD
-      Care | رعاية
-=======
+
       Re3aya | رعاية
->>>>>>> 118c175 (feat: initialize Angular application with basic structure and configurations)
+
     </a>
 
     <nav class="space-y-3 text-[15px] font-medium">
       <a
-<<<<<<< HEAD
+
         [routerLink]="['/',   'dashboard']"
         routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
         class="block hover:text-blue-500 transition"
       >
         dashboard
-=======
-        [routerLink]="['dashboard/profile']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
-      >
-        profile
->>>>>>> 118c175 (feat: initialize Angular application with basic structure and configurations)
+
       </a>
 
-      <a
-        [routerLink]="['/',   'dashboard/1']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
-      >
-        dashboard
-      </a>
-      <a
-        [routerLink]="['/',   'dashboard/2']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
-      >
-        dashboard
-      </a>
-      <a
-        [routerLink]="['/',   'dashboard/3']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
-      >
-        dashboard
-      </a>
-      <a
-        [routerLink]="['/',   'dashboard/4']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
-      >
-        dashboard
-      </a>
-      <a
-        [routerLink]="['/',   'dashboard/5']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
-      >
-        dashboard
-      </a>
-      <a
-        [routerLink]="['/',   'dashboard/6']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
-      >
-        help-center
-      </a>
+      رعاية | Care
+    </a>
+
+    <nav class="space-y-1 text-[15px] font-medium mt-4">
+      <!-- doctor -->
+      <ng-container *ngIf="dashboardType() === 'doctor'">
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/doctor']"
+          routerLinkActive="text-green-600 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          لوحة الدكتور
+        </a>
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/doctor/appointments']"
+          routerLinkActive="text-green-600 font-bold"
+        >
+          مواعيدي
+        </a>
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/doctor/patients']"
+          routerLinkActive="text-green-600 font-bold"
+        >
+          حجوزات المرضى
+        </a>
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/doctor/timeslots']"
+          routerLinkActive="text-green-600 font-bold"
+        >
+          مواعيدي المتاحة
+        </a>
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/doctor/profile']"
+          routerLinkActive="text-green-600 font-bold"
+        >
+          ملفي الشخصي
+        </a>
+      </ng-container>
+
+
+      <!-- patient -->
+      <ng-container *ngIf="dashboardType() === 'patient'">
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/patient']"
+          routerLinkActive="text-green-600 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          لوحة المريض
+        </a>
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/patient/appointments']"
+          routerLinkActive="text-green-600 font-bold"
+        >
+          حجوزتي
+        </a>
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/patient/profile']"
+          routerLinkActive="text-green-600 font-bold"
+        >
+          الملف الشخصي
+        </a>
+        <a
+          class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          [routerLink]="['/dashboard/patient/settings']"
+          routerLinkActive="text-green-600 font-bold"
+        >
+          الإعدادات
+        </a>
+      </ng-container>
     </nav>
 
+    <!-- space -->
     <div class="flex-grow"></div>
-    <div class="flex items-center gap-4"></div>
 
-    <div class="flex align-center justify-center">
+    <div class="flex justify-center">
       <button
         type="button"
-        class="text-black cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-white rounded-full focus:outline-none focus:ring-0 text-sm p-2.5"
+        class="text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full p-2.5 transition"
         (click)="toggleDarkMode()"
-        title="Toggle Dark Mode"
+        title="تبديل الوضع الليلي"
       >
         <ng-container *ngIf="!darkMode(); else lightTheme">
           <svg class="w-5 h-5 fill-gray-500" viewBox="0 0 20 20">
@@ -117,8 +147,8 @@
 <button
   *ngIf="!isSidebarOpen()"
   (click)="toggleSidebar()"
-  class="fixed top-4 z-50 p-3 px-3 py-2 bg-blue-700 text-2xl cursor-pointer rounded"
-  aria-label="Open Sidebar"
+  class="fixed top-4 right-4 z-50 p-3 bg-blue-700 text-white text-2xl cursor-pointer rounded"
+  aria-label="toggle Sidebar"
 >
   ☰
 </button>

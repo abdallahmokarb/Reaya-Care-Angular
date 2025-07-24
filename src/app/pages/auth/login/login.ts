@@ -9,9 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.html',
   imports: [CommonModule, FormsModule, RouterModule],
 })
-<<<<<<< HEAD
-export class LoginComponent {}
-=======
+
 export class LoginComponent {
     model = {
     email: '',
@@ -28,4 +26,3 @@ export class LoginComponent {
     }
   }
 }
->>>>>>> 118c175 (feat: initialize Angular application with basic structure and configurations)
