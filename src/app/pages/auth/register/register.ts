@@ -1,12 +1,39 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.html',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule],
 })
-export class RegisterComponent {}
+export class RegisterComponent {
+  registerForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.registerForm = this.fb.group({
+      fullName: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      isDoctor: [false], // false = patient, true = doctor
+    });
+  }
+
+  onInit() {
+    // Initialize any data or state here
+  }
+
+  onSubmit() {
+    if (this.registerForm.valid) {
+      // Handle registration logic here
+      console.log(this.registerForm.value);
+    } else {
+      this.registerForm.markAllAsTouched();
+    }
+  }
+}
