@@ -11,24 +11,9 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./pages/auth/login/login').then((m) => m.LoginComponent),
-  },
-
  
-  {path: 'register',
-    loadComponent: () =>
-      import('./pages/auth/register/register').then((m) => m.RegisterComponent),
-  },
-  {
-    path: 'appointment',
-    loadComponent: () =>
-      import('./pages/appointment/appointment').then((m) => m.AppointmentComponent),
-  },
-
-
+  
+  
   {
     path: 'auth',
     component: AuthLayout,
@@ -47,7 +32,7 @@ export const routes: Routes = [
       },
     ],
   },
-
+  
   {
     path: '',
     component: MainLayout,
@@ -56,7 +41,7 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./pages/home/home').then((m) => m.Home),
       },
-
+      
       {
         path: 'dashboard',
         children: [
@@ -67,7 +52,7 @@ export const routes: Routes = [
           },
         ],
       },
-
+      
       {
         path: 'dashboard',
         children: [
@@ -77,20 +62,20 @@ export const routes: Routes = [
               import('./pages/dashboard-patient/dashboard-patient').then(
                 (m) => m.DashboardPatient
               ),
-          },
-        ],
-      },
-
-      {
-        path: 'dashboard/patient',
-        children: [
-          {
-            path: 'test',
-            loadComponent: () =>
-              import('./pages/dashboard-patient/test-page/test-page').then(
-                (m) => m.TestPage
-              ),
-          },
+            },
+          ],
+        },
+        
+        {
+          path: 'dashboard/patient',
+          children: [
+            {
+              path: 'test',
+              loadComponent: () =>
+                import('./pages/dashboard-patient/test-page/test-page').then(
+                  (m) => m.TestPage
+                ),
+              },
         ],
       },
       {
@@ -99,28 +84,33 @@ export const routes: Routes = [
           import('./components/patient-profile/patient-profile').then(
             (m) => m.PatientProfile
           ),
-      },
-
-      {
-         path: 'all-doctors',
+        },
+        
+        {
+          path: 'all-doctors',
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
-
       {
-         path: 'about',
+        path: 'appointment',
+        loadComponent: () =>
+          import('./pages/appointment/appointment').then((m) => m.AppointmentComponent),
+      },
+      
+      {
+        path: 'about',
         loadComponent: () =>
           import('./pages/about/about').then((m) => m.About),
       },
 
       {
-         path: 'doctor-details/:id',
+        path: 'doctor-details/:id',
         loadComponent: () =>
           import('./pages/doctor-details/doctor-details').then((m) => m.DoctorDetails),
       },
  
     ],
   },
-
+  
   
 ];
