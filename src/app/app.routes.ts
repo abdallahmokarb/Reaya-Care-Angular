@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
-// import { DoctorListComponent } from './pages/doctor/doctor-list/doctor-list';
+import { AllDoctors } from './pages/all-doctors/all-doctors';
+ 
 
 export const routes: Routes = [
   {
@@ -101,11 +102,13 @@ export const routes: Routes = [
       },
 
       {
-        path: 'dashboard/profile',
+         path: 'all-doctors',
         loadComponent: () =>
-          import('./components/patient-profile/patient-profile').then((m) => m.PatientProfile),
-      }
-
+          import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
+      },
+ 
     ],
   },
+
+  
 ];
