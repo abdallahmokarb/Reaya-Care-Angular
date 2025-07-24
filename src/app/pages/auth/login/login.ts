@@ -9,4 +9,19 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.html',
   imports: [CommonModule, FormsModule, RouterModule],
 })
-export class LoginComponent {}
+export class LoginComponent {
+    model = {
+    email: '',
+    password: '',
+    remember: false
+  };
+  onSubmit(form: any) {
+    if (form.valid) {
+      console.log('Form Data:', this.model);
+
+      // this.authService.login(this.model).subscribe(...)
+    } else {
+      console.warn('Form is invalid');
+    }
+  }
+}
