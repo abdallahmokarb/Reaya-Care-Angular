@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
+import { AllDoctors } from './pages/all-doctors/all-doctors';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
       },
+
+      {
+        path: 'all-doctors',
+        loadComponent: () =>
+          import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
+      },
     ],
   },
+
+  
 ];
