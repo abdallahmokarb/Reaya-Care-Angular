@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
-import { DoctorListComponent } from './pages/doctor/doctor-list/doctor-list';
+// import { DoctorListComponent } from './pages/doctor/doctor-list/doctor-list';
 
 export const routes: Routes = [
   {
@@ -14,16 +14,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/auth/login/login').then((m) => m.LoginComponent),
   },
-  {
-    path: 'doctor-details/:id',
-    loadComponent: () =>
-      import('./pages/doctor/doctor-details/doctor-details').then((m) => m.DoctorDetails),
-  },
-  {
-    path: 'doctor-list',
-    component: DoctorListComponent,
-  },
- 
+  // {
+  //   path: 'doctor-details/:id',
+  //   loadComponent: () =>
+  //     import('./pages/doctor/doctor-details/doctor-details').then(
+  //       (m) => m.DoctorDetails
+  //     ),
+  // },
+  // {
+  //   path: 'doctor-list',
+  //   component: DoctorListComponent,
+  // },
+
   {
     path: 'auth',
     component: AuthLayout,
@@ -54,14 +56,47 @@ export const routes: Routes = [
 
       {
         path: 'dashboard',
-        loadComponent: () =>
-          import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
+        children: [
+          {
+            path: 'doctor',
+            loadComponent: () =>
+              import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
+          },
+        ],
+      },
+
+      {
+        path: 'dashboard',
+        children: [
+          {
+            path: 'patient',
+            loadComponent: () =>
+              import('./pages/dashboard-patient/dashboard-patient').then(
+                (m) => m.DashboardPatient
+              ),
+          },
+        ],
+      },
+
+      {
+        path: 'dashboard/patient',
+        children: [
+          {
+            path: 'test',
+            loadComponent: () =>
+              import('./pages/dashboard-patient/test-page/test-page').then(
+                (m) => m.TestPage
+              ),
+          },
+        ],
       },
       {
-        path: 'dashboard/profile',
+        path: 'dashboard/patient/profile',
         loadComponent: () =>
-          import('./components/patient-profile/patient-profile').then((m) => m.PatientProfile),
-      }
+          import('./components/patient-profile/patient-profile').then(
+            (m) => m.PatientProfile
+          ),
+      },
     ],
   },
 ];

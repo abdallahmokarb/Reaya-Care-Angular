@@ -10,9 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Sidebar {
   private router = inject(Router);
-
-  isSidebarOpen = signal(true);
-
+  isSidebarOpen = signal(false);
   darkMode = signal<boolean>(
     JSON.parse(localStorage.getItem('darkMode') ?? 'false')
   );
@@ -25,7 +23,17 @@ export class Sidebar {
     this.darkMode.set(!this.darkMode());
   }
 
+  dashboardType = signal<'doctor' | 'patient' | null>(null);
+
   constructor() {
+    const path = this.router.url;
+    if (path.includes('/dashboard/doctor')) {
+      this.dashboardType.set('doctor');
+    } else if (path.includes('/dashboard/patient')) {
+      this.dashboardType.set('patient');
+    }
+
+    // watch dark mode
     effect(() => {
       const isDark = this.darkMode();
       localStorage.setItem('darkMode', JSON.stringify(isDark));
