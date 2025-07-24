@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Chart } from 'chart.js/auto';
+ import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-dashboard',

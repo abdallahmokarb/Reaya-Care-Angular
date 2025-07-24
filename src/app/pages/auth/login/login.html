@@ -1,18 +1,22 @@
-<div class="flex justify-center items-center min-h-screen bg-gray-100">
-  <div dir="rtl" class="bg-white rounded-2xl shadow-lg flex w-full max-w-4xl overflow-hidden flex-row-reverse">
 
-   
+<div class="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-12">
+  <div
+    dir="rtl"
+    class="bg-white rounded-2xl shadow-2xl flex w-full max-w-4xl overflow-hidden flex-row-reverse"
+  >
+    <!-- صورة -->
     <div class="w-1/2 bg-blue-500 flex justify-center items-center p-4">
-      <img src="assets/images/doctor.png" alt="طبيب" class="max-h-[470px]">
+      <img src="assets/images/doctor.png" alt="طبيب" class="max-h-[470px]" />
     </div>
 
-    
+    <!-- نموذج تسجيل الدخول -->
+
     <div class="w-1/2 p-8">
       <h2 class="text-3xl font-bold mb-2 text-center">مرحبًا بك</h2>
       <p class="text-gray-600 text-center mb-6">تسجيل الدخول</p>
 
       <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-       
+
         <div class="mb-4">
           <label for="email" class="block mb-2 text-sm font-medium text-gray-700">البريد الإلكتروني</label>
           <input
@@ -26,7 +30,7 @@
           />
         </div>
 
-       
+
         <div class="mb-4">
           <label for="password" class="block mb-2 text-sm font-medium text-gray-700">كلمة المرور</label>
           <input
@@ -40,7 +44,7 @@
           />
         </div>
 
-      
+
         <div class="flex items-center mb-4">
           <input
             id="remember"
@@ -52,7 +56,7 @@
           <label for="remember" class="text-sm text-gray-700">تذكرني</label>
         </div>
 
-       
+
         <button
           type="submit"
           class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
@@ -63,9 +67,12 @@
         <!-- رابط التسجيل -->
         <p class="text-sm text-center mt-4 text-gray-600">
           ليس لديك حساب؟
-          <a href="/register" class="text-blue-600 hover:underline">أنشئ حساب جديد</a>
+
+          <a routerLink="/register" class="text-blue-600 hover:underline">أنشئ حساب جديد</a>
+
         </p>
       </form>
     </div>
   </div>
 </div>
+

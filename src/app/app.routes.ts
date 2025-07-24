@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
-// import { DoctorListComponent } from './pages/doctor/doctor-list/doctor-list';
+import { AllDoctors } from './pages/all-doctors/all-doctors';
+ 
 
 export const routes: Routes = [
   {
@@ -9,22 +10,24 @@ export const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full',
   },
+
   {
     path: 'login',
     loadComponent: () =>
       import('./pages/auth/login/login').then((m) => m.LoginComponent),
   },
-  // {
-  //   path: 'doctor-details/:id',
-  //   loadComponent: () =>
-  //     import('./pages/doctor/doctor-details/doctor-details').then(
-  //       (m) => m.DoctorDetails
-  //     ),
-  // },
-  // {
-  //   path: 'doctor-list',
-  //   component: DoctorListComponent,
-  // },
+
+ 
+  {path: 'register',
+    loadComponent: () =>
+      import('./pages/auth/register/register').then((m) => m.RegisterComponent),
+  },
+  {
+    path: 'appointment',
+    loadComponent: () =>
+      import('./components/appointment/appointment').then((m) => m.AppointmentComponent),
+  },
+
 
   {
     path: 'auth',
@@ -97,6 +100,15 @@ export const routes: Routes = [
             (m) => m.PatientProfile
           ),
       },
+
+      {
+         path: 'all-doctors',
+        loadComponent: () =>
+          import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
+      },
+ 
     ],
   },
+
+  
 ];

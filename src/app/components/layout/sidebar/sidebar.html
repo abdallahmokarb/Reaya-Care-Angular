@@ -18,6 +18,22 @@
       href="/"
       class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
     >
+
+      Re3aya | رعاية
+
+    </a>
+
+    <nav class="space-y-3 text-[15px] font-medium">
+      <a
+
+        [routerLink]="['/',   'dashboard']"
+        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
+        class="block hover:text-blue-500 transition"
+      >
+        dashboard
+
+      </a>
+
       رعاية | Care
     </a>
 
@@ -89,6 +105,7 @@
           مركز المساعدة
         </a>
       </ng-container>
+
 
       <!-- patient -->
       <ng-container *ngIf="dashboardType() === 'patient'">
