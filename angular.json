@@ -16,7 +16,11 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
+<<<<<<< HEAD
             "assets": ["src/assets", "src/favicon.ico"],
+=======
+            "assets": ["src/assets/images", "src/favicon.ico"],
+>>>>>>> 118c175 (feat: initialize Angular application with basic structure and configurations)
             "styles": ["src/styles.css"]
           },
           "configurations": {

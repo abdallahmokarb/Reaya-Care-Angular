@@ -1,0 +1,95 @@
+<section class="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+  <div class="flex flex-col items-center justify-center px-4 py-12">
+
+    <!-- كرت حجز الموعد -->
+    <div class="backdrop-blur-md bg-white/90 dark:bg-gray-900/80 shadow-xl rounded-3xl p-8 w-full max-w-4xl mx-4">
+      <h2 class="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-green-300">
+        احجز موعدك الآن
+      </h2>
+
+      <form (ngSubmit)="bookAppointment()" #appointmentForm="ngForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-900 dark:text-white">
+        
+        <!-- التخصص -->
+        <div>
+          <label class="block mb-2 font-semibold">اختر التخصص</label>
+          <select [(ngModel)]="appointment.specializationId" name="specialization" required (change)="filterDoctors()"
+            class="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
+            <option [ngValue]="null" disabled selected>-- اختر التخصص --</option>
+            <option *ngFor="let spec of specializations" [value]="spec.id">{{ spec.name }}</option>
+          </select>
+        </div>
+
+        <!-- المحافظة -->
+        <div>
+          <label class="block mb-2 font-semibold">اختر المحافظة</label>
+          <select [(ngModel)]="appointment.city" name="city" required (change)="filterDoctors()"
+            class="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
+            <option [ngValue]="null" disabled selected>-- اختر المحافظة --</option>
+            <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+          </select>
+        </div>
+
+        <!-- الدكتور -->
+        <div class="col-span-2">
+          <label class="block mb-2 font-semibold">اختر الدكتور</label>
+          <select [(ngModel)]="appointment.doctorId" name="doctor" required
+            class="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
+            <option [ngValue]="null" disabled selected>-- اختر الدكتور --</option>
+            <option *ngFor="let doctor of filteredDoctors" [value]="doctor.id">{{ doctor.fullName }}</option>
+          </select>
+        </div>
+
+        <!-- التاريخ -->
+        <div>
+          <label class="block mb-2 font-semibold">اختر التاريخ</label>
+          <input type="date" [(ngModel)]="appointment.date" name="date" required
+            class="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600" />
+        </div>
+
+        <!-- الوقت -->
+        <div>
+          <label class="block mb-2 font-semibold">اختر الوقت</label>
+          <select [(ngModel)]="appointment.timeSlotId" name="timeSlot" required
+            class="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
+            <option [ngValue]="null" disabled selected>-- اختر الوقت --</option>
+            <option *ngFor="let slot of timeSlots" [value]="slot.id">{{ slot.startTime }} - {{ slot.endTime }}</option>
+          </select>
+        </div>
+
+        <!-- زر الحجز -->
+        <div class="col-span-2 text-center mt-4">
+          <button type="submit" [disabled]="appointmentForm.invalid"
+            class="bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all duration-200">
+            احجز الموعد
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- كرت المواعيد السابقة -->
+    <div class="mt-12 backdrop-blur-md bg-white/85 dark:bg-gray-900/80 rounded-3xl shadow-xl p-8 w-full max-w-4xl mx-4 border border-green-300 dark:border-green-600">
+      <h3 class="text-2xl font-bold mb-6 text-green-700 dark:text-green-300 text-center">
+        المواعيد السابقة
+      </h3>
+
+      <div class="space-y-6">
+        <!-- موعد 1 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow">
+          <div><span class="font-semibold">الدكتور:</span> د. أحمد خالد</div>
+          <div><span class="font-semibold">التخصص:</span> القلب</div>
+          <div><span class="font-semibold">التاريخ:</span> الأحد، 1 يناير 2024</div>
+          <div><span class="font-semibold">الوقت:</span> 10:00 صباحًا - 10:30 صباحًا</div>
+        </div>
+
+        <!-- موعد 2 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow">
+          <div><span class="font-semibold">الدكتور:</span> د. سارة علي</div>
+          <div><span class="font-semibold">التخصص:</span> أطفال</div>
+          <div><span class="font-semibold">التاريخ:</span> الإثنين، 5 فبراير 2024</div>
+          <div><span class="font-semibold">الوقت:</span> 1:00 مساءً - 1:30 مساءً</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
