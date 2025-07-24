@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.html',
   imports: [CommonModule, FormsModule, RouterModule],
 })
+
 export class LoginComponent {
     model = {
     email: '',

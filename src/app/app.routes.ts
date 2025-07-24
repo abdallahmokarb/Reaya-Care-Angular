@@ -9,22 +9,24 @@ export const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full',
   },
+
   {
     path: 'login',
     loadComponent: () =>
       import('./pages/auth/login/login').then((m) => m.LoginComponent),
   },
-  // {
-  //   path: 'doctor-details/:id',
-  //   loadComponent: () =>
-  //     import('./pages/doctor/doctor-details/doctor-details').then(
-  //       (m) => m.DoctorDetails
-  //     ),
-  // },
-  // {
-  //   path: 'doctor-list',
-  //   component: DoctorListComponent,
-  // },
+
+ 
+  {path: 'register',
+    loadComponent: () =>
+      import('./pages/auth/register/register').then((m) => m.RegisterComponent),
+  },
+  {
+    path: 'appointment',
+    loadComponent: () =>
+      import('./components/appointment/appointment').then((m) => m.AppointmentComponent),
+  },
+
 
   {
     path: 'auth',
@@ -97,6 +99,13 @@ export const routes: Routes = [
             (m) => m.PatientProfile
           ),
       },
+
+      {
+        path: 'dashboard/profile',
+        loadComponent: () =>
+          import('./components/patient-profile/patient-profile').then((m) => m.PatientProfile),
+      }
+
     ],
   },
 ];
