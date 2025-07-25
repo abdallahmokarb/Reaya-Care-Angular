@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-all-doctors',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './all-doctors.html',
   styleUrl: './all-doctors.css'
 })
 export class AllDoctors {
   doctors = [
   {
+    id: 1,
     name: "أحمد يوسف",
     specialization: "أخصائي الأمراض الجلدية",
     availability: "الانتظار 30 دقيقة",
@@ -19,6 +21,7 @@ export class AllDoctors {
     image: "/assets/images/Doc1.jpg"
   },
   {
+    id: 2,
     name: "علي جمال",
     specialization: "أخصائي انف واذن وحنجرة",
     availability: "الانتظار 30 دقيقة",
@@ -29,6 +32,7 @@ export class AllDoctors {
     image: "/assets/images/Doc2.jpg"
   },
   {
+    id: 3,
     name: "هبة احمد",
     specialization: "أخصائي نساء وتوليد",
     availability: "الانتظار 30 دقيقة",
@@ -39,6 +43,7 @@ export class AllDoctors {
     image: "/assets/images/Doc3.jpg"
   },
   {
+    id: 4,
     name: "منى سامي",
     specialization: "أخصائية طب الأطفال",
     availability: "الانتظار 15 دقيقة",

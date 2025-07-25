@@ -1,0 +1,122 @@
+<!-- Main Container -->
+  <div class="doctor-details-section container mx-auto px-4 pt-24 pb-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      
+      <!-- Doctor Info Section -->
+      <div class="col-span-2 bg-white p-6 rounded-lg shadow space-y-6">
+        <!-- Top Info -->
+        <img src="assets/images/Doc1.jpg" alt="Doctor" class="rounded-lg" />
+
+        <div class="flex flex-col md:flex-row gap-6 basic-info">
+          <div class="flex-1">
+            <h2 class="text-xl font-bold">د. عبد الرحمن عبد العال - طبيب عظام</h2>
+            <div class="flex items-center text-yellow-500 space-x-1 mt-2">
+              <span>⭐</span><span>4.8</span>
+            </div>
+            <p class="text-gray-600 mt-2">العنوان: 26 شارع الجزائر، المعادي الجديدة، القاهرة</p>
+            <p class="text-sm text-gray-700 mt-4">
+              استشاري جراحة العظام والمفاصل الصناعية، خبرة واسعة في استبدال المفاصل وعلاج الكسور الدقيقة.
+            </p>
+          </div>
+        </div>
+
+        <!-- Specializations -->
+        <div class="basic-info">
+          <h3 class="font-semibold text-lg mb-2">متخصص في</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="specialization">عملية مفصل الركبة</span>
+            <span class="specialization">عملية الفخذ</span>
+            <span class="specialization">خدمات عظام أخرى</span>
+          </div>
+        </div>
+
+        <!-- Insurance Companies -->
+        <div>
+          <h3 class="font-semibold text-lg mb-2">شركات التأمين</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-gray-100 px-3 py-1 rounded">التأمين الصحي المصري</span>
+            <span class="bg-gray-100 px-3 py-1 rounded">نيو كير</span>
+            <span class="bg-gray-100 px-3 py-1 rounded">كارد بلس</span>
+          </div>
+        </div>
+
+        <!-- Clinic Features -->
+        <div>
+          <h3 class="font-semibold text-lg mb-2">مميزات العيادة</h3>
+          <div class="flex gap-4 text-gray-600">
+            <span>📺 شاشة انتظار</span>
+            <span>🧑‍🔬 معقم</span>
+            <span>❄️ تكييف</span>
+          </div>
+        </div>
+
+        <!-- Gallery -->
+        <div>
+          <h3 class="font-semibold text-lg mb-2">صور العيادة</h3>
+          <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-3">
+            <img src="assets/images/clinic.jpg" class="rounded-lg object-cover" />
+            <img src="assets/images/clinic1.jpg" class="rounded-lg object-cover" />
+            <img src="assets/images/clinic2.jpg" class="rounded-lg object-cover" />
+            <img src="assets/images/clinic4.jpg" class="rounded-lg object-cover" />
+          </div>
+        </div>
+
+        <!-- Reviews -->
+        <div>
+          <h3 class="font-semibold text-lg mb-2">التقييمات</h3>
+          <div class="space-y-4">
+            <div class="bg-gray-100 p-4 rounded">
+              <p class="text-sm">تجربتي مع Re3aya كانت ممتازة جداً مع د. عبد الرحمن وفريق الدعم كان متعاون جداً.</p>
+              <div class="text-sm text-gray-600 mt-2">خالد - الجيزة ⭐⭐⭐⭐⭐</div>
+            </div>
+            <div class="bg-gray-100 p-4 rounded">
+              <p class="text-sm">حجزت بسهولة والدكتور كان على قدر عالي من الاحترافية.</p>
+              <div class="text-sm text-gray-600 mt-2">سارة - القاهرة ⭐⭐⭐⭐⭐</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Section -->
+      <div class="bg-white rounded-lg shadow book-section">
+        <h2 class="text-xl font-bold mb-4 text-center book-h2">احجز كشفك</h2>
+        <div class="p-6 ">
+            <div class="text-sm text-gray-700 space-y-2">
+                <div class="flex justify-between">
+                    <span>سعر الكشف:</span>
+                    <span class="font-bold text-blue-600">350 ج.م</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>مدة الانتظار:</span>
+                    <span>30 دقيقة</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>اتصال مباشر:</span>
+                    <span>0120111344</span>
+                </div>
+                </div>
+
+                <!-- Date picker simulation -->
+                <div class="mt-6">
+                <label class="block font-semibold mb-2">اختر التاريخ:</label>
+                <input type="date" class="w-full border rounded p-2" />
+                </div>
+
+                <div class="mt-4">
+                <label class="block font-semibold mb-2">المواعيد المتاحة:</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="border rounded py-1 hover:bg-blue-100">12 مساءً</button>
+                    <button class="border rounded py-1 hover:bg-blue-100">2 مساءً</button>
+                    <button class="border rounded py-1 hover:bg-blue-100">4 مساءً</button>
+                    <button class="border rounded py-1 hover:bg-blue-100">6 مساءً</button>
+                </div>
+                </div>
+
+                <button class="w-full text-white mt-6 py-2 rounded hover:bg-blue-700 book-btn">
+                احجز الآن
+                </button>
+        </div>
+      </div>
+    </div>
+  </div>

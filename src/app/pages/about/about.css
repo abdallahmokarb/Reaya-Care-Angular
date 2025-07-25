@@ -1,0 +1,39 @@
+.about-section {
+    padding-top: 100px;
+}
+
+.about-section > h2{
+
+    /* border-r-4 border-blue-800; Tailwind's border-blue-800 */
+    border-right: 4px solid #15803d; /* Tailwind's border-blue-800 */
+}
+.about-info-filled, .about-info-empty {
+    padding: 50px 20px;
+}
+
+.about-info-empty , .extra-info {
+    border: 1px solid #15803d; /* Tailwind's border-blue-200 */
+    color: #101828;
+}
+
+.about-info-filled{
+    background-color: #15803d;
+    color: #ffffff;
+}
+
+.extra-info {
+    margin-top: 50px;
+}
+
+#statistics{
+    margin-top: 50px;
+    background-color: white;
+    padding: 50px 0;
+    text-align: center;
+    border: 1px solid #15803d; /* Tailwind's border-gray-200 */
+}
+
+#statistics h2 {
+    font-size: 2rem;
+    color: #101828;
+}
