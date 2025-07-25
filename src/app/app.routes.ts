@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
 import { AllDoctors } from './pages/all-doctors/all-doctors';
- 
+import { PaymentCallbackComponent } from './pages/payment/payment-callback/payment-callback';
 
 export const routes: Routes = [
   {
@@ -17,17 +17,18 @@ export const routes: Routes = [
       import('./pages/auth/login/login').then((m) => m.LoginComponent),
   },
 
- 
-  {path: 'register',
+  {
+    path: 'register',
     loadComponent: () =>
       import('./pages/auth/register/register').then((m) => m.RegisterComponent),
   },
   {
     path: 'appointment',
     loadComponent: () =>
-      import('./components/appointment/appointment').then((m) => m.AppointmentComponent),
+      import('./components/appointment/appointment').then(
+        (m) => m.AppointmentComponent
+      ),
   },
-
 
   {
     path: 'auth',
@@ -102,19 +103,16 @@ export const routes: Routes = [
       },
 
       {
-         path: 'all-doctors',
+        path: 'all-doctors',
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
 
       {
-         path: 'about',
-        loadComponent: () =>
-          import('./pages/about/about').then((m) => m.About),
+        path: 'about',
+        loadComponent: () => import('./pages/about/about').then((m) => m.About),
       },
- 
+      { path: 'payment/callback', component: PaymentCallbackComponent },
     ],
   },
-
-  
 ];
