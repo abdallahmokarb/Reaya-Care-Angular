@@ -139,14 +139,16 @@
         <div id="doctorCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  p-4">
           @for (doctor of doctors; track $index) {
             <div class="doctor-card ">
-              <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.image + ')'">
-                <div class="doctor-rating">
-                  <span class="stars">
-                    <i class="fas fa-star"></i> {{ doctor.rating }}
-                  </span>
+              <a [routerLink]='["/doctor-details/{{ doctor.id }}"]'>
+                <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.image + ')'">
+                  <div class="doctor-rating">
+                    <span class="stars">
+                      <i class="fas fa-star"></i> {{ doctor.rating }}
+                    </span>
+                  </div>
+                  <!-- <img src="assets/images/Doc1.jpg" alt="Doctor" /> -->
                 </div>
-                <!-- <img src="assets/images/Doc1.jpg" alt="Doctor" /> -->
-              </div>
+              </a>
               <!-- Doctor Info -->
               <div class="doctor-info flex-1 space-y-1 text-right">
                 <!-- Name & Availability -->

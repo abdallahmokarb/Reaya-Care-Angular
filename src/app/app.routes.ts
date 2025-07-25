@@ -12,25 +12,6 @@ export const routes: Routes = [
   },
 
   {
-    path: 'login',
-    loadComponent: () =>
-      import('./pages/auth/login/login').then((m) => m.LoginComponent),
-  },
-
-  {
-    path: 'register',
-    loadComponent: () =>
-      import('./pages/auth/register/register').then((m) => m.RegisterComponent),
-  },
-  {
-    path: 'appointment',
-    loadComponent: () =>
-      import('./components/appointment/appointment').then(
-        (m) => m.AppointmentComponent
-      ),
-  },
-
-  {
     path: 'auth',
     component: AuthLayout,
     children: [
@@ -107,11 +88,26 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
+      {
+        path: 'appointment',
+        loadComponent: () =>
+          import('./pages/appointment/appointment').then(
+            (m) => m.AppointmentComponent
+          ),
+      },
 
       {
         path: 'about',
         loadComponent: () => import('./pages/about/about').then((m) => m.About),
       },
+      {
+        path: 'doctor-details/:id',
+        loadComponent: () =>
+          import('./pages/doctor-details/doctor-details').then(
+            (m) => m.DoctorDetails
+          ),
+      },
+
       { path: 'payment/callback', component: PaymentCallbackComponent },
     ],
   },
