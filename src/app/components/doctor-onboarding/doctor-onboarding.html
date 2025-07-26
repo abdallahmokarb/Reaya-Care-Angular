@@ -1,0 +1,61 @@
+<div class="min-h-screen flex dark:bg-gray-950" dir="rtl">
+  <!-- Sidebar space (keep width for sidebar, adjust as needed) -->
+  <div class="hidden md:block w-64"></div>
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex items-start justify-start py-10 px-4">
+      <div class="w-full max-w-4xl bg-white dark:bg-gray-900 shadow-2xl rounded-2xl overflow-hidden">
+        <!-- Header Section -->
+        <div class="bg-green-600 p-6 text-white flex flex-col md:flex-row items-center gap-6">
+          <img src="/assets/images/avatar.jpg"
+               class="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover"
+               alt="صورة الطبيب">
+          <div class="text-center md:text-right">
+            <h2 class="text-3xl font-bold">{{ doctor.fullName }}</h2>
+            <p class="text-green-200 mt-1 text-sm">التخصص: {{ doctor.specialization || 'غير محدد' }}</p>
+            <p class="text-sm">
+              الحالة:
+              <span [ngClass]="doctor.status === 1 ? 'text-green-300' : 'text-red-300'">
+                {{ doctor.status === 1 ? 'نشط' : 'غير نشط' }}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+          <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">معلومات التواصل</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-200">
+            <p><strong>البريد الإلكتروني:</strong> {{ doctor.email }}</p>
+            <p><strong>رقم الهاتف:</strong> {{ doctor.phoneNumber }}</p>
+          </div>
+        </div>
+
+        <!-- Professional Section -->
+        <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+          <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">المعلومات المهنية</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-200">
+            <p><strong>سنوات الخبرة:</strong> {{ doctor.expYears }}</p>
+            <p><strong>التقييم:</strong> {{ doctor.ratingValue }} / 5</p>
+            <p><strong>الأجر:</strong> {{ doctor.fees }} جنيه</p>
+            <p><strong>الرصيد:</strong> {{ doctor.balance }} جنيه</p>
+          </div>
+        </div>
+
+        <!-- About Me Section -->
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">نبذة عني</h3>
+          <p class="text-gray-700 dark:text-gray-200 leading-relaxed">{{ doctor.aboutMe }}</p>
+        </div>
+
+        <!-- Edit Button -->
+        <div class="p-6 bg-gray-50 dark:bg-gray-800 text-left">
+          <button (click)="goToEdit()"
+                  class="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition-all">
+            تعديل الملف الشخصي
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
