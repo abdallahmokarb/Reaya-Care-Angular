@@ -9,4 +9,7 @@ export interface Idoctor {
   fees: number;
   status: number; // 1 = active, 0 = inactive
   specialization: string | null;
+  specializationId: number;
+  service: string;
+  serviceId: number;
 }

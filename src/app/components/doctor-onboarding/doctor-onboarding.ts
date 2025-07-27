@@ -1,42 +1,48 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DoctorInfoService } from '../../shared/services/doctor-info-service';
 import { Idoctor } from '../../models/idoctor';
+import { ISpecialization } from '../../models/ispecialization';
 @Component({
   selector: 'app-doctor-onboarding',
   imports: [CommonModule,
-    FormsModule,],
+    FormsModule,ReactiveFormsModule] ,
   templateUrl: './doctor-onboarding.html',
   styleUrl: './doctor-onboarding.css'
 })
 export class DoctorOnboarding {
-  //  doctor = {
-  //   fullName: 'Dr. Sara Ali',
-  //   email: 'sara.ali@doc.com',
-  //   phoneNumber: '01987654321',
-  //   balance: 1500,
-  //   expYears: 10,
-  //   aboutMe: 'Experienced cardiologist with 10 years in heart care.',
-  //   ratingValue: 4.8,
-  //   fees: 500,
-  //   status: 1,
-  //   specialization: 'Cardiologist'
-  // };
-  doctor!: Idoctor  
-  constructor(private router: Router, private doctorInfoService: DoctorInfoService) {
+
+  public doctor!: Idoctor;
+  public specializations!: ISpecialization[]
+  private doctorId = '24'; // Replace with actual doctor ID
+  editMode = false;
+  editForm: FormGroup;
+
+  constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService) {
     // Initialize any data or state here
+    this.getSpecializations();
     this.getDoctorInfo();
+
+    this.editForm = this.fb.group({
+      fullName: [this.doctor?.fullName || ''],
+      email: [this.doctor?.email || ''],
+      phoneNumber: [this.doctor?.phoneNumber || ''],
+      specializationId: [this.doctor?.specializationId || null],
+      expYears: [this.doctor?.expYears || ''],
+      aboutMe: [this.doctor?.aboutMe || ''],
+      fee: [this.doctor?.fees || ''],
+      service: [this.doctor?.serviceId || null]
+      
+    });
+    
   }
   
-  goToEdit() {
-    this.router.navigate(['/edit-doctor']);
-  }
+  
 
   getDoctorInfo() {
-    const doctorId = '1'; // Replace with actual doctor ID
-    this.doctorInfoService.getDoctorInfo(doctorId).subscribe({
+    this.doctorInfoService.getDoctorInfo(this.doctorId).subscribe({
       next: (doctor: Idoctor) => {
         console.log(doctor);
         this.doctor = doctor;  // Assign the fetched doctor data to the component property
@@ -44,6 +50,49 @@ export class DoctorOnboarding {
       },
       error: (error) => {
         console.error('Error fetching doctor info:', error);
+      }
+    });
+  }
+
+  openEditModal() {
+  
+    this.editForm.patchValue(this.doctor); // doctor is your current doctor object
+    this.editForm.patchValue({
+      specializationId: this.doctor.specializationId || 0 
+    });
+    this.editForm.patchValue({
+      service: this.doctor.serviceId || 0
+    });
+
+    this.editMode = true;
+  }
+
+  closeEditModal() {
+    this.editMode = false;
+  }
+
+  submitEdit() {
+    const updatedDoctor = this.editForm.value;
+    this.doctorInfoService.updateDoctorInfo(this.doctorId, updatedDoctor).subscribe({
+      next: (res) => {
+        console.log('Doctor info updated successfully:', res);
+        this.doctor = res;
+        this.editMode = false;
+      },
+      error: (err) => {
+        console.error('Error updating doctor info:', err);
+        this.editMode = false;
+        
+      }
+    });
+  }
+  getSpecializations() {
+    this.doctorInfoService.getspecializations().subscribe({
+      next: (specializations: ISpecialization[]) => {
+        this.specializations = specializations;
+      },
+      error: (error) => {
+        console.error('Error fetching specializations:', error);
       }
     });
   }
