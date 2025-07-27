@@ -18,6 +18,6 @@ export class DoctorService {
   }
 
   getDoctorById(id: number): Observable<Idoctordetails> {
-    return this.http.get<Idoctordetails>(`${this.baseUrl}/${id}`);
+    return this.http.get<Idoctordetails>(`${this.baseUrl}/details/${id}`);
   }
 }
