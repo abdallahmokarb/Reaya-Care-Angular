@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SpecializationDTO } from '../../models/SpecializationDTO';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { SpecializationDTO } from '../../models/SpecializationDTO';
 
 
 export class Specialization {
-   private apiUrl = 'https://your-api-endpoint.com/api/specializations'; // Update with your actual API URL
+   private apiUrl = `${environment.apiBaseUrl}Specialization`; // Update with actual API URL
 
   constructor(private http: HttpClient) { }
 
