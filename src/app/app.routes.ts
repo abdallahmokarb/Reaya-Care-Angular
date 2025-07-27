@@ -5,7 +5,9 @@ import { AllDoctors } from './pages/all-doctors/all-doctors';
 import { PaymentCallbackComponent } from './pages/payment/payment-callback/payment-callback';
 import { AuthGuard } from './auth.guard';
 import { Unauthorized } from './pages/unauthorized/unauthorized';
-
+import { Contact } from './pages/contact/contact';
+import { Specializations } from './pages/specializations/specializations';
+ 
 export const routes: Routes = [
   {
     path: '',
@@ -120,7 +122,8 @@ export const routes: Routes = [
             (m) => m.DoctorDetails
           ),
       },
-
+      { path: 'contact', component: Contact },
+        { path: 'specializations', component: Specializations },
       { path: 'payment/callback', component: PaymentCallbackComponent },
       {
         path: 'unauthorized',
