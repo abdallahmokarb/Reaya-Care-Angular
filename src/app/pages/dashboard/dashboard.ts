@@ -10,6 +10,20 @@ import { Chart } from 'chart.js/auto';
   templateUrl: './dashboard.html',
 })
 export class Dashboard implements AfterViewInit {
+  isOpen: boolean = true;
+
+  closeModal() {
+    this.isOpen = false;
+  }
+
+  user: any;
+  ngOnInit(): void {
+    const userJson = sessionStorage.getItem('user');
+    if (userJson) {
+      this.user = JSON.parse(userJson);
+    }
+  }
+
   ngAfterViewInit() {
     new Chart(document.getElementById('specialtyChart') as HTMLCanvasElement, {
       type: 'bar',
@@ -18,17 +32,19 @@ export class Dashboard implements AfterViewInit {
         datasets: [
           {
             label: 'الذكور',
-            data: [34, 25],
-            backgroundColor: '#16a34a',
-            borderColor: '#15803d',
+            data: [59, 25],
+            backgroundColor: '#194ad6',
+            borderColor: '#24ace4',
             borderWidth: 1,
+            barThickness: 50,
           },
           {
             label: 'الإناث',
-            data: [11, 51],
-            backgroundColor: '#4ade80',
-            borderColor: '#22c55e',
+            data: [40, 51],
+            backgroundColor: '#f514a0',
+            borderColor: '#ff7cad',
             borderWidth: 1,
+            barThickness: 50,
           },
         ],
       },
@@ -49,7 +65,7 @@ export class Dashboard implements AfterViewInit {
         datasets: [
           {
             data: [110, 20, 9],
-            backgroundColor: ['#00c950', '#fb2c36', '#ffdf20'],
+            backgroundColor: ['#007b35', '#b70011', '#d69400'],
           },
         ],
       },
