@@ -3,6 +3,8 @@ import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
 import { AllDoctors } from './pages/all-doctors/all-doctors';
 import { PaymentCallbackComponent } from './pages/payment/payment-callback/payment-callback';
+import { Contact } from './pages/contact/contact';
+import { Specializations } from './pages/specializations/specializations';
 
 export const routes: Routes = [
   {
@@ -107,7 +109,8 @@ export const routes: Routes = [
             (m) => m.DoctorDetails
           ),
       },
-
+      { path: 'contact', component: Contact },
+        { path: 'specializations', component: Specializations },
       { path: 'payment/callback', component: PaymentCallbackComponent },
     ],
   },
