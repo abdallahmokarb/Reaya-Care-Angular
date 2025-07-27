@@ -47,6 +47,13 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
           },
+          {
+            path: 'doctor/onboarding',
+            loadComponent: () =>
+              import('./components/doctor-onboarding/doctor-onboarding').then(
+                (m) => m.DoctorOnboarding
+              ),
+          }
         ],
       },
 
