@@ -10,13 +10,13 @@
 
         <div class="flex flex-col md:flex-row gap-6 basic-info">
           <div class="flex-1">
-            <h2 class="text-xl font-bold">د. عبد الرحمن عبد العال - طبيب عظام</h2>
+            <h2 class="text-xl font-bold">د. {{doctor?.fullName}} - طبيب {{doctor?.specialization}}</h2>
             <div class="flex items-center text-yellow-500 space-x-1 mt-2">
-              <span>⭐</span><span>4.8</span>
+              <span>⭐</span><span>{{doctor?.ratingValue}}</span>
             </div>
-            <p class="text-gray-600 mt-2">العنوان: 26 شارع الجزائر، المعادي الجديدة، القاهرة</p>
+            <p class="text-gray-600 mt-2">{{doctor?.addresses?.[0]}}</p>
             <p class="text-sm text-gray-700 mt-4">
-              استشاري جراحة العظام والمفاصل الصناعية، خبرة واسعة في استبدال المفاصل وعلاج الكسور الدقيقة.
+              {{doctor?.about}}.
             </p>
           </div>
         </div>
@@ -85,11 +85,11 @@
             <div class="text-sm text-gray-700 space-y-2">
                 <div class="flex justify-between">
                     <span>سعر الكشف:</span>
-                    <span class="font-bold text-blue-600">350 ج.م</span>
+                    <span class="font-bold text-blue-600">{{doctor?.fees}} ج.م</span>
                 </div>
                 <div class="flex justify-between">
                     <span>مدة الانتظار:</span>
-                    <span>30 دقيقة</span>
+                    <span>{{doctor?.waitingTime}} دقيقة</span>
                 </div>
                 <div class="flex justify-between">
                     <span>اتصال مباشر:</span>
@@ -100,16 +100,21 @@
                 <!-- Date picker simulation -->
                 <div class="mt-6">
                 <label class="block font-semibold mb-2">اختر التاريخ:</label>
-                <input type="date" class="w-full border rounded p-2" />
+                <input type="date"
+                        [(ngModel)]="selectedDate"
+                        (change)="onDateChange()" 
+                        class="w-full border rounded p-2" />
                 </div>
 
                 <div class="mt-4">
                 <label class="block font-semibold mb-2">المواعيد المتاحة:</label>
                 <div class="grid grid-cols-2 gap-2">
-                    <button class="border rounded py-1 hover:bg-blue-100">12 مساءً</button>
-                    <button class="border rounded py-1 hover:bg-blue-100">2 مساءً</button>
-                    <button class="border rounded py-1 hover:bg-blue-100">4 مساءً</button>
-                    <button class="border rounded py-1 hover:bg-blue-100">6 مساءً</button>
+                  @for (timeslot of availableTimeSlots; track $index) {
+                    <button class="border rounded py-1 hover:bg-blue-100">
+                      {{formatArabicTime(timeslot.startTime)}}
+                    </button>
+                  }
+                    
                 </div>
                 </div>
 

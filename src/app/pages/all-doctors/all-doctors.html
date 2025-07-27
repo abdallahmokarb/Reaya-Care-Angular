@@ -129,7 +129,7 @@
           <select class="border rounded p-1" name="orderBy" id="orderBy">
             <option value="rating">الأعلى تقييماً</option>
             <option value="fees">الأرخص سعراً</option>
-            <option value="timeslot">أقرب موعد متاح</option>
+            <option value="timeslot">وقت الانتظار</option>
           </select>
         </div>
       </div>
@@ -139,11 +139,11 @@
         <div id="doctorCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  p-4">
           @for (doctor of doctors; track $index) {
             <div class="doctor-card ">
-              <a [routerLink]='["/doctor-details/{{ doctor.id }}"]'>
-                <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.image + ')'">
+              <a [routerLink]="['/doctor-details', doctor.doctorId]">
+                <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.profilePicture + ')'">
                   <div class="doctor-rating">
                     <span class="stars">
-                      <i class="fas fa-star"></i> {{ doctor.rating }}
+                      <i class="fas fa-star"></i> {{doctor.ratingValue}}
                     </span>
                   </div>
                   <!-- <img src="assets/images/Doc1.jpg" alt="Doctor" /> -->
@@ -153,8 +153,8 @@
               <div class="doctor-info flex-1 space-y-1 text-right">
                 <!-- Name & Availability -->
                 <div class="flex justify-between items-center text-right">
-                  <h3 class="text-lg font-bold text-gray-800">{{ doctor.name }}</h3>
-                  <span class="text-sm text-green-600 font-medium">{{ doctor.availability }}</span>
+                  <h3 class="text-lg font-bold text-gray-800">{{ doctor.fullName }}</h3>
+                  <span class="text-sm text-green-600 font-medium">{{ doctor.waitingTime }}</span>
                 </div>
 
                 <!-- Specialization -->
@@ -162,12 +162,12 @@
 
                 <!-- Service Type & Location -->
                 <div class="flex justify-between text-sm text-gray-500">
-                  <span>{{ doctor.serviceType }}</span>
-                  <span>{{ doctor.location }}</span>
+                  <span>{{ doctor.service }}</span>
+                  <span>{{ doctor?.addresses?.length ? doctor.addresses[0] : '' }}</span>
                 </div>
 
                 <!-- Price -->
-                <div class="doctor-price">سعر الكشف : {{ doctor.price }} جنيه</div>
+                <div class="doctor-price">سعر الكشف : {{ doctor.fees }} جنيه</div>
 
                 <!-- Button -->
                 <div class="pt-2">
