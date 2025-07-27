@@ -47,10 +47,13 @@ export class AuthService {
         this.router.navigate(['/admin/dashboard']);
         break;
       case 'doctor':
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/doctor/dashboard']);
+        break;
+      case 'patient':
+        this.router.navigate(['/patient/dashboard']);
         break;
       default:
-        this.router.navigate(['/appointments']);
+        this.router.navigate(['/home']);
     }
   }
 }
