@@ -32,7 +32,7 @@ export class DoctorOnboarding {
       specializationId: [this.doctor?.specializationId || null],
       expYears: [this.doctor?.expYears || ''],
       aboutMe: [this.doctor?.aboutMe || ''],
-      fee: [this.doctor?.fees || ''],
+      fees: [this.doctor?.fees || ''],
       service: [this.doctor?.serviceId || null]
       
     });

@@ -13,7 +13,7 @@
           <div class="text-center md:text-right">
             <h2 class="text-3xl font-bold">{{ doctor?.fullName }}</h2>
             <p class="text-green-200 mt-1 text-sm">التخصص: {{ doctor?.specialization || 'غير محدد' }}</p>
-            
+
             @if(doctor?.service == "InClinic") {
               <p class="text-green-200 mt-1 text-sm">نوع الخدمة: عيادة</p>
             } @else if(doctor?.service == "OnlineConsultion") {
@@ -91,6 +91,10 @@
             <option value="">اختر التخصص</option>
             <option *ngFor="let spec of specializations" [value]="spec.specializationId">{{ spec.name }}</option>
           </select>
+        </div>
+        <div>
+          <label class="block mb-1">الأجر</label>
+          <input formControlName="fees" type="number" class="w-full rounded border px-3 py-2" />
         </div>
         <div>
           <label class="block mb-1">سنوات الخبرة</label>
