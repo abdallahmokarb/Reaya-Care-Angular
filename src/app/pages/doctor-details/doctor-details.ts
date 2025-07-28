@@ -7,6 +7,10 @@ import { Itimeslot } from '../../models/itimeslot';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RatingService } from '../../shared/services/rating-service';
+import { Irating } from '../../models/irating';
+
+
 
 @Component({
   selector: 'app-doctor-details',
@@ -19,6 +23,7 @@ export class DoctorDetails implements OnInit {
   doctorId!: number;
   doctor?: Idoctordetails;
   availableTimeSlots: Itimeslot[] = [];
+  ratings: Irating[] = [];
   isLoading = true;
 
   selectedDate: string = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
@@ -32,6 +37,7 @@ export class DoctorDetails implements OnInit {
   route = inject(ActivatedRoute);
   doctorService = inject(DoctorService);
   timeslotService = inject(TimeslotService);
+  ratingService = inject(RatingService);
 
   ngOnInit(): void {
 
@@ -45,6 +51,15 @@ export class DoctorDetails implements OnInit {
       error: (err) => {
         console.error('Error fetching doctor details:', err);
         this.isLoading = false;
+      }
+    });
+
+    this.ratingService.getAllDoctorRatings(this.doctorId).subscribe({
+      next: (ratings) => {
+        this.ratings = ratings;
+      },
+      error: (err) => {
+        console.error('Error fetching doctor ratings:', err);
       }
     });
 
@@ -71,13 +86,18 @@ export class DoctorDetails implements OnInit {
   }
 
   formatArabicTime(date: Date | string): string {
-  const time = new Date(date); // ensure it's a Date object
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
-  const arabicPeriod = hours < 12 ? 'صباحًا' : 'مساءً';
-  const hour12 = hours % 12 || 12;
+    const time = new Date(date); // ensure it's a Date object
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+    const arabicPeriod = hours < 12 ? 'صباحًا' : 'مساءً';
+    const hour12 = hours % 12 || 12;
 
-  return `${hour12}:${minutes.toString().padStart(2, '0')} ${arabicPeriod}`;
-}
+    return `${hour12}:${minutes.toString().padStart(2, '0')} ${arabicPeriod}`;
+  }
+
+
+  getStars(value: number | undefined): string[] {
+    return this.ratingService.getRatingAsStars(value);
+  }
 
 }

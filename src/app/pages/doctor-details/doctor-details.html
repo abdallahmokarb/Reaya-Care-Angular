@@ -6,13 +6,19 @@
       <!-- Doctor Info Section -->
       <div class="col-span-2 bg-white p-6 rounded-lg shadow space-y-6">
         <!-- Top Info -->
-        <img src="assets/images/Doc1.jpg" alt="Doctor" class="rounded-lg" />
+        <img [src]="doctor?.profileImageUrl" alt="Doctor" class="rounded-lg" />
 
         <div class="flex flex-col md:flex-row gap-6 basic-info">
           <div class="flex-1">
             <h2 class="text-xl font-bold">د. {{doctor?.fullName}} - طبيب {{doctor?.specialization}}</h2>
             <div class="flex items-center text-yellow-500 space-x-1 mt-2">
-              <span>⭐</span><span>{{doctor?.ratingValue}}</span>
+              <span>
+                @for (star of getStars(doctor?.ratingValue); track $index) {
+                  <i class="{{star}}"></i>
+                }
+              </span>
+              <span id="ratingvalue">{{doctor?.ratingValue}} / 10</span>
+              
             </div>
             <p class="text-gray-600 mt-2">{{doctor?.addresses?.[0]}}</p>
             <p class="text-sm text-gray-700 mt-4">
@@ -66,14 +72,17 @@
         <div>
           <h3 class="font-semibold text-lg mb-2">التقييمات</h3>
           <div class="space-y-4">
-            <div class="bg-gray-100 p-4 rounded">
-              <p class="text-sm">تجربتي مع Re3aya كانت ممتازة جداً مع د. عبد الرحمن وفريق الدعم كان متعاون جداً.</p>
-              <div class="text-sm text-gray-600 mt-2">خالد - الجيزة ⭐⭐⭐⭐⭐</div>
-            </div>
-            <div class="bg-gray-100 p-4 rounded">
-              <p class="text-sm">حجزت بسهولة والدكتور كان على قدر عالي من الاحترافية.</p>
-              <div class="text-sm text-gray-600 mt-2">سارة - القاهرة ⭐⭐⭐⭐⭐</div>
-            </div>
+
+            @for (rating of ratings; track $index) {
+              <div class="bg-gray-100 p-4 rounded">
+                <p class="text-sm">{{rating.comment}}.</p>
+                <div class="text-sm text-gray-600 mt-2">{{rating.patientName}} &nbsp;&nbsp;
+                  @for(star of getStars(rating.ratingValue); track $index) {
+                    <i class="{{star}}"></i>
+                  }
+                </div>
+              </div>
+            }
           </div>
         </div>
       </div>
