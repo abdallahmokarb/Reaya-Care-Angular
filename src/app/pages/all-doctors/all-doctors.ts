@@ -8,6 +8,7 @@ import { SpecializationDTO } from '../../models/SpecializationDTO';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AddressService } from '../../shared/services/address-service';
+import { Igovernment } from '../../models/igovernment';
 
 @Component({
   selector: 'app-all-doctors',
