@@ -1,53 +1,178 @@
 <div
-  class="flex flex-col items-center justify-center min-h-screen text-center p-4"
+  class="flex flex-col items-center justify-center min-h-screen p-6 text-center"
 >
+  <!-- أثناء التحميل -->
   <ng-container *ngIf="isLoading; else resultTemplate">
-    <p class="text-lg">جاري معالجة الدفع...</p>
+    <div class="flex flex-col items-center">
+      <svg
+        class="animate-spin h-12 w-12 text-[#00ba00] mb-4"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v8z"
+        ></path>
+      </svg>
+      <p class="text-lg font-semibold text-[#00ba00]">
+        جاري معالجة عملية الدفع .. يرجي الانتظار قليلاً
+      </p>
+    </div>
   </ng-container>
 
   <ng-template #resultTemplate>
-    <h1
-      class="text-4xl font-bold mb-4"
-      [ngClass]="paymentData?.Success ? 'text-green-600' : 'text-red-600'"
+    <div
+      class="max-w-xl w-full mt-20 bg-white dark:bg-gray-950 rounded-2xl shadow-lg p-6 border-t-4 transition-all duration-300"
+      [ngClass]="paymentData?.Success ? 'border-[#00ba00]' : 'border-[#f44336]'"
     >
-      {{ paymentData?.Success ? 'شكرا لك، تم الدفع بنجاح' : 'عفوا، فشل الدفع' }}
-    </h1>
+      <div class="flex flex-col items-center mb-4">
+        <img
+          *ngIf="paymentData?.Success; else errorImage"
+          src="https://cdn-icons-png.flaticon.com/512/14090/14090371.png"
+          alt="Success"
+          class="h-32 w-32 mb-4"
+        />
+        <ng-template #errorImage>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/9068/9068699.png"
+            alt="Error"
+            class="h-32 w-32 mb-4"
+          />
+        </ng-template>
 
-    <p class="mb-2">رقم المعاملة: {{ paymentData?.Id }}</p>
-    <p class="mb-2">القيمة: {{ paymentData?.AmountCents / 100 }} EGP</p>
-    <p class="mb-2">
-      بطاقة: {{ paymentData?.Pan }} ({{ paymentData?.CardType }})
-    </p>
-    <p class="mb-2">تاريخ العملية: {{ paymentData?.Date }}</p>
+        <h1
+          class="text-4xl mb-2 font-extrabold"
+          [ngClass]="paymentData?.Success ? 'text-[#00ba00] ' : 'text-[#f44336] '"
+        >
+          {{ paymentData?.Success ? 'شكرا لك، تم الدفع بنجاح' : 'عفوا، فشل
+          الدفع' }}
+        </h1>
+        <p class="text-gray-600 dark:text-gray-300">
+          {{ paymentData?.Success ? 'تمت معالجة معاملتك بنجاح' : 'حدث خطأ أثناء
+          معالجة الدفع. حاول مرة أخرى او يمكنك الاتصال ببنكك للتفاصيل' }}
+        </p>
+      </div>
+
+      <div
+        class="text-right text-gray-800 dark:text-gray-200 space-y-2 text-base mt-6"
+      >
+        <p>
+          رقم المعاملة: <span class="font-semibold">{{ paymentData?.Id }}</span>
+        </p>
+        <p>
+          المبلغ:
+          <span class="font-semibold"
+            >{{ paymentData?.AmountCents / 100 }} EGP</span
+          >
+        </p>
+        <p>
+          نوع البطاقة:
+          <span class="font-semibold">{{ paymentData?.CardType }} Gold</span>
+        </p>
+        <p>
+          اخر اربع ارقام من البطاقة:
+          <span class="font-semibold">
+            {{ paymentData?.Pan }} **** **** ****
+          </span>
+        </p>
+        <p>
+          تاريخ العملية:
+          <span class="font-semibold">{{ paymentData?.Date }}</span>
+        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0 break-words">
+          رقم مرجع العملية:
+          <span class="font-mono">{{paymentData?.Hmac}}</span>
+        </p>
+
+        <div
+          class="mt-8 p-6 bg-blue-50 dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-2xl shadow-md"
+        >
+          <div class="flex items-center mb-4">
+            <!-- Lock Shield SVG Icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8 text-blue-600 dark:text-blue-400 mr-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 11c0 .552-.448 1-1 1s-1-.448-1-1V9a3 3 0 116 0v2c0 .552-.448 1-1 1s-1-.448-1-1V9a1 1 0 10-2 0v2z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 11v5a4 4 0 004 4h8a4 4 0 004-4v-5"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3L4 7v4c0 5.523 4.477 10 10 10s10-4.477 10-10V7l-8-4z"
+              />
+            </svg>
+            <h2 class="text-sm font-semibold text-blue-800 dark:text-blue-300">
+              ملاحظة مهمة عن الأمان في رعاية . كوم
+            </h2>
+          </div>
+          <p
+            class="text-blue-900 text-[10px] dark:text-gray-200 leading-relaxed"
+          >
+            نود أن نطمئنك أن جميع عمليات الدفع التي تتم عبر رعاية
+            <strong class="text-blue-700 dark:text-blue-400"
+              >آمنة ومشفرة بالكامل</strong
+            >
+            باستخدام أحدث تقنيات الحماية. في رعاية نتعامل مع
+            <strong class="text-blue-700 dark:text-blue-400"
+              >بوابات دفع خارجية موثوقة ومرخصة</strong
+            >
+            مثل Paymob , Visa , MasterCard , AMX لضمان أمان معاملتك وسرية
+            معلوماتك.
+          </p>
+          <p
+            class="mt-1 text-[10px] text-blue-900 dark:text-gray-200 leading-relaxed"
+          >
+            جميع المعاملات تمر عبر قنوات
+            <strong class="text-blue-700 dark:text-blue-400"
+              >مشفرة (SSL)</strong
+            >
+            ولا يتم تخزين أي معلومات حساسة مثل بيانات البطاقة أو رمز التحقق في
+            قواعد بيانات رعاية. هدفنا هو تقديم تجربة سلسة وآمنة يمكنك الوثوق بها
+            دائمًا.
+            <br />
+            تحياتنا فريق تطوير المدفوعات الالكترونية لـ رعاية . كوم
+          </p>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <a
+          *ngIf="paymentData?.Success; else homeLink"
+          class="form-btn"
+          routerLink="/appointment"
+          >اضغط لتأكيد حجزك</a
+        >
+        <ng-template #homeLink>
+          <br />
+          <a
+            class="bg-gray-500 p-2 rounded-xl w-full inline-block"
+            routerLink="/all-doctors"
+            >اعادة الحجز مرة اخري</a
+          >
+        </ng-template>
+      </div>
+    </div>
   </ng-template>
 </div>
-
-<!-- <div
-  class="p-6 rounded-xl shadow bg-white dark:bg-black text-black dark:text-white max-w-lg mx-auto mt-20 text-center"
->
-  <h1 class="text-4xl font-bold mb-4">
-    {{ paymentData.success ? 'شكرا لك' : 'عفوا' }}
-  </h1>
-  <h2
-    class="text-4xl font-bold mb-4"
-    [ngClass]="paymentData.success ? 'text-green-500' : 'text-red-500'"
-  >
-    عملية دفع {{ paymentData.success ? 'ناجحة' : 'فاشلة' }}
-  </h2>
-
-  <h3>رقم مرجع العملية : 73a364819188c74f77a45b02ca4e459eb1a64593cbe0</h3>
-  <p class="mb-2">معرف المعاملة : {{ paymentData.id }}</p>
-  <p class="mb-2">المبلغ: {{ paymentData.amountEGP }} EGP</p>
-  <p class="mb-2">النتيجة: {{ paymentData.message }}</p>
-  <p class="mb-2">
-    نوع بطاقة الائتمان : {{ paymentData.cardType }} Gold Bank Masr
-  </p>
-  <p class="mb-2">
-    اخر اربع ارقام من البطاقة: **** **** **** {{ paymentData.pan?.slice(-4) }}
-  </p>
-  <p class="mb-2">التاريخ: {{ paymentData.date | date: 'short' }}</p>
-
-  <div *ngIf="!paymentData.success" class="mt-4 text-red-600">
-    Payment was not successful. Please try again.
-  </div>
-</div> -->
