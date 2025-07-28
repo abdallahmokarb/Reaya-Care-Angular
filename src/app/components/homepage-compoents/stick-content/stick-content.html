@@ -1,135 +1,472 @@
-<section
-  class="bg-gradient-to-r from-green-400 to-green-700 dark:from-black dark:to-black py-20 text-center text-gray-900 dark:text-white"
->
-  <h1 class="text-4xl md:text-5xl font-bold mb-4">
-    احجز بسهولة مع أفضل الدكاترة
-  </h1>
-  <p class="text-lg mb-6">
-    ابحث عن تخصصك الطبي، واستعرض الدكاترة، واحجز موعدك في دقائق
-  </p>
-
-  <section class="py-16 text-center text-gray-800 dark:text-white">
-    <h2 class="text-3xl font-bold mb-10">التخصصات الطبية</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 px-6">
-      <div class="p-4 bg-green-50 dark:bg-green-600 rounded-lg shadow">
-        طب الأسنان
-      </div>
-      <div class="p-4 bg-green-50 dark:bg-green-600 rounded-lg shadow">
-        طب الأطفال
-      </div>
-      <div class="p-4 bg-green-50 dark:bg-green-600 rounded-lg shadow">
-        طب النساء
-      </div>
-      <div class="p-4 bg-green-50 dark:bg-green-600 rounded-lg shadow">
-        أمراض القلب
-      </div>
-    </div>
-  </section>
-</section>
-
-<!-- why choose care sec -->
-<section
-  class="py-16 flex flex-col md:flex-row items-center justify-between px-6 text-gray-900 dark:text-white"
->
-  <img
-    src="https://via.placeholder.com/400x300"
-    alt="Why Choose Care"
-    class="rounded-lg shadow mb-6 md:mb-0 md:mr-8"
-  />
-  <div>
-    <h2 class="text-3xl font-bold mb-4">لماذا تختار رعايه</h2>
-    <ul class="space-y-3 text-lg">
-      <li>دعم منصتنا نماذج الذكاء الاصطناعي AI</li>
-      <li>سهولة البحث والحجز</li>
-      <li>أطباء موثوقون</li>
-      <li>دعم فني متواصل</li>
-      <li>تقييمات حقيقية من المرضى</li>
-    </ul>
-  </div>
-</section>
-
 <!--  doctors sec -->
-<section class="py-20 bg-gradient-to-b text-center">
-  <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-12">
-    أبرز الدكاترة حجزا في الاسبوع الماضي في مختلف التخصصات
+<section
+  class="py-20 bg-gradient-to-b from-teal-100 via-white to-white dark:from-black dark:via-black dark:to-black text-center"
+>
+  <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-16">
+    اكثر الدكاترة حجزاً في الأسبوع الماضي
   </h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 px-6 max-w-7xl mx-auto">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 px-6 max-w-7xl mx-auto"
+  >
+    <!-- Doctor Card -->
     <div
-      class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform"
+      class="bg-gradient-to-br from-green-200 to-green-100 dark:from-green-900 dark:to-green-800 rounded-3xl shadow-xl p-6 hover:scale-105 transition-all duration-300"
     >
-      <img
-        src="https://images.unsplash.com/photo-1622559926210-1b5f5ab96743"
-        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-600"
-      />
-      <h3 class="text-xl font-bold text-gray-800 dark:text-white">
-        د. محمود عبدالغني
-      </h3>
-      <p class="text-sm text-gray-600 dark:text-gray-300">أخصائي طب الأطفال</p>
+      <div class="flex flex-col items-center">
+        <div class="w-32 h-32 mb-4">
+          <img
+            src="assets/images/team/mahmoud.jpg"
+            class="rounded-full border-4 border-white shadow-lg w-full h-full object-cover"
+          />
+        </div>
+        <div class="text-center">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+            د. محمود عبدالغني
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+            أخصائي طب الأطفال
+          </p>
+          <svg
+            class="w-6 h-6 mx-auto text-green-700 dark:text-green-300"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 2l2 7h7l-5.5 4 2 7-6.5-4-6.5 4 2-7L3 9h7l2-7z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Doctor Card -->
+    <div
+      class="bg-gradient-to-br from-blue-200 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-3xl shadow-xl p-6 hover:scale-105 transition-all duration-300"
+    >
+      <div class="flex flex-col items-center">
+        <div class="w-32 h-32 mb-4">
+          <img
+            src="assets/images/team/ali.jpg"
+            class="rounded-full border-4 border-white shadow-lg w-full h-full object-cover"
+          />
+        </div>
+        <div class="text-center">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+            د. علي جمال دخلي
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+            أخصائي طب العيون
+          </p>
+          <svg
+            class="w-6 h-6 mx-auto text-blue-700 dark:text-blue-300"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 2a10 10 0 1 0 0 20m0-20v20" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Doctor Card -->
+    <div
+      class="bg-gradient-to-br from-red-200 to-red-100 dark:from-red-900 dark:to-red-800 rounded-3xl shadow-xl p-6 hover:scale-105 transition-all duration-300"
+    >
+      <div class="flex flex-col items-center">
+        <div class="w-32 h-32 mb-4">
+          <img
+            src="assets/images/team/khald.jpg"
+            class="rounded-full border-4 border-white shadow-lg w-full h-full object-cover"
+          />
+        </div>
+        <div class="text-center">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+            د. خالد ماهر
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+            أخصائي طب الأسنان
+          </p>
+          <svg
+            class="w-6 h-6 mx-auto text-red-700 dark:text-red-300"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 2C9 2 6 6 6 10s6 12 6 12 6-8 6-12-3-8-6-8z" />
+          </svg>
+        </div>
+      </div>
     </div>
 
     <div
-      class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform"
+      class="bg-gradient-to-br from-yellow-200 to-yellow-100 dark:from-yellow-900 dark:to-yellow-800 rounded-3xl shadow-xl p-6 hover:scale-105 transition-all duration-300"
     >
-      <img
-        src="https://images.unsplash.com/photo-1622559926210-1b5f5ab96743"
-        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-600"
-      />
-      <h3 class="text-xl font-bold text-gray-800 dark:text-white">
-        د. علي جمال دخلي
-      </h3>
-      <p class="text-sm text-gray-600 dark:text-gray-300">أخصائي طب النساء</p>
+      <div class="flex flex-col items-center">
+        <div class="w-32 h-32 mb-4">
+          <img
+            src="https://images.unsplash.com/photo-1550831107-1553da8c8464"
+            class="rounded-full border-4 border-white shadow-lg w-full h-full object-cover"
+          />
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+          د. مريهان
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          أخصائية طب التجميل
+        </p>
+        <svg
+          class="w-6 h-6 mx-auto text-yellow-700 dark:text-yellow-300"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 2a10 10 0 0 1 10 10" />
+        </svg>
+      </div>
     </div>
 
+    <!-- Doctor 5 -->
     <div
-      class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform"
+      class="bg-gradient-to-br from-purple-200 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-3xl shadow-xl p-6 hover:scale-105 transition-all duration-300"
     >
-      <img
-        src="https://images.unsplash.com/photo-1628157588553-5a0f7d89c9db"
-        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-600"
-      />
-      <h3 class="text-xl font-bold text-gray-800 dark:text-white">
-        د. خالد ماهر
-      </h3>
-      <p class="text-sm text-gray-600 dark:text-gray-300">أخصائي طب الأسنان</p>
+      <div class="flex flex-col items-center">
+        <div class="w-32 h-32 mb-4">
+          <img
+            src="assets/images/team/sayed.jpg"
+            class="rounded-full border-4 border-white shadow-lg w-full h-full object-cover"
+          />
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+          د. سيد علي
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          أخصائي القلب
+        </p>
+        <svg
+          class="w-6 h-6 mx-auto text-purple-700 dark:text-purple-300"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M4.5 12a5.5 5.5 0 0 1 11 0l.5 3 3-4a5.5 5.5 0 0 1 0 8l-6 6-6-6a5.5 5.5 0 0 1 0-8z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Doctor 6 -->
+    <div
+      class="bg-gradient-to-br from-pink-200 to-pink-100 dark:from-pink-900 dark:to-pink-800 rounded-3xl shadow-xl p-6 hover:scale-105 transition-all duration-300"
+    >
+      <div class="flex flex-col items-center">
+        <div class="w-32 h-32 mb-4">
+          <img
+            src="assets/images/team/abdallah.jpg"
+            class="rounded-full border-4 border-white shadow-lg w-full h-full object-cover"
+          />
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+          عبدالله مقرب
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          أخصائي تطبيقات ويب
+        </p>
+        <svg
+          class="w-6 h-6 mx-auto text-pink-700 dark:text-pink-300"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 4v16m8-8H4" />
+        </svg>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- statistics sec -->
-<section
-  class="py-16 bg-white dark:bg-gray-900 text-center text-gray-900 dark:text-white"
->
-  <h2 class="text-3xl font-bold mb-10">إحصائياتنا</h2>
+<!-- Redesigned Statistics Section with 5 Cards and SVG Icons -->
+
+<section class="py-16 text-center text-gray-900 dark:text-white">
+  <h2 class="text-3xl font-bold mb-12">إحصائياتنا</h2>
+
   <div
-    class="flex flex-col md:flex-row justify-around px-6 text-2xl font-semibold"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 px-6 max-w-7xl mx-auto"
   >
-    <div class="mb-4 md:mb-0">
-      <span class="text-green-600 dark:text-green-400">99%</span> رضا المرضى
+    <div
+      class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white"
+    >
+      <div class="flex items-center justify-center mb-4">
+        <svg
+          class="w-10 h-10"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      </div>
+      <div class="text-4xl font-extrabold mb-2">99%</div>
+      <p class="text-xl font-semibold">رضا المرضى</p>
     </div>
-    <div class="mb-4 md:mb-0">
-      <span class="text-green-600 dark:text-green-400">10+</span> موعد تم حجزه
+
+    <div
+      class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white"
+    >
+      <div class="flex items-center justify-center mb-4">
+        <svg
+          class="w-10 h-10"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+      </div>
+      <div class="text-4xl font-extrabold mb-2">+10</div>
+      <p class="text-xl font-semibold">موعد تم حجزه</p>
     </div>
-    <div>
-      <span class="text-green-600 dark:text-green-400">10+</span> طبيب موثوق
+
+    <div
+      class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 text-white"
+    >
+      <div class="flex items-center justify-center mb-4">
+        <svg
+          class="w-10 h-10"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5.121 17.804A6 6 0 1118.88 6.196M15 12h.01M9 12h.01M12 12h.01M12 16h.01M9 16h.01M15 16h.01"
+          />
+        </svg>
+      </div>
+      <div class="text-4xl font-extrabold mb-2">+10</div>
+      <p class="text-xl font-semibold">دكتور موثوق</p>
+    </div>
+
+    <div
+      class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white"
+    >
+      <div class="flex items-center justify-center mb-4">
+        <svg
+          class="w-10 h-10"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.184 6.715a1 1 0 00.95.69h7.104c.969 0 1.371 1.24.588 1.81l-5.758 4.179a1 1 0 00-.364 1.118l2.183 6.714c.3.921-.755 1.688-1.54 1.118l-5.757-4.178a1 1 0 00-1.176 0l-5.758 4.178c-.784.57-1.838-.197-1.539-1.118l2.183-6.714a1 1 0 00-.364-1.118L2.134 12.14c-.783-.57-.38-1.81.588-1.81h7.104a1 1 0 00.95-.69l2.183-6.715z"
+          />
+        </svg>
+      </div>
+      <div class="text-4xl font-extrabold mb-2">4.8</div>
+      <p class="text-xl font-semibold">متوسط التقييم</p>
+    </div>
+
+    <div
+      class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white"
+    >
+      <div class="flex items-center justify-center mb-4">
+        <svg
+          class="w-10 h-10"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 22c4.418 0 8-4.03 8-9 0-3.866-3.134-7-7-7S6 9.134 6 13c0 4.97 3.582 9 8 9z"
+          />
+        </svg>
+      </div>
+      <div class="text-4xl font-extrabold mb-2">+5</div>
+      <p class="text-xl font-semibold">مراكز طبية</p>
     </div>
   </div>
 </section>
 
 <!-- testimonials sec -->
+
 <section class="py-16 text-center">
-  <h2 class="text-3xl font-bold mb-10">آراء المرضى</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
-    <div class="p-6 bg-white dark:bg-gray-700 rounded-lg shadow">
-      <p class="italic">"تجربة ممتازة! حجزت في أقل من دقيقة والدوك كان رائع"</p>
-      <p class="mt-4 font-bold">- سيد علي</p>
-    </div>
-    <div class="p-6 bg-white dark:bg-gray-700 rounded-lg shadow">
-      <p class="italic">
-        "منصة رائعة وسهلة، أنصح بها للجميع و كل الشكر لي القائمين علي المنصة
-        بشمهندس علي وخالد وعبدلغني وسيد"
+  <h2 class="text-3xl font-bold mb-12 text-gray-800 dark:text-white">
+    آراء مراجعينا
+  </h2>
+
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6 max-w-8xl mx-auto"
+  >
+    <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md relative">
+      <svg
+        class="absolute top-4 left-4 w-8 h-8 text-green-500"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 17a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2H8v2h3v2H7zm10 0a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2h-1v2h3v2h-4z"
+        />
+      </svg>
+      <p class="italic text-gray-700 dark:text-gray-300 mt-8">
+        "تجربة ممتازة! حجزت في أقل من دقيقة والدكتور كان رائع."
       </p>
-      <p class="mt-4 font-bold">- عبدالله مقرب</p>
+      <p class="mt-4 font-bold text-gray-900 dark:text-white">- سيد علي</p>
     </div>
+
+    <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md relative">
+      <svg
+        class="absolute top-4 left-4 w-8 h-8 text-green-500"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 17a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2H8v2h3v2H7zm10 0a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2h-1v2h3v2h-4z"
+        />
+      </svg>
+      <p class="italic text-gray-700 dark:text-gray-300 mt-8">
+        "منصة رائعة وسهلة، أنصح بها للجميع وكل الشكر للقائمين على المنصة."
+      </p>
+      <p class="mt-4 font-bold text-gray-900 dark:text-white">- عبدالله مقرب</p>
+    </div>
+
+    <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md relative">
+      <svg
+        class="absolute top-4 left-4 w-8 h-8 text-green-500"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 17a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2H8v2h3v2H7zm10 0a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2h-1v2h3v2h-4z"
+        />
+      </svg>
+      <p class="italic text-gray-700 dark:text-gray-300 mt-8">
+        "دكاترة محترفين وسهولة في الحجز، شكراً ليكم!"
+      </p>
+      <p class="mt-4 font-bold text-gray-900 dark:text-white">- احمد طاهر</p>
+    </div>
+
+    <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md relative">
+      <svg
+        class="absolute top-4 left-4 w-8 h-8 text-green-500"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 17a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2H8v2h3v2H7zm10 0a4 4 0 01-4-4v-4a4 4 0 014-4h2a2 2 0 012 2v2a2 2 0 01-2 2h-1v2h3v2h-4z"
+        />
+      </svg>
+      <p class="italic text-gray-700 dark:text-gray-300 mt-8">
+        "خدمة ممتازة وسريعة. بحس براحة في استخدام رعاية دايما."
+      </p>
+      <p class="mt-4 font-bold text-gray-900 dark:text-white">مصطفي محمد</p>
+    </div>
+  </div>
+</section>
+
+<!-- why choose care sec -->
+<section
+  class="relative bg-cover bg-center bg-no-repeat py-20 text-white h-[650px]"
+  style="
+    background-image: url('https://cdn.prod.website-files.com/677ca44598d8bae2633f6b99/67863dfce8186b2b9dbd2605_Voice%20AI%20main%20img.jpg');
+  "
+>
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/40 z-0"
+  ></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center pt-25">
+    <h2 class="text-8xl font-extrabold mb-6">
+      ليه تختار <span class="text-green-400">رعاية</span>
+    </h2>
+    <ul
+      class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-4xl text-white/90 text-right"
+    >
+      <li class="flex items-center gap-3">
+        <svg
+          class="w-6 h-6 text-green-400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M13 16h-1v-4h-1m0-4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9
+          9-9 9 4.03 9 9z"
+          />
+        </svg>
+        دعم منصتنا نماذج AI
+      </li>
+      <li class="flex items-center gap-3">
+        <svg
+          class="w-6 h-6 text-green-400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 11c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4
+          4-4-1.79-4-4zm-1 8H5v-2c0-2.21 3.58-4 8-4s8 1.79 8
+          4v2h-6"
+          />
+        </svg>
+        سهولة البحث والحجز
+      </li>
+      <li class="flex items-center gap-3">
+        <svg
+          class="w-6 h-6 text-green-400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0
+          3a1 1 0 0 1 1 1v5l4 2-1 1-4-2V6a1 1 0 0 1 1-1z"
+          />
+        </svg>
+        دكاترة موثوقين
+      </li>
+      <li class="flex items-center gap-3">
+        <svg
+          class="w-6 h-6 text-green-400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2
+          2H5a2 2 0 0 1-2-2V5z"
+          />
+        </svg>
+        دعم فني متواصل
+      </li>
+    </ul>
   </div>
 </section>
