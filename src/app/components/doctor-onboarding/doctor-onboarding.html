@@ -28,7 +28,13 @@
               {{ doctor?.service === 'OnlineConsultion' ? 'أونلاين' : 'غير محدد' }}
             </p>
           </ng-template>
-
+          <p class="text-sm mt-2">
+            @if(doctor?.gender === 'Female') {
+              الجنس: أنثى
+            } @else if(doctor?.gender === 'Male') {
+              الجنس: ذكر
+            }
+          </p>
           <p class="text-sm">
             الحالة:
             <span [ngClass]="doctor?.status === 1 ? 'text-green-300' : 'text-red-300'">
@@ -242,6 +248,11 @@
       <h2 class="text-xl font-bold mb-4 text-green-600 dark:text-green-400">تعديل بيانات الطبيب</h2>
       <form [formGroup]="editForm" (ngSubmit)="submitEdit()" class="space-y-4">
         <div><label class="block mb-1">الاسم الكامل</label><input formControlName="fullName" class="w-full rounded border px-3 py-2" /></div>
+        <label class="block mb-1">الجنس</label>
+        <div class="flex gap-4 mb-4">
+          <label class="flex items-center gap-2"><input type="radio" formControlName="gender" [value]="'Male'" /> ذكر</label>
+          <label class="flex items-center gap-2"><input type="radio" formControlName="gender" [value]="'Female'" /> أنثى</label>
+        </div>
         <div><label class="block mb-1">البريد الإلكتروني</label><input formControlName="email" class="w-full rounded border px-3 py-2" /></div>
         <div><label class="block mb-1">رقم الهاتف</label><input formControlName="phoneNumber" class="w-full rounded border px-3 py-2" /></div>
         <div>

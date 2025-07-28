@@ -23,4 +23,6 @@ export interface Idoctor {
     graduationCertificateUrl: string; // Optional graduation certificate URL
     experienceCertificateUrl: string; // Optional experience certificate URL
     profilePictureUrl: string; // Optional profile picture URL
+    profileImageUrl: string; // URL to the doctor's profile picture
+    gender:string; // Gender of the doctor
 }

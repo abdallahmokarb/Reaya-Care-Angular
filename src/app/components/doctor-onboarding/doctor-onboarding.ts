@@ -46,8 +46,8 @@ export class DoctorOnboarding {
       fees: [this.doctor?.fees || ''],
       service: [this.doctor?.serviceId || null],
       location: [this.doctor?.location || ''],
-      detailedAddress: [this.doctor?.detailedAddress || '']
-  
+      detailedAddress: [this.doctor?.detailedAddress || ''],
+      gender: [this.doctor?.gender || ''],
     });
     this.docInfoResponse = JSON.parse(localStorage.getItem('docmentrespose') || 'null');
     
