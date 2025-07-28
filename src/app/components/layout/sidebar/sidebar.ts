@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 export class Sidebar {
   private router = inject(Router);
   isSidebarOpen = signal(false);
+  user = signal<any>(null);
+
   darkMode = signal<boolean>(
     JSON.parse(localStorage.getItem('darkMode') ?? 'false')
   );
@@ -20,6 +22,15 @@ export class Sidebar {
 
   toggleDarkMode() {
     this.darkMode.set(!this.darkMode());
+  }
+
+  logout() {
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    this.user.set(null);
+    this.router.navigate(['/auth/login']);
   }
 
   dashboardType = signal<'doctor' | 'patient' | null>(null);
