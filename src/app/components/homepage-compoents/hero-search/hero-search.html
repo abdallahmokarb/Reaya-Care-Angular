@@ -10,11 +10,11 @@
     <h1
       class="md:text-5xl text-2xl font-black pt-[120px] text-center text-white mb-8"
     >
-      اهلا بكم في رعاية، حيث تبدأ رحلتك نحو صحة أفضل
+      رعاية، حيث تبدأ رحلتك نحو صحة أفضل
       <h2 class="pt-5">نجمع بين الخبرة الطبية والذكاء الاصطناعي من أجلك</h2>
     </h1>
     <div
-      class="w-full max-w-5xl rounded-2xl shadow-2xl p-8 bg-white/10 backdrop-blur-lg dark:bg-black/10 text-gray-900 dark:text-white"
+      class="w-full max-w-5xl rounded-2xl shadow-2xl p-8 backdrop-blur-lg bg-black/10 text-white"
     >
       <!-- text header -->
       <div class="flex justify-between items-center mb-6">
@@ -29,8 +29,8 @@
         <button
           class="py-2 px-4 font-medium border-b-4 transition cursor-pointer"
           [ngClass]="{
-            'border-green-500 text-green-600 dark:text-green-400': activeTab === 'find',
-            'border-transparent dark:text-gray-300 text-gray-800  hover:text-green-500': activeTab !== 'find'
+            'border-green-500 text-green-600  ': activeTab === 'find',
+            'border-transparent text-gray-300    hover:text-green-500': activeTab !== 'find'
           }"
           (click)="setActiveTab('find')"
         >
@@ -39,8 +39,8 @@
         <button
           class="py-2 px-4 font-medium border-b-4 transition cursor-pointer"
           [ngClass]="{
-            'border-green-500 text-green-600 dark:text-green-400': activeTab === 'video',
-            'border-transparent dark:text-gray-300 text-gray-800 hover:text-green-500': activeTab !== 'video'
+            'border-green-500 text-green-600  ': activeTab === 'video',
+            'border-transparent text-gray-300  hover:text-green-500': activeTab !== 'video'
           }"
           (click)="setActiveTab('video')"
         >
@@ -53,8 +53,8 @@
         <button
           class="py-2 px-4 font-medium border-b-4 transition cursor-pointer"
           [ngClass]="{
-            'border-green-500 text-green-600 dark:text-green-400': activeTab === 'homeVisit',
-            'border-transparent dark:text-gray-300 text-gray-800 hover:text-green-500': activeTab !== 'homeVisit'
+            'border-green-500 text-green-600  ': activeTab === 'homeVisit',
+            'border-transparent  text-gray-300   hover:text-green-500': activeTab !== 'homeVisit'
           }"
           (click)="setActiveTab('homeVisit')"
         >

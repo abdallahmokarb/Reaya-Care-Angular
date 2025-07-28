@@ -14,25 +14,28 @@
       ✕
     </button>
 
-    <a
-      href="/"
-      class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
-    >
-      Re3aya | رعاية
-    </a>
-
     <nav class="space-y-3 text-[15px] font-medium">
       <a
-        [routerLink]="['/',   'dashboard']"
-        routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-        class="block hover:text-blue-500 transition"
+        class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
+        [routerLink]="['/']"
+        routerLinkActive="text-green-600 font-bold"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
-        رعاية | Care
+        Re3aya | رعاية
       </a>
 
       <nav class="space-y-1 text-[15px] font-medium mt-4">
         <!-- doctor -->
         <ng-container *ngIf="dashboardType() === 'doctor'">
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/']"
+            routerLinkActive="text-green-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            الصفحة الرئيسة لرعاية
+          </a>
+
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/doctor']"
@@ -55,12 +58,13 @@
           >
             حجوزات المرضى
           </a>
+
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/doctor/timeslots']"
             routerLinkActive="text-green-600 font-bold"
           >
-            مواعيدي المتاحة
+            فيديو كول للمرضي
           </a>
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
@@ -69,13 +73,7 @@
           >
             الروشته الالكترونيه
           </a>
-          <a
-            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-            [routerLink]="['/dashboard/doctor/timeslots']"
-            routerLinkActive="text-green-600 font-bold"
-          >
-            فيديو كول للمرضي
-          </a>
+
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/doctor/profile']"
@@ -88,7 +86,7 @@
             [routerLink]="['/dashboard/doctor/profile']"
             routerLinkActive="text-green-600 font-bold"
           >
-            مركز الدفع الالكتروني
+            المدفوعات الالكترونيه
           </a>
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
@@ -103,6 +101,15 @@
         <ng-container *ngIf="dashboardType() === 'patient'">
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/']"
+            routerLinkActive="text-green-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            الصفحة الرئيسة لرعاية
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/patient']"
             routerLinkActive="text-green-600 font-bold"
             [routerLinkActiveOptions]="{ exact: true }"
@@ -114,7 +121,14 @@
             [routerLink]="['/dashboard/patient/appointments']"
             routerLinkActive="text-green-600 font-bold"
           >
-            حجوزتي
+            حجوزاتي
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/patient/appointments']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            مدفوعاتي
           </a>
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
@@ -160,6 +174,27 @@
             </svg>
           </ng-template>
         </button>
+
+        <button
+          (click)="logout()"
+          class="flex items-center gap-1 text-sm text-red-700 hover:text-red-500 transition cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0v-1m4-8V7a2 2 0 10-4 0v1"
+            />
+          </svg>
+          خروج
+        </button>
       </div>
     </nav>
   </div>
@@ -168,8 +203,11 @@
 <button
   *ngIf="!isSidebarOpen()"
   (click)="toggleSidebar()"
-  class="fixed top-4 right-4 z-50 p-3 bg-blue-700 text-white text-2xl cursor-pointer rounded"
+  class="fixed top-4 right-4 z-50 text-xl"
   aria-label="toggle Sidebar"
 >
-  ☰
+  <span class="dark:bg-green-600/50 bg-green-600 p-2 cursor-pointer rounded"
+    >☰</span
+  >
+  <span class="hidden md:inline-block p-1"> رعاية | لوحة المعلومات </span>
 </button>

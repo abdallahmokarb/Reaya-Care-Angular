@@ -19,6 +19,18 @@ body {
   --color-tertiary: #f0f0f0;
   --color-text: #333333;
   --color-text-secondary: #666666;
+  --font-care: care, sans-serif;
+  --animate-marquee: marquee 50s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - 2.5rem));
+    }
+  }
 }
 
 @plugin "@tailwindcss/forms";
