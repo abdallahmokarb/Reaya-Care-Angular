@@ -16,8 +16,10 @@
 
     <nav class="space-y-3 text-[15px] font-medium">
       <a
-        href="/"
         class="mt-8 flex items-center gap-2 text-lg font-bold tracking-wide uppercase"
+        [routerLink]="['/']"
+        routerLinkActive="text-green-600 font-bold"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         Re3aya | رعاية
       </a>
@@ -25,6 +27,15 @@
       <nav class="space-y-1 text-[15px] font-medium mt-4">
         <!-- doctor -->
         <ng-container *ngIf="dashboardType() === 'doctor'">
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/']"
+            routerLinkActive="text-green-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            الصفحة الرئيسة لرعاية
+          </a>
+
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/doctor']"
@@ -90,6 +101,15 @@
         <ng-container *ngIf="dashboardType() === 'patient'">
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/']"
+            routerLinkActive="text-green-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            الصفحة الرئيسة لرعاية
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/patient']"
             routerLinkActive="text-green-600 font-bold"
             [routerLinkActiveOptions]="{ exact: true }"
@@ -101,7 +121,14 @@
             [routerLink]="['/dashboard/patient/appointments']"
             routerLinkActive="text-green-600 font-bold"
           >
-            حجوزتي
+            حجوزاتي
+          </a>
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/patient/appointments']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            مدفوعاتي
           </a>
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
@@ -146,6 +173,27 @@
               ></path>
             </svg>
           </ng-template>
+        </button>
+
+        <button
+          (click)="logout()"
+          class="flex items-center gap-1 text-sm text-red-700 hover:text-red-500 transition cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0v-1m4-8V7a2 2 0 10-4 0v1"
+            />
+          </svg>
+          خروج
         </button>
       </div>
     </nav>
