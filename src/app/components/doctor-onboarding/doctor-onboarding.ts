@@ -26,7 +26,8 @@ export class DoctorOnboarding {
     medicalLicense: '',
     nationalId: '',
     graduationCertificate: '',
-    experienceCertificate: ''
+    experienceCertificate: '',
+    ProfileImage: ''
   }; // Initialize to avoid undefined errors
 
   private docInfoResponse: IDocumentResponse | null = null; // Initialize to null to avoid undefined errors
@@ -151,6 +152,8 @@ export class DoctorOnboarding {
             this.docInfoResponseUrl.graduationCertificate = response.data.filePath; // Store the response
           }else if (type === 'experienceCertificate') {
             this.docInfoResponseUrl.experienceCertificate = response.data.filePath; // Store the response
+          }else if (type === 'ProfileImage') {
+            this.doctor.profilePictureUrl = response.data.filePath; // Update the doctor's profile picture
           }
         },
         error: (error) => {
@@ -185,6 +188,8 @@ export class DoctorOnboarding {
           }
           else if (type === 'experienceCertificate') {
             this.docInfoResponseUrl.experienceCertificate = response.data.filePath; // Update the URL
+          }else if (type === 'ProfileImage') {
+            this.doctor.profilePictureUrl = response.data.filePath; // Update the doctor's profile picture
           }
           localStorage.setItem('docmentrespose', JSON.stringify(response));
         },
@@ -196,6 +201,15 @@ export class DoctorOnboarding {
       console.warn(`No file selected for ${type}`);
     }
     this.selectedFiles = {};
+  }
+
+  uploadProfileImage(event: Event) {
+    this.onFileSelect(event, 'ProfileImage');
+    this.uploadFile('ProfileImage');
+  }
+  editProfileImage(event: Event) {
+    this.onFileSelect(event, 'ProfileImage');
+    this.editFile('ProfileImage');
   }
 }
 

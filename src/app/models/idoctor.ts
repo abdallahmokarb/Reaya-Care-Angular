@@ -22,4 +22,5 @@ export interface Idoctor {
     nationalIdUrl: string; // Optional national ID UR
     graduationCertificateUrl: string; // Optional graduation certificate URL
     experienceCertificateUrl: string; // Optional experience certificate URL
+    profilePictureUrl: string; // Optional profile picture URL
 }
