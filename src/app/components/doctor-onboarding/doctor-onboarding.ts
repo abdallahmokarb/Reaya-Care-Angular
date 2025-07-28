@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DoctorInfoService } from '../../shared/services/doctor-info-service';
 import { Idoctor } from '../../models/idoctor';
 import { ISpecialization } from '../../models/ispecialization';
+import { IDocument, IDocumentResponse } from '../../models/idocument';
 @Component({
   selector: 'app-doctor-onboarding',
   imports: [CommonModule,
@@ -16,10 +17,19 @@ export class DoctorOnboarding {
 
   public doctor!: Idoctor;
   public specializations!: ISpecialization[]
-  private doctorId = '24'; // Replace with actual doctor ID
+  private doctorId = '1'; // Replace with actual doctor ID
+  private docInfo!: IDocument;
   editMode = false;
   editForm: FormGroup;
+  public selectedFiles: { [key: string]: File } = {};
+  public docInfoResponseUrl={
+    medicalLicense: '',
+    nationalId: '',
+    graduationCertificate: '',
+    experienceCertificate: ''
+  }; // Initialize to avoid undefined errors
 
+  private docInfoResponse: IDocumentResponse | null = null; // Initialize to null to avoid undefined errors
   constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService) {
     // Initialize any data or state here
     this.getSpecializations();
@@ -33,9 +43,12 @@ export class DoctorOnboarding {
       expYears: [this.doctor?.expYears || ''],
       aboutMe: [this.doctor?.aboutMe || ''],
       fees: [this.doctor?.fees || ''],
-      service: [this.doctor?.serviceId || null]
-      
+      service: [this.doctor?.serviceId || null],
+      location: [this.doctor?.location || ''],
+      detailedAddress: [this.doctor?.detailedAddress || '']
+  
     });
+    this.docInfoResponse = JSON.parse(localStorage.getItem('docmentrespose') || 'null');
     
   }
   
@@ -55,7 +68,7 @@ export class DoctorOnboarding {
   }
 
   openEditModal() {
-  
+    console.log('Opening edit modal');
     this.editForm.patchValue(this.doctor); // doctor is your current doctor object
     this.editForm.patchValue({
       specializationId: this.doctor.specializationId || 0 
@@ -65,6 +78,17 @@ export class DoctorOnboarding {
     });
 
     this.editMode = true;
+
+    // Reset detailedAddress and location if service is online
+    this.editForm.get('service')?.valueChanges.subscribe((val) => {
+      if (val == 2) {
+        this.editForm.patchValue({
+          detailedAddress: '',
+          location: ''
+        });
+      }
+    });
+
   }
 
   closeEditModal() {
@@ -96,4 +120,82 @@ export class DoctorOnboarding {
       }
     });
   }
+  onFileSelect(event: Event, type: string) {
+  const input = event.target as HTMLInputElement;
+  if (input.files?.length) {
+    this.selectedFiles[type] = input.files[0];
+    console.log(`Selected ${type}:`, input.files[0].name);
+    console.log('Selected files:', this.selectedFiles);
+  }
 }
+  uploadFile( type: string) {
+    const file = this.selectedFiles[type];
+    if (file) {
+      const formData = new FormData();
+      formData.append("File", file);
+      formData.append("DocumentType", type);
+      formData.append("DoctorId", this.doctorId);
+      console.log(formData);
+    
+      this.doctorInfoService.uploadFile(formData).subscribe({
+        next: (response: IDocumentResponse) => {
+          console.log(`${type} uploaded successfully:`, response);
+          this.docInfoResponse = response; // Store the response for later use
+          localStorage.setItem('docmentrespose', JSON.stringify(response));
+
+          if (type === 'medicalLicense') {
+            this.docInfoResponseUrl.medicalLicense = response.data.filePath; // Store the response
+          } else if (type === 'nationalId') {
+            this.docInfoResponseUrl.nationalId = response.data.filePath; // Store the response
+          } else if (type === 'graduationCertificate') {
+            this.docInfoResponseUrl.graduationCertificate = response.data.filePath; // Store the response
+          }else if (type === 'experienceCertificate') {
+            this.docInfoResponseUrl.experienceCertificate = response.data.filePath; // Store the response
+          }
+        },
+        error: (error) => {
+          console.error(`Error uploading ${type}:`, error);
+        }
+      });
+    } else {
+      console.warn(`No file selected for ${type}`);
+    }
+    // Clear the selected file after upload
+  }
+  editFile(type: string) {
+    const file = this.selectedFiles[type];
+    if (file) {
+      const formData = new FormData();
+      formData.append("File", file);
+      formData.append("DocumentType", type);
+      formData.append("DocumentId", this.docInfoResponse?.data.documentId.toString() || '0'); // Ensure DocumentId is included
+      formData.append("FilePath", this.docInfoResponse?.data.filePath || '');
+     
+    
+      this.doctorInfoService.editfile(formData).subscribe({
+        next: (response: IDocumentResponse) => {
+          console.log(`${type} edited successfully:`, response);
+          this.docInfoResponse = response; // Store the response for later use
+          if (type === 'medicalLicense') {
+            this.docInfoResponseUrl.medicalLicense = response.data.filePath; // Update the URL
+          } else if (type === 'nationalId') {
+            this.docInfoResponseUrl.nationalId = response.data.filePath; // Update the URL
+          } else if (type === 'graduationCertificate') {
+            this.docInfoResponseUrl.graduationCertificate = response.data.filePath; // Update the URL
+          }
+          else if (type === 'experienceCertificate') {
+            this.docInfoResponseUrl.experienceCertificate = response.data.filePath; // Update the URL
+          }
+          localStorage.setItem('docmentrespose', JSON.stringify(response));
+        },
+        error: (error) => {
+          console.error(`Error editing ${type}:`, error);
+        }
+      });
+    } else {
+      console.warn(`No file selected for ${type}`);
+    }
+    this.selectedFiles = {};
+  }
+}
+
