@@ -1,14 +1,11 @@
 <nav
   dir="rtl"
-  class="bg-transparent fixed z-[100] w-full max-w-[1920px] bg-white/50 shadow-xl backdrop-blur duration-300 ease-in-out dark:bg-black/50"
+  class="bg-transparent fixed z-[100] w-full max-w-[1920px] bg-white/50 shadow-xl backdrop-blur duration-300 ease-in-out dark:bg-black/30"
 >
   <div
     class="mx-auto flex flex-row h-[75px] w-full items-center justify-between px-4 py-4 text-[1rem] font-medium text-slate-900 dark:text-slate-300"
   >
-
-  
     <div class="mt-2 text-xl font-extrabold text-green-600">رعاية | Re3aya</div>
-
 
     <ul class="hidden md:flex gap-6 text-[16px] font-medium flex-row">
       <li>
@@ -37,10 +34,7 @@
       </li>
       <li>
         <a
-
           [routerLink]="['/appointment']"
-
-
           class="hover:text-green-600"
           routerLinkActive="text-green-700"
           >الحجوزات</a
@@ -81,58 +75,88 @@
     </ul>
 
     <div class="flex items-center gap-2 flex-row-reverse">
-      <a
+      <div class="flex items-center gap-6" *ngIf="user() as user">
+        <img
+          [src]="user.photoUrl || 'https://ui-avatars.com/api/?name=' + user.userName"
+          alt="User photo"
+          class="w-10 h-10 rounded-full border border-white"
+        />
+        <div>
+          <h2 class="text-sm font-medium text-gray-700 dark:text-white">
+            {{ user.email }}
+          </h2>
+          <p class="text-xs mt-1 text-green-400">{{ user.roles.join(', ') }}</p>
+        </div>
 
-       
-
-        [routerLink]="['/auth/login']"
-
-        class="relative rounded-full border border-neutral-200 px-4 py-2 text-[9px] md:text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-green-600"
-        routerLinkActive="text-green-700"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="{1.5}"
-          stroke="currentColor"
-          class="h-5 w-5 inline-block ml-1"
+        <button
+          (click)="logout()"
+          class="flex items-center gap-1 text-sm text-red-700 hover:text-red-500 transition cursor-pointer"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-          />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0v-1m4-8V7a2 2 0 10-4 0v1"
+            />
+          </svg>
+          خروج
+        </button>
+      </div>
 
-
-        دخول 
-      </a>
-      <a
-        [routerLink]="['/auth/register']"
-
-   
-        class="relative rounded-full border border-neutral-200 px-4 py-2 text-[9px] md:text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-green-600"
-        routerLinkActive="text-green-700"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-5 w-5 inline-block ml-1"
+      <div *ngIf="!user()" class="gap-4 flex">
+        <a
+          [routerLink]="['/auth/register']"
+          class="relative rounded-full border border-neutral-200 px-4 py-2 text-[9px] md:text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-green-600"
+          routerLinkActive="text-green-700"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"
-          />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-5 w-5 inline-block ml-1"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"
+            />
+          </svg>
 
-        تسجيل
+          تسجيل
+        </a>
 
-      </a>
+        <a
+          [routerLink]="['/auth/login']"
+          class="relative rounded-full border border-neutral-200 px-4 py-2 text-[9px] md:text-sm font-medium text-black dark:border-white/[0.2] dark:text-white hover:text-green-600"
+          routerLinkActive="text-green-700"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="{1.5}"
+            stroke="currentColor"
+            class="h-5 w-5 inline-block ml-1"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            />
+          </svg>
+
+          دخول
+        </a>
+      </div>
 
       <button
         type="button"
@@ -224,10 +248,11 @@
       >مركز الدعم</a
     >
     <a
-      [routerLink]="['/dashboard']"
+      [routerLink]="['/auth/login']"
       class="block hover:text-green-600"
       routerLinkActive="text-green-700"
-      >مركز الدخول الموحد</a
+    >
+      الدخول الموحد</a
     >
   </div>
 </nav>
