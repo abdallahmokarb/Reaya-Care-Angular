@@ -137,7 +137,7 @@
           </li>
           <li>
             <a
-              href="#"
+              [routerLink]="['/specializations']"
               class="hover:underline hover:text-[var(--color-tertiary)] transition"
               >التخصصات</a
             >
@@ -167,7 +167,9 @@
           </li>
           <li>
             <a
-              href="#"
+              class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+              [routerLink]="['/contact']"
+              routerLinkActive="text-green-600 font-bold"
               class="hover:underline hover:text-[var(--color-tertiary)] transition"
               >اتصل بنا</a
             >

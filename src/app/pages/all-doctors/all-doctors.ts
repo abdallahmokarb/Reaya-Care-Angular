@@ -2,66 +2,36 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DoctorService } from '../../shared/services/doctor-service';
 import { Idoctor } from '../../models/idoctor';
+import { Specialization } from '../../shared/services/specialization';
+import { ISpecialization } from '../../models/ispecialization';
+import { SpecializationDTO } from '../../models/SpecializationDTO';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AddressService } from '../../shared/services/address-service';
+import { Igovernment } from '../../models/igovernment';
 
 @Component({
   selector: 'app-all-doctors',
-  imports: [RouterModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   templateUrl: './all-doctors.html',
   styleUrl: './all-doctors.css'
 })
 export class AllDoctors implements OnInit {
 
   private doctorService = inject(DoctorService);
+  private addressService = inject(AddressService);
+  private specializationService = inject(Specialization); // specialization service injection
+
   doctors: Idoctor[] = [];
   isLoading = true;
+  specializations: SpecializationDTO[] = [];
+  selectedSpecialization: number = 0;
 
-//   doctors = [
-//   {
-//     id: 1,
-//     name: "أحمد يوسف",
-//     specialization: "أخصائي الأمراض الجلدية",
-//     availability: "الانتظار 30 دقيقة",
-//     serviceType: "العيادة",
-//     location: "المنيا, ميدان بالاس",
-//     price: 250,
-//     rating: 4.5,
-//     image: "/assets/images/Doc1.jpg"
-//   },
-//   {
-//     id: 2,
-//     name: "علي جمال",
-//     specialization: "أخصائي انف واذن وحنجرة",
-//     availability: "الانتظار 30 دقيقة",
-//     serviceType: "العيادة",
-//     location: "المنيا, مضرب الرز",
-//     price: 350,
-//     rating: 4.9,
-//     image: "/assets/images/Doc2.jpg"
-//   },
-//   {
-//     id: 3,
-//     name: "هبة احمد",
-//     specialization: "أخصائي نساء وتوليد",
-//     availability: "الانتظار 30 دقيقة",
-//     serviceType: "العيادة",
-//     location: "المنيا, ميدان بالاس",
-//     price: 250,
-//     rating: 4.1,
-//     image: "/assets/images/Doc3.jpg"
-//   },
-//   {
-//     id: 4,
-//     name: "منى سامي",
-//     specialization: "أخصائية طب الأطفال",
-//     availability: "الانتظار 15 دقيقة",
-//     serviceType: "اونلاين",
-//     location: "القاهرة, التجمع الخامس",
-//     price: 400,
-//     rating: 4.8,
-//     image: "/assets/images/Doc4.jpg"
-//   },
-//   // Add more doctors...
-// ];
+  governments: Igovernment[] = [];
+  selectedGovernment: number = 0;
+
+
+
 
 ngOnInit(): void {
     this.doctorService.getAllDoctors().subscribe({
@@ -72,6 +42,24 @@ ngOnInit(): void {
       error: (err) => {
         console.error('Error fetching doctors:', err);
         this.isLoading = false;
+      }
+    });
+
+    this.specializationService.getAllSpecializations().subscribe({
+      next: (data) => {
+        this.specializations = data;
+      },
+      error: (err) => {
+        console.error('Error fetching specializations:', err);
+      }
+    });
+
+    this.addressService.getAllGovernments().subscribe({
+      next: (data) => {
+        this.governments = data;
+      },
+      error: (err) => {
+        console.error('Error fetching governments:', err);
       }
     });
   }

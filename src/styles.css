@@ -19,6 +19,18 @@ body {
   --color-tertiary: #f0f0f0;
   --color-text: #333333;
   --color-text-secondary: #666666;
+  --font-care: care, sans-serif;
+  --animate-marquee: marquee 50s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - 2.5rem));
+    }
+  }
 }
 
 @plugin "@tailwindcss/forms";
@@ -38,6 +50,6 @@ body {
   }
 
   .form-btn {
-    @apply mt-3 flex h-12 w-full flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-blue-700 to-blue-900 px-2 text-center text-xl text-white shadow-blue-500 duration-300 hover:bg-blue-700 focus:translate-y-1 disabled:cursor-not-allowed disabled:bg-gradient-to-t disabled:from-gray-400 disabled:to-gray-600;
+    @apply mt-3 flex h-12 w-full flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-green-700 to-[#00ba00] px-2 text-center text-xl text-white shadow-[#00ba00] duration-300 hover:bg-[#00ba00] focus:translate-y-1 disabled:cursor-not-allowed disabled:bg-gradient-to-t disabled:from-gray-400 disabled:to-gray-600;
   }
 }

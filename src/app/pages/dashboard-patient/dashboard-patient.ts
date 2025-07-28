@@ -9,6 +9,20 @@ import { Chart } from 'chart.js/auto';
   imports: [CommonModule],
 })
 export class DashboardPatient implements AfterViewInit {
+  user: any;
+  ngOnInit(): void {
+    const userJson = sessionStorage.getItem('user');
+    if (userJson) {
+      this.user = JSON.parse(userJson);
+    }
+  }
+
+  displayRoles(): string {
+    if (!this.user || !this.user.roles) return '';
+    const roles = this.user.roles.filter((role: any) => role !== 'Patient');
+    return roles.length === 0 ? 'مستخدم جديد' : roles.join(', ');
+  }
+
   ngAfterViewInit() {
     // Bar Chart Testb
     new Chart(document.getElementById('specialtyChart') as HTMLCanvasElement, {

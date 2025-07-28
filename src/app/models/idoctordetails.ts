@@ -3,7 +3,7 @@ import { Irating } from "./irating";
 export interface Idoctordetails {
     doctorId: number;
     fullName: string;
-    profilePicture: string; // URL to the doctor's profile picture
+    profileImageUrl: string; // URL to the doctor's profile picture
     specialization: string;
     experienceYears: number; // Years of experience
     serviceType: string; // e.g., "In-person", "Online"

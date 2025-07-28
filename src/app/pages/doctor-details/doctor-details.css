@@ -44,3 +44,19 @@ img {
     padding: 10px;
     border-radius: 5px;
 }
+
+.fullstar{
+    color: #15803d;
+}
+
+.emptystar{
+    color: lightgray;
+}
+
+.emptystar, .fullstar {
+    font-size: 18px;
+}
+
+#ratingvalue{
+    color: #15803d;
+}

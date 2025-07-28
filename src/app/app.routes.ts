@@ -3,7 +3,11 @@ import { MainLayout } from './components/layout/main-layout';
 import { AuthLayout } from './components/layout/auth-layout';
 import { AllDoctors } from './pages/all-doctors/all-doctors';
 import { PaymentCallbackComponent } from './pages/payment/payment-callback/payment-callback';
-
+import { AuthGuard } from './auth.guard';
+import { Unauthorized } from './pages/unauthorized/unauthorized';
+import { Contact } from './pages/contact/contact';
+import { Specializations } from './pages/specializations/specializations';
+ 
 export const routes: Routes = [
   {
     path: '',
@@ -44,6 +48,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'doctor',
+            canActivate: [AuthGuard],
             loadComponent: () =>
               import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
           },
@@ -53,7 +58,7 @@ export const routes: Routes = [
               import('./components/doctor-onboarding/doctor-onboarding').then(
                 (m) => m.DoctorOnboarding
               ),
-          }
+          },
         ],
       },
 
@@ -62,6 +67,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'patient',
+            canActivate: [AuthGuard],
             loadComponent: () =>
               import('./pages/dashboard-patient/dashboard-patient').then(
                 (m) => m.DashboardPatient
@@ -75,6 +81,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'test',
+            canActivate: [AuthGuard],
             loadComponent: () =>
               import('./pages/dashboard-patient/test-page/test-page').then(
                 (m) => m.TestPage
@@ -84,6 +91,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard/patient/profile',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('./components/patient-profile/patient-profile').then(
             (m) => m.PatientProfile
@@ -114,8 +122,13 @@ export const routes: Routes = [
             (m) => m.DoctorDetails
           ),
       },
-
+      { path: 'contact', component: Contact },
+        { path: 'specializations', component: Specializations },
       { path: 'payment/callback', component: PaymentCallbackComponent },
+      {
+        path: 'unauthorized',
+        component: Unauthorized,
+      },
     ],
   },
 ];
