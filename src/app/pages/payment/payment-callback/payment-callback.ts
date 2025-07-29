@@ -2,22 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-payment-callback',
   templateUrl: './payment-callback.html',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class PaymentCallbackComponent implements OnInit {
   paymentData: any = {};
   isLoading = true;
+  countdown = 5;
+  isSuccess = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -47,18 +46,18 @@ export class PaymentCallbackComponent implements OnInit {
   }
 
   sendToBackend(params: HttpParams) {
-    const apiUrl = 'https://localhost:5216/api/payment/paymob-callback';
+    const apiUrl = 'http://localhost:5216/api/payment/paymob-callback';
 
     this.http.get(apiUrl, { params }).subscribe({
       next: (res) => {
         console.log('Payment sent to backend:', res);
         this.isLoading = false;
-        this.router.navigate(['/payment/success']);
+        this.isSuccess = this.paymentData.Success;
       },
       error: (err) => {
         console.error('Failed to send payment to backend:', err);
         this.isLoading = false;
-        this.router.navigate(['/payment/error']);
+        this.isSuccess = false;
       },
     });
   }

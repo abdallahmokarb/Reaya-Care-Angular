@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Idoctor } from '../../models/idoctor';
 import { Idoctordetails } from '../../models/idoctordetails';
+import { Idoctorcard } from '../../models/idoctorcard';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class DoctorService {
 
   constructor(private http: HttpClient) {}
 
-  getAllDoctors(): Observable<Idoctor[]> {
-    return this.http.get<Idoctor[]>(this.baseUrl);
+  getAllDoctors(): Observable<Idoctorcard[]> {
+    return this.http.get<Idoctorcard[]>(this.baseUrl);
   }
 
   getDoctorById(id: number): Observable<Idoctordetails> {
