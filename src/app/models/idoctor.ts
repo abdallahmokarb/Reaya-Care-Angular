@@ -13,7 +13,7 @@ export interface Idoctor {
   service: string;
   serviceId: number;
   doctorId: number;
-  profileImageUrl: string; // URL to the doctor's profile picture
+  profilePictureUrl: string; // URL to the doctor's profile picture
   waitingTime: number; // in minutes
   addresses: string[];
 }
