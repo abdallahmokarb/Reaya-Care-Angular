@@ -103,7 +103,8 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
-      {
+      { path: 'all-doctors/:specializationId', component: AllDoctors }
+      ,{
         path: 'appointment',
         loadComponent: () =>
           import('./pages/appointment/appointment').then(
