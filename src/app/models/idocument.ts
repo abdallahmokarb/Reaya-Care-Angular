@@ -4,13 +4,11 @@ export interface IDocument {
 }
 
 export interface IDocumentResponse {
-  isSuccess: boolean;
-  statusDetails: string;
+  
+  documentType: string;
   data: {
-    documentId: number;
-    documentType: number;
-    
+    documentId: number;  
     filePath: string;
-    doctorId: number;
+  
   };
 }

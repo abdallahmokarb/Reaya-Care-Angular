@@ -6,13 +6,13 @@
     <div class="w-full bg-white dark:bg-gray-900 shadow-2xl rounded-2xl overflow-hidden">
       <!-- Header Section -->
       <div class="bg-green-600 p-6 text-white flex flex-col md:flex-row items-center gap-6">
-        @if(!doctor?.profilePictureUrl) {
+        @if(!docInfoResponseUrl.ProfileImage) {
         <img src="/assets/images/avatar.jpg"
         class="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover"
         alt="صورة الطبيب" (click)="fileInput.click()" />
           <input type="file" (change)="uploadProfileImage($event)" class="hidden" #fileInput />
         }@else {
-          <img [src]="doctor?.profilePictureUrl" class="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover" alt="صورة الطبيب" (click)="fileEdit.click()" />
+          <img [src]="docInfoResponseUrl.ProfileImage" class="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover" alt="صورة الطبيب" (click)="fileEdit.click()" />
           <input type="file" (change)="editProfileImage($event)" class="hidden" #fileEdit />
         }
         <div class="text-center md:text-right">
@@ -92,7 +92,7 @@
           <div class="flex flex-col gap-3">
             <label class="font-semibold text-lg text-gray-800 dark:text-gray-200">رخصة المزاولة الطبية</label>
 
-            <form *ngIf="!doctor?.medicalLicenseUrl && !docInfoResponseUrl.medicalLicense" (ngSubmit)="uploadFile('medicalLicense')" class="flex flex-col gap-2">
+            <form *ngIf="!doctor?.medicalLicenseUrl && !docInfoResponseUrl.medicalLicense" (ngSubmit)="uploadFile('MedicalLicense')" class="flex flex-col gap-2">
               <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0-9L8 16m4-4l4 4M12 4v8" />
@@ -101,7 +101,7 @@
                 <svg *ngIf="selectedFiles['medicalLicense']" class="w-5 h-5 text-green-500 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                <input type="file" (change)="onFileSelect($event, 'medicalLicense')" class="hidden" />
+                <input type="file" (change)="onFileSelect($event, 'MedicalLicense')" class="hidden" />
               </label>
               <button type="submit" class="self-start bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700 transition">رفع الملف</button>
             </form>
@@ -109,15 +109,15 @@
             <div *ngIf="doctor?.medicalLicenseUrl || docInfoResponseUrl.medicalLicense" class="flex flex-col gap-2">
               <div class="text-sm text-green-700 dark:text-green-300">
                 تم رفع الملف:
-                <a [href]="doctor.medicalLicenseUrl || docInfoResponseUrl.medicalLicense" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
+                <a [href]="docInfoResponseUrl.medicalLicense" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
               </div>
-              <form (ngSubmit)="editFile('medicalLicense')" class="flex flex-col gap-2">
+              <form (ngSubmit)="editFile('MedicalLicense')" class="flex flex-col gap-2">
                 <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-yellow-400 rounded-lg shadow-sm cursor-pointer hover:bg-yellow-100 dark:hover:bg-yellow-600 transition">
                   <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16V4H4zm4 4h8v2H8V8zm0 4h8v2H8v-2z" />
                   </svg>
                   <span class="text-sm text-gray-700 dark:text-gray-200">اختيار ملف جديد للتعديل</span>
-                  <input type="file" (change)="onFileSelect($event, 'medicalLicense')" class="hidden" />
+                  <input type="file" (change)="onFileSelect($event, 'MedicalLicense')" class="hidden" />
                 </label>
                 <button type="submit" class="self-start bg-yellow-500 text-white px-4 py-1.5 rounded-md hover:bg-yellow-600 transition">تعديل الملف</button>
               </form>
@@ -130,7 +130,7 @@
           <div class="flex flex-col gap-3">
             <label class="font-semibold text-lg text-gray-800 dark:text-gray-200">الرقم القومي</label>
 
-            <form *ngIf="!doctor?.nationalIdUrl && !docInfoResponseUrl.nationalId" (ngSubmit)="uploadFile('nationalId')" class="flex flex-col gap-2">
+            <form *ngIf="!doctor?.nationalIdUrl && !docInfoResponseUrl.nationalId" (ngSubmit)="uploadFile('NationalId')" class="flex flex-col gap-2">
               <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0-9L8 16m4-4l4 4M12 4v8" />
@@ -139,7 +139,7 @@
                 <svg *ngIf="selectedFiles['nationalId']" class="w-5 h-5 text-green-500 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                <input type="file" (change)="onFileSelect($event, 'nationalId')" class="hidden" />
+                <input type="file" (change)="onFileSelect($event, 'NationalId')" class="hidden" />
               </label>
               <button type="submit" class="self-start bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700 transition">رفع الملف</button>
             </form>
@@ -147,15 +147,15 @@
             <div *ngIf="doctor?.nationalIdUrl || docInfoResponseUrl.nationalId" class="flex flex-col gap-2">
               <div class="text-sm text-green-700 dark:text-green-300">
                 تم رفع الملف:
-                <a [href]="doctor.nationalIdUrl || docInfoResponseUrl.nationalId" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
+                <a [href]="docInfoResponseUrl.nationalId" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
               </div>
-              <form (ngSubmit)="editFile('nationalId')" class="flex flex-col gap-2">
+              <form (ngSubmit)="editFile('NationalId')" class="flex flex-col gap-2">
                 <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-yellow-400 rounded-lg shadow-sm cursor-pointer hover:bg-yellow-100 dark:hover:bg-yellow-600 transition">
                   <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16V4H4zm4 4h8v2H8V8zm0 4h8v2H8v-2z" />
                   </svg>
                   <span class="text-sm text-gray-700 dark:text-gray-200">اختيار ملف جديد للتعديل</span>
-                  <input type="file" (change)="onFileSelect($event, 'nationalId')" class="hidden" />
+                  <input type="file" (change)="onFileSelect($event, 'NationalId')" class="hidden" />
                 </label>
                 <button type="submit" class="self-start bg-yellow-500 text-white px-4 py-1.5 rounded-md hover:bg-yellow-600 transition">تعديل الملف</button>
               </form>
@@ -168,16 +168,16 @@
           <div class="flex flex-col gap-3">
             <label class="font-semibold text-lg text-gray-800 dark:text-gray-200">شهادة التخرج</label>
 
-            <form *ngIf="!doctor?.graduationCertificateUrl && !docInfoResponseUrl.graduationCertificate" (ngSubmit)="uploadFile('graduationCertificate')" class="flex flex-col gap-2">
+            <form *ngIf="!doctor?.graduationCertificateUrl && !docInfoResponseUrl.graduationCertificate" (ngSubmit)="uploadFile('GraduationCertificate')" class="flex flex-col gap-2">
               <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0-9L8 16m4-4l4 4M12 4v8" />
                 </svg>
                 <span class="text-sm text-gray-700 dark:text-gray-300">اختر ملفاً من جهازك</span>
-                <svg *ngIf="selectedFiles['graduationCertificate']" class="w-5 h-5 text-green-500 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                <svg *ngIf="selectedFiles['GraduationCertificate']" class="w-5 h-5 text-green-500 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                <input type="file" (change)="onFileSelect($event, 'graduationCertificate')" class="hidden" />
+                <input type="file" (change)="onFileSelect($event, 'GraduationCertificate')" class="hidden" />
               </label>
               <button type="submit" class="self-start bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700 transition">رفع الملف</button>
             </form>
@@ -185,15 +185,15 @@
             <div *ngIf="doctor?.graduationCertificateUrl || docInfoResponseUrl?.graduationCertificate" class="flex flex-col gap-2">
               <div class="text-sm text-green-700 dark:text-green-300">
                 تم رفع الملف:
-                <a [href]="doctor.graduationCertificateUrl || docInfoResponseUrl.graduationCertificate" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
+                <a [href]="docInfoResponseUrl.graduationCertificate" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
               </div>
-              <form (ngSubmit)="editFile('graduationCertificate')" class="flex flex-col gap-2">
+              <form (ngSubmit)="editFile('GraduationCertificate')" class="flex flex-col gap-2">
                 <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-yellow-400 rounded-lg shadow-sm cursor-pointer hover:bg-yellow-100 dark:hover:bg-yellow-600 transition">
                   <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16V4H4zm4 4h8v2H8V8zm0 4h8v2H8v-2z" />
                   </svg>
                   <span class="text-sm text-gray-700 dark:text-gray-200">اختيار ملف جديد للتعديل</span>
-                  <input type="file" (change)="onFileSelect($event, 'graduationCertificate')" class="hidden" />
+                  <input type="file" (change)="onFileSelect($event, 'GraduationCertificate')" class="hidden" />
                 </label>
                 <button type="submit" class="self-start bg-yellow-500 text-white px-4 py-1.5 rounded-md hover:bg-yellow-600 transition">تعديل الملف</button>
               </form>
@@ -206,16 +206,16 @@
           <div class="flex flex-col gap-3">
             <label class="font-semibold text-lg text-gray-800 dark:text-gray-200">شهادة الخبرة</label>
 
-            <form *ngIf="!doctor?.experienceCertificateUrl && !docInfoResponseUrl?.experienceCertificate" (ngSubmit)="uploadFile('experienceCertificate')" class="flex flex-col gap-2">
+            <form *ngIf="!doctor?.experienceCertificateUrl && !docInfoResponseUrl?.experienceCertificate" (ngSubmit)="uploadFile('ExperienceCertificate')" class="flex flex-col gap-2">
               <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0-9L8 16m4-4l4 4M12 4v8" />
                 </svg>
                 <span class="text-sm text-gray-700 dark:text-gray-300">اختر ملفاً من جهازك</span>
-                <svg *ngIf="selectedFiles['experienceCertificate']" class="w-5 h-5 text-green-500 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                <svg *ngIf="selectedFiles['ExperienceCertificate']" class="w-5 h-5 text-green-500 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                <input type="file" (change)="onFileSelect($event, 'experienceCertificate')" class="hidden" />
+                <input type="file" (change)="onFileSelect($event, 'ExperienceCertificate')" class="hidden" />
               </label>
               <button type="submit" class="self-start bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700 transition">رفع الملف</button>
             </form>
@@ -223,15 +223,15 @@
             <div *ngIf="doctor?.experienceCertificateUrl || docInfoResponseUrl?.experienceCertificate" class="flex flex-col gap-2">
               <div class="text-sm text-green-700 dark:text-green-300">
                 تم رفع الملف:
-                <a [href]="doctor.experienceCertificateUrl || docInfoResponseUrl?.experienceCertificate" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
+                <a [href]="docInfoResponseUrl.experienceCertificate" target="_blank" class="underline hover:text-green-900">عرض الملف</a>
               </div>
-              <form (ngSubmit)="editFile('experienceCertificate')" class="flex flex-col gap-2">
+              <form (ngSubmit)="editFile('ExperienceCertificate')" class="flex flex-col gap-2">
                 <label class="flex items-center gap-3 px-4 py-2 bg-white dark:bg-gray-800 border border-yellow-400 rounded-lg shadow-sm cursor-pointer hover:bg-yellow-100 dark:hover:bg-yellow-600 transition">
                   <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16V4H4zm4 4h8v2H8V8zm0 4h8v2H8v-2z" />
                   </svg>
                   <span class="text-sm text-gray-700 dark:text-gray-200">اختيار ملف جديد للتعديل</span>
-                  <input type="file" (change)="onFileSelect($event, 'experienceCertificate')" class="hidden" />
+                  <input type="file" (change)="onFileSelect($event, 'ExperienceCertificate')" class="hidden" />
                 </label>
                 <button type="submit" class="self-start bg-yellow-500 text-white px-4 py-1.5 rounded-md hover:bg-yellow-600 transition">تعديل الملف</button>
               </form>

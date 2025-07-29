@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Idoctor } from '../../models/idoctor';
 import { Observable } from 'rxjs/internal/Observable';
 import { ISpecialization } from '../../models/ispecialization';
-import { IDocument } from '../../models/idocument';
+import { IDocument, IDocumentResponse } from '../../models/idocument';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,7 @@ export class DoctorInfoService {
   private apiUrl = `${environment.apiBaseUrl}doctor`;
   private apiSpecializationUrl = `${environment.apiBaseUrl}specialization`;
   private apiUploadUrl = `${environment.apiBaseUrl}Document/upload`;
+  private getDoctordocInfoUrl = `${environment.apiBaseUrl}Document/doctor`;
   constructor(private http: HttpClient) { }
 
 
@@ -35,4 +36,7 @@ export class DoctorInfoService {
  editfile(formData: FormData): Observable<any> {
   return this.http.put(`${this.apiUploadUrl}/edit`, formData);
  }
+ getallDocuments(doctorId: string): Observable<IDocumentResponse[]> {
+    return this.http.get<IDocumentResponse[]>(`${this.getDoctordocInfoUrl}/${doctorId}`);
+  }
 }

@@ -39,7 +39,7 @@ export class RegisterComponent {
       this.registrationService.registerUser(userData).subscribe({
         next: (response: string) => {
           console.log(response); // response is your string
-          this.router.navigate(['/']); // route to home
+          this.router.navigate(['/auth/login']); // route to login
         },
         error: (error: any) => {
           console.error('Registration failed', error);

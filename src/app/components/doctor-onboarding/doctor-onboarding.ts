@@ -30,11 +30,13 @@ export class DoctorOnboarding {
     ProfileImage: ''
   }; // Initialize to avoid undefined errors
 
-  private docInfoResponse: IDocumentResponse | null = null; // Initialize to null to avoid undefined errors
+  private docInfoResponse!: IDocumentResponse[]
   constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService) {
     // Initialize any data or state here
     this.getSpecializations();
     this.getDoctorInfo();
+    this.getAllDocuments();
+
 
     this.editForm = this.fb.group({
       fullName: [this.doctor?.fullName || ''],
@@ -49,11 +51,18 @@ export class DoctorOnboarding {
       detailedAddress: [this.doctor?.detailedAddress || ''],
       gender: [this.doctor?.gender || ''],
     });
-    this.docInfoResponse = JSON.parse(localStorage.getItem('docmentrespose') || 'null');
-    
+    //this.docInfoResponse = JSON.parse(localStorage.getItem('docmentrespose') || 'null');
+    this.docInfoResponseUrl = {
+      medicalLicense: this.doctor?.medicalLicenseUrl || '',
+      nationalId: this.doctor?.nationalIdUrl || '',
+      graduationCertificate: this.doctor?.graduationCertificateUrl || '',
+      experienceCertificate: this.doctor?.experienceCertificateUrl || '',
+      ProfileImage: this.doctor?.profilePictureUrl || ''
+    }
+    console.log('Document response URL:', this.docInfoResponseUrl);
   }
-  
-  
+
+
 
   getDoctorInfo() {
     this.doctorInfoService.getDoctorInfo(this.doctorId).subscribe({
@@ -61,6 +70,14 @@ export class DoctorOnboarding {
         console.log(doctor);
         this.doctor = doctor;  // Assign the fetched doctor data to the component property
         // Handle the doctor data as needed
+         this.docInfoResponseUrl = {
+      medicalLicense: this.doctor?.medicalLicenseUrl || '',
+      nationalId: this.doctor?.nationalIdUrl || '',
+      graduationCertificate: this.doctor?.graduationCertificateUrl || '',
+      experienceCertificate: this.doctor?.experienceCertificateUrl || '',
+      ProfileImage: this.doctor?.profilePictureUrl || ''
+    }
+    console.log('Document response URL:', this.docInfoResponseUrl);
       },
       error: (error) => {
         console.error('Error fetching doctor info:', error);
@@ -139,11 +156,11 @@ export class DoctorOnboarding {
       console.log(formData);
     
       this.doctorInfoService.uploadFile(formData).subscribe({
-        next: (response: IDocumentResponse) => {
+        next: (response:any) => {
           console.log(`${type} uploaded successfully:`, response);
           this.docInfoResponse = response; // Store the response for later use
-          localStorage.setItem('docmentrespose', JSON.stringify(response));
-
+          //localStorage.setItem('docmentrespose', JSON.stringify(response));
+          
           if (type === 'medicalLicense') {
             this.docInfoResponseUrl.medicalLicense = response.data.filePath; // Store the response
           } else if (type === 'nationalId') {
@@ -153,7 +170,7 @@ export class DoctorOnboarding {
           }else if (type === 'experienceCertificate') {
             this.docInfoResponseUrl.experienceCertificate = response.data.filePath; // Store the response
           }else if (type === 'ProfileImage') {
-            this.doctor.profilePictureUrl = response.data.filePath; // Update the doctor's profile picture
+            this.docInfoResponseUrl.ProfileImage = response.data.filePath; // Update the doctor's profile picture
           }
         },
         error: (error) => {
@@ -171,27 +188,27 @@ export class DoctorOnboarding {
       const formData = new FormData();
       formData.append("File", file);
       formData.append("DocumentType", type);
-      formData.append("DocumentId", this.docInfoResponse?.data.documentId.toString() || '0'); // Ensure DocumentId is included
-      formData.append("FilePath", this.docInfoResponse?.data.filePath || '');
-     
-    
+      formData.append("DocumentId", this.docInfoResponse.find(doc => doc.documentType === type)?.data.documentId.toString() || '0'); // Ensure DocumentId is included
+      formData.append("FilePath", this.docInfoResponse.find(doc => doc.documentType === type)?.data.filePath || '');
+
       this.doctorInfoService.editfile(formData).subscribe({
-        next: (response: IDocumentResponse) => {
-          console.log(`${type} edited successfully:`, response);
-          this.docInfoResponse = response; // Store the response for later use
-          if (type === 'medicalLicense') {
+        next: (response: any) => {
+          //localStorage.setItem('docmentrespose', JSON.stringify(response));
+          console.log(`${type} edited successfully:`, response.data.filePath);
+          this.getAllDocuments(); // Refresh doctor info after editing
+          if (type === 'MedicalLicense') {
             this.docInfoResponseUrl.medicalLicense = response.data.filePath; // Update the URL
-          } else if (type === 'nationalId') {
+          } else if (type === 'NationalId') {
             this.docInfoResponseUrl.nationalId = response.data.filePath; // Update the URL
-          } else if (type === 'graduationCertificate') {
+          } else if (type === 'GraduationCertificate') {
             this.docInfoResponseUrl.graduationCertificate = response.data.filePath; // Update the URL
           }
-          else if (type === 'experienceCertificate') {
+          else if (type === 'ExperienceCertificate') {
             this.docInfoResponseUrl.experienceCertificate = response.data.filePath; // Update the URL
           }else if (type === 'ProfileImage') {
-            this.doctor.profilePictureUrl = response.data.filePath; // Update the doctor's profile picture
+            this.docInfoResponseUrl.ProfileImage = response.data.filePath; // Update the doctor's profile picture
           }
-          localStorage.setItem('docmentrespose', JSON.stringify(response));
+          console.log('Document response:', this.docInfoResponseUrl);
         },
         error: (error) => {
           console.error(`Error editing ${type}:`, error);
@@ -210,6 +227,19 @@ export class DoctorOnboarding {
   editProfileImage(event: Event) {
     this.onFileSelect(event, 'ProfileImage');
     this.editFile('ProfileImage');
+  }
+  getAllDocuments() {
+    this.doctorInfoService.getallDocuments(this.doctorId).subscribe({
+      next: (documents: IDocumentResponse[]) => {
+        this.docInfoResponse = documents;
+        console.log('Documents fetched successfully:', this.docInfoResponse);
+        console.log('Document URLs:',  this.docInfoResponse.find(doc => doc.documentType === 'ProfileImage')?.data.documentId.toString());
+
+      },
+      error: (error) => {
+        console.error('Error fetching documents:', error);
+      }
+    });
   }
 }
 
