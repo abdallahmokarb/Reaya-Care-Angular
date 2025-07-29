@@ -149,7 +149,7 @@
           @for (doctor of doctors; track $index) {
             <div class="doctor-card ">
               <a [routerLink]="['/doctor-details', doctor.doctorId]">
-                <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.profileImageUrl + ')'">
+                <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.profilePictureUrl + ')'">
                   <div class="doctor-rating">
                     <span class="stars">
                       <i class="fas fa-star"></i> {{doctor.ratingValue}}
