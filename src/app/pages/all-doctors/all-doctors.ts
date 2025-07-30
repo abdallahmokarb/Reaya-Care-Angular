@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { AddressService } from '../../shared/services/address-service';
 import { Igovernment } from '../../models/igovernment';
 import { Idoctorcard } from '../../models/idoctorcard';
+import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-all-doctors',
-  imports: [RouterModule, FormsModule, CommonModule],
+  imports: [RouterModule, FormsModule, CommonModule, NgxSliderModule],
   templateUrl: './all-doctors.html',
   styleUrl: './all-doctors.css'
 })
@@ -38,8 +39,21 @@ export class AllDoctors implements OnInit {
   genderFilters: string[] = [];
   availableTimesFilters: string[] = [];
   serviceTypesFilters: string[] = [];
+
   minPrice: number = 0;
   maxPrice: number = 500;
+
+  priceSliderValue: number = 0;
+  priceSliderHighValue: number = 500;
+
+  sliderOptions: Options = {
+    floor: 0,
+    ceil: 500,
+    step: 10,
+    translate: (value: number): string => {
+      return `${value} ج.م`;
+    }
+  };
 
 
 
@@ -96,13 +110,13 @@ ngOnInit(): void {
 
     switch (this.orderBy) {
       case 'rating':
-        this.doctors.sort((a, b) => b.ratingValue - a.ratingValue); // descending
+        this.filteredDoctors.sort((a, b) => b.ratingValue - a.ratingValue); // descending
         break;
       case 'fees':
-        this.doctors.sort((a, b) => a.fees - b.fees); // ascending
+        this.filteredDoctors.sort((a, b) => a.fees - b.fees); // ascending
         break;
       case 'timeslot':
-        this.doctors.sort((a, b) => a.waitingTime - b.waitingTime); // ascending
+        this.filteredDoctors.sort((a, b) => a.waitingTime - b.waitingTime); // ascending
         break;
     }
   }
@@ -137,7 +151,7 @@ ngOnInit(): void {
       const matchesGovernment = this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
 
       const matchesGender = this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
-
+      const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
       const matchesServiceType = this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
 
       const matchesAvailableTimes =
@@ -155,12 +169,17 @@ ngOnInit(): void {
             matchesGovernment &&
             matchesGender &&
             matchesServiceType &&
-            matchesAvailableTimes;
-            // matchesPrice 
-            // &&matchesTime;
+            matchesAvailableTimes &&
+            matchesPrice;
     });
 
+    this.sortDoctors();
   }
 
+  onSliderChange(): void {
+    this.minPrice = this.priceSliderValue;
+    this.maxPrice = this.priceSliderHighValue;
+    this.applyFilters();
+  }
 
 }

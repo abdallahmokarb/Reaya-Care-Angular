@@ -86,12 +86,19 @@
       <hr>
 
       <!-- Price Filter -->
-      <div>
-        <label class="font-semibold mb-2 block">السعر (جنيه)</label>
-        <div id="price-slider" class="bg-gray-200 h-2 rounded"></div>
-        <div class="flex justify-between text-sm mt-2">
-          <span id="price-min">0</span>
-          <span id="price-max">500</span>
+      <div class="w-full max-w-md mx-auto my-6">
+        <h5 class="text-lg font-semibold mb-2">ثمن الحجز</h5>
+
+        <ngx-slider
+          [(value)]="priceSliderValue"
+          [(highValue)]="priceSliderHighValue"
+          [options]="sliderOptions"
+          (userChangeEnd)="onSliderChange()">
+        </ngx-slider>
+
+        <div class="flex justify-between mt-3 text-sm text-gray-700 text-right">
+          <div class="border border-gray-300 px-3 py-1 rounded">500 أعلى سعر</div>
+          <div class="border border-gray-300 px-3 py-1 rounded">0 أقل سعر</div>
         </div>
       </div>
 
