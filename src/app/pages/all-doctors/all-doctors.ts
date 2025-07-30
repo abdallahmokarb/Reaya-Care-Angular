@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { AddressService } from '../../shared/services/address-service';
 import { Igovernment } from '../../models/igovernment';
 import { Idoctorcard } from '../../models/idoctorcard';
+import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-all-doctors',
-  imports: [RouterModule, FormsModule, CommonModule],
+  imports: [RouterModule, FormsModule, CommonModule, NgxSliderModule],
   templateUrl: './all-doctors.html',
   styleUrl: './all-doctors.css'
 })
@@ -36,16 +37,23 @@ export class AllDoctors implements OnInit {
   genderFilters: string[] = [];
   availableTimesFilters: string[] = [];
   serviceTypesFilters: string[] = [];
+
   minPrice: number = 0;
   maxPrice: number = 500;
 
-  ngOnInit(): void {
-    // Read specializationId from query string ONCE
-    const specializationId = Number(this.route.snapshot.queryParamMap.get('specializationId'));
-    if (!isNaN(specializationId)) {
-      this.selectedSpecialization = specializationId;
-    }
+  priceSliderValue: number = 0;
+  priceSliderHighValue: number = 500;
 
+  sliderOptions: Options = {
+    floor: 0,
+    ceil: 500,
+    step: 10,
+    translate: (value: number): string => {
+      return `${value} ج.م`;
+    }
+  };
+
+ngOnInit(): void {
     // Load doctors and apply filters
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
@@ -91,13 +99,13 @@ export class AllDoctors implements OnInit {
 
     switch (this.orderBy) {
       case 'rating':
-        this.doctors.sort((a, b) => b.ratingValue - a.ratingValue);
+        this.filteredDoctors.sort((a, b) => b.ratingValue - a.ratingValue); // descending
         break;
       case 'fees':
-        this.doctors.sort((a, b) => a.fees - b.fees);
+        this.filteredDoctors.sort((a, b) => a.fees - b.fees); // ascending
         break;
       case 'timeslot':
-        this.doctors.sort((a, b) => a.waitingTime - b.waitingTime);
+        this.filteredDoctors.sort((a, b) => a.watingTime - b.watingTime); // ascending
         break;
     }
   }
@@ -127,15 +135,10 @@ export class AllDoctors implements OnInit {
     this.filteredDoctors = this.doctors.filter((doc) => {
       const matchesSpecialization =
         this.selectedSpecialization === 0 || doc.specializationId === this.selectedSpecialization;
-
-      const matchesGovernment =
-        this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
-
-      const matchesGender =
-        this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
-
-      const matchesServiceType =
-        this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
+      const matchesGovernment = this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
+      const matchesGender = this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
+      const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
+      const matchesServiceType = this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
 
       const matchesAvailableTimes =
         this.availableTimesFilters.length === 0 ||
@@ -148,14 +151,21 @@ export class AllDoctors implements OnInit {
 
       // const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
 
-      return (
-        matchesSpecialization &&
-        matchesGovernment &&
-        matchesGender &&
-        matchesServiceType &&
-        matchesAvailableTimes
-        // && matchesPrice
-      );
+      return matchesSpecialization &&
+            matchesGovernment &&
+            matchesGender &&
+            matchesServiceType &&
+            matchesAvailableTimes &&
+            matchesPrice;
     });
+
+    this.sortDoctors();
   }
+
+  onSliderChange(): void {
+    this.minPrice = this.priceSliderValue;
+    this.maxPrice = this.priceSliderHighValue;
+    this.applyFilters();
+  }
+
 }

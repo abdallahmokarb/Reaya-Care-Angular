@@ -12,7 +12,7 @@ export interface Idoctorcard {
   doctorService: string;
   doctorId: number;
   profilePictureUrl: string; // URL to the doctor's profile picture
-  waitingTime: number; // in minutes
+  watingTime: number; // in minutes
   addresses: string[];
   gender: string; 
   hasAvailableTimeSlots: boolean;
