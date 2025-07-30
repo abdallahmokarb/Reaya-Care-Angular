@@ -1,5 +1,7 @@
 export interface ISpecialization {
-    specializationId: string;
+    specializationId: number;  
     name: string;
-    description?: string;
+    description: string;
+    icon?: string;
+    imageUrl?: string; 
 }

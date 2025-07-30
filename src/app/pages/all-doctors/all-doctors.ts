@@ -3,7 +3,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DoctorService } from '../../shared/services/doctor-service';
 import { Specialization } from '../../shared/services/specialization';
 import { ISpecialization } from '../../models/ispecialization';
-import { SpecializationDTO } from '../../models/SpecializationDTO';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AddressService } from '../../shared/services/address-service';
@@ -30,7 +29,7 @@ export class AllDoctors implements OnInit {
 
   orderBy: string = 'rating';
 
-  specializations: SpecializationDTO[] = [];
+  specializations: ISpecialization[] = [];
   governments: Igovernment[] = [];
  
   selectedSpecialization: number = 0;
