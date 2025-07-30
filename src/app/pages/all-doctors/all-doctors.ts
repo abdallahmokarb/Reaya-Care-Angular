@@ -53,7 +53,7 @@ export class AllDoctors implements OnInit {
     }
   };
 
-
+ngOnInit(): void {
     // Load doctors and apply filters
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
@@ -135,7 +135,7 @@ export class AllDoctors implements OnInit {
     this.filteredDoctors = this.doctors.filter((doc) => {
       const matchesSpecialization =
         this.selectedSpecialization === 0 || doc.specializationId === this.selectedSpecialization;
-
+      const matchesGovernment = this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
       const matchesGender = this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
       const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
       const matchesServiceType = this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
