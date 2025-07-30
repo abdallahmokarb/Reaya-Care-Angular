@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, FormsModule],
 })
 export class PatientProfile {
-  patientId: string = '1'; // Replace with dynamic ID as needed
+  patientId: string = '10'; // Replace with dynamic ID as needed
   editMode: boolean = false;
 
   patient: Ipatient | null = null;
