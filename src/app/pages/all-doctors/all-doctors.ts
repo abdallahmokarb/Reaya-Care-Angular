@@ -20,7 +20,7 @@ export class AllDoctors implements OnInit {
   private doctorService = inject(DoctorService);
   private addressService = inject(AddressService);
   private specializationService = inject(Specialization); // specialization service injection
-  private route: ActivatedRoute = inject(ActivatedRoute);
+  route = inject(ActivatedRoute);
 
 
   doctors: Idoctorcard[] = [];
@@ -43,10 +43,12 @@ export class AllDoctors implements OnInit {
 
 
 ngOnInit(): void {
+
+    this.selectedSpecialization = Number(this.route.snapshot.paramMap.get('id'));
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
         this.doctors = data;
-        this.filteredDoctors = data;
+        this.applyFilters();
         this.isLoading = false;
       },
       error: (err) => {
@@ -73,14 +75,16 @@ ngOnInit(): void {
         console.error('Error fetching governments:', err);
       }
     });
-  }
 
-toggleFilters(): void {
-    const sidebar = document.getElementById('filterSidebar');
-    if (sidebar) {
-      sidebar.classList.toggle('translate-x-full');
+    
     }
-  }
+
+    toggleFilters(): void {
+      const sidebar = document.getElementById('filterSidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('translate-x-full');
+      }
+    }
 
 
 
@@ -113,8 +117,6 @@ toggleFilters(): void {
       const index = filterArray.indexOf(value);
       if (index > -1) filterArray.splice(index, 1);
     }
-    console.log('Gender Filters:', this.genderFilters);
-    console.log('Service Filters:', this.serviceTypesFilters);
 
     this.applyFilters(); // تحدث القائمة
   }
@@ -137,40 +139,26 @@ toggleFilters(): void {
 
       const matchesServiceType = this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
 
-      console.log('SelectedSpecialization:', this.selectedSpecialization);
-      console.log('Doctor Spec:', doc.specializationId);
+      const matchesAvailableTimes =
+      this.availableTimesFilters.length === 0 ||
+      this.availableTimesFilters.some((filter) => {
+        if (filter === 'اليوم') return doc.hasAvailableTimeSlotsToday;
+        if (filter === 'غداً') return doc.hasAvailableTimeSlotsTomorrow;
+        if (filter === 'أي يوم') return doc.hasAvailableTimeSlots;
+        return false;
+      });
 
-      console.log('SelectedGovernment:', this.selectedGovernment);
-      console.log('Doctor Government:', doc.governemntId);
       // const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
-
-      // const matchesTime = this.availableTimesFilters.length === 0 || this.availableTimesFilters.some(time => {
-      //   const today = new Date();
-      //   const slot = new Date(doc.nextAvailableSlot); // Make sure `nextAvailableSlot` exists
-
-      //   switch (time) {
-      //     case 'اليوم':
-      //       return slot.toDateString() === today.toDateString();
-      //     case 'غداً':
-      //       const tomorrow = new Date(today);
-      //       tomorrow.setDate(tomorrow.getDate() + 1);
-      //       return slot.toDateString() === tomorrow.toDateString();
-      //     case 'أي يوم':
-      //       return true;
-      //     default:
-      //       return false;
-      //   }
-      // });
 
       return matchesSpecialization &&
             matchesGovernment &&
             matchesGender &&
-            matchesServiceType;
+            matchesServiceType &&
+            matchesAvailableTimes;
             // matchesPrice 
             // &&matchesTime;
     });
 
-    console.log('Result:', this.filteredDoctors);
   }
 
 
