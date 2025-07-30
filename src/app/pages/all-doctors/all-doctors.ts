@@ -20,7 +20,7 @@ export class AllDoctors implements OnInit {
   private doctorService = inject(DoctorService);
   private addressService = inject(AddressService);
   private specializationService = inject(Specialization); // specialization service injection
-  route = inject(ActivatedRoute);
+  private route = inject(ActivatedRoute);
 
 
   doctors: Idoctorcard[] = [];
@@ -44,6 +44,14 @@ export class AllDoctors implements OnInit {
 
 ngOnInit(): void {
 
+  // read from query params
+    this.route.queryParams.subscribe(params => {
+      const specializationId = +params['specializationId'];
+      if (specializationId && !isNaN(specializationId)) {
+        this.selectedSpecialization = specializationId;
+      }
+    });
+    // Fetching data from services
     this.selectedSpecialization = Number(this.route.snapshot.paramMap.get('id'));
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
