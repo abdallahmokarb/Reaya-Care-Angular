@@ -1,0 +1,34 @@
+<div class="space-y-4 mt-4">
+  <!-- Centered stars -->
+  <div class="flex justify-center">
+    <div class="flex gap-1 text-3xl cursor-pointer">
+        تقييمك يهمنا : 
+      <ng-container *ngFor="let star of stars; let i = index">
+        <i
+          class="fas fa-star"
+          [class.fullstar]="(hoverRating || ratingValue) > i"
+          [class.emptystar]="(hoverRating || ratingValue) <= i"
+          (mouseenter)="hoverRating = i + 1"
+          (mouseleave)="hoverRating = 0"
+          (click)="setRating(i + 1)"
+        ></i>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Comment box -->
+  <textarea
+    [(ngModel)]="comment"
+    rows="2"
+    placeholder="اترك تعليقك......"
+    class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+  ></textarea>
+
+  <!-- Submit button -->
+  <button
+    (click)="submit()"
+    class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+  >
+    ارسال
+  </button>
+</div>

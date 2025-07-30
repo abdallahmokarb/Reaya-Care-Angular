@@ -1,0 +1,24 @@
+/* 
+.fullstar{
+    color: #15803d;
+}
+
+.emptystar{
+    color: lightgray;
+}
+*/
+
+.emptystar, .fullstar {
+    font-size: 25px;
+} 
+
+
+.fullstar {
+  color: #15803d !important; /* Tailwind yellow-400 */
+  transition: color 0.2s;
+}
+
+.emptystar {
+  color: lightgray !important; /* Tailwind gray-300 */
+  transition: color 0.2s;
+}
