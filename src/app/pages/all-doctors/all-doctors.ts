@@ -1,9 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DoctorService } from '../../shared/services/doctor-service';
 import { Specialization } from '../../shared/services/specialization';
 import { ISpecialization } from '../../models/ispecialization';
-import { SpecializationDTO } from '../../models/SpecializationDTO';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AddressService } from '../../shared/services/address-service';
@@ -21,6 +20,7 @@ export class AllDoctors implements OnInit {
   private doctorService = inject(DoctorService);
   private addressService = inject(AddressService);
   private specializationService = inject(Specialization); // specialization service injection
+  private route: ActivatedRoute = inject(ActivatedRoute);
 
 
   doctors: Idoctorcard[] = [];
@@ -29,7 +29,7 @@ export class AllDoctors implements OnInit {
 
   orderBy: string = 'rating';
 
-  specializations: SpecializationDTO[] = [];
+  specializations: ISpecialization[] = [];
   governments: Igovernment[] = [];
  
   selectedSpecialization: number = 0;
