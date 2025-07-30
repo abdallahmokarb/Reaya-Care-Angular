@@ -116,7 +116,7 @@ ngOnInit(): void {
         this.filteredDoctors.sort((a, b) => a.fees - b.fees); // ascending
         break;
       case 'timeslot':
-        this.filteredDoctors.sort((a, b) => a.waitingTime - b.waitingTime); // ascending
+        this.filteredDoctors.sort((a, b) => a.watingTime - b.watingTime); // ascending
         break;
     }
   }
