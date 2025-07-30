@@ -264,9 +264,9 @@ select:focus {
   background-color: #15803d !important; 
   height: 6px;
   border-radius: 10px;
-  left: 10px !important;
+  left: 8px !important;
   right: 10px !important;
-  width: auto !important;
+  width: 100% !important;
 }
 
 ::ng-deep .ngx-slider .ngx-slider-selection {
@@ -282,7 +282,7 @@ select:focus {
   height: 20px !important;
   background-color: #15803d !important;
   border: 2px solid #15803d !important;
-  margin-left: 0px !important; /* this ensures alignment */
+  margin-left: 0 !important;
 }
 
 ::ng-deep .ngx-slider .ngx-slider-pointer:focus {
