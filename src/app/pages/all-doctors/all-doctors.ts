@@ -17,11 +17,10 @@ import { Idoctorcard } from '../../models/idoctorcard';
 })
 export class AllDoctors implements OnInit {
 
-  private doctorService = inject(DoctorService);
+   private doctorService = inject(DoctorService);
   private addressService = inject(AddressService);
-  private specializationService = inject(Specialization); // specialization service injection
+  private specializationService = inject(Specialization);
   private route = inject(ActivatedRoute);
-
 
   doctors: Idoctorcard[] = [];
   filteredDoctors: Idoctorcard[] = [];
@@ -31,7 +30,7 @@ export class AllDoctors implements OnInit {
 
   specializations: ISpecialization[] = [];
   governments: Igovernment[] = [];
- 
+
   selectedSpecialization: number = 0;
   selectedGovernment: number = 0;
   genderFilters: string[] = [];
@@ -40,23 +39,18 @@ export class AllDoctors implements OnInit {
   minPrice: number = 0;
   maxPrice: number = 500;
 
+  ngOnInit(): void {
+    // Read specializationId from query string ONCE
+    const specializationId = Number(this.route.snapshot.queryParamMap.get('specializationId'));
+    if (!isNaN(specializationId)) {
+      this.selectedSpecialization = specializationId;
+    }
 
-
-ngOnInit(): void {
-
-  // read from query params
-    this.route.queryParams.subscribe(params => {
-      const specializationId = +params['specializationId'];
-      if (specializationId && !isNaN(specializationId)) {
-        this.selectedSpecialization = specializationId;
-      }
-    });
-    // Fetching data from services
-    this.selectedSpecialization = Number(this.route.snapshot.paramMap.get('id'));
+    // Load doctors and apply filters
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
         this.doctors = data;
-        this.applyFilters();
+        this.applyFilters(); // apply after loading
         this.isLoading = false;
       },
       error: (err) => {
@@ -64,7 +58,6 @@ ngOnInit(): void {
         this.isLoading = false;
       }
     });
-
 
     this.specializationService.getAllSpecializations().subscribe({
       next: (data) => {
@@ -83,19 +76,14 @@ ngOnInit(): void {
         console.error('Error fetching governments:', err);
       }
     });
+  }
 
-    
+  toggleFilters(): void {
+    const sidebar = document.getElementById('filterSidebar');
+    if (sidebar) {
+      sidebar.classList.toggle('translate-x-full');
     }
-
-    toggleFilters(): void {
-      const sidebar = document.getElementById('filterSidebar');
-      if (sidebar) {
-        sidebar.classList.toggle('translate-x-full');
-      }
-    }
-
-
-
+  }
 
   // Sorting logic
   sortDoctors() {
@@ -103,18 +91,17 @@ ngOnInit(): void {
 
     switch (this.orderBy) {
       case 'rating':
-        this.doctors.sort((a, b) => b.ratingValue - a.ratingValue); // descending
+        this.doctors.sort((a, b) => b.ratingValue - a.ratingValue);
         break;
       case 'fees':
-        this.doctors.sort((a, b) => a.fees - b.fees); // ascending
+        this.doctors.sort((a, b) => a.fees - b.fees);
         break;
       case 'timeslot':
-        this.doctors.sort((a, b) => a.waitingTime - b.waitingTime); // ascending
+        this.doctors.sort((a, b) => a.waitingTime - b.waitingTime);
         break;
     }
   }
 
-  // function to to apply filters
   toggleFilter(filterArray: string[], event: Event) {
     const checkbox = event.target as HTMLInputElement;
     const value = checkbox.value;
@@ -126,48 +113,49 @@ ngOnInit(): void {
       if (index > -1) filterArray.splice(index, 1);
     }
 
-    this.applyFilters(); // تحدث القائمة
+    this.applyFilters();
   }
 
-
   applyFilters() {
-
     console.log('Applying filters with:', {
-    specialization: this.selectedSpecialization,
-    government: this.selectedGovernment,
-    genderFilters: this.genderFilters,
-    serviceTypesFilters: this.serviceTypesFilters
-  });
+      specialization: this.selectedSpecialization,
+      government: this.selectedGovernment,
+      genderFilters: this.genderFilters,
+      serviceTypesFilters: this.serviceTypesFilters
+    });
 
     this.filteredDoctors = this.doctors.filter((doc) => {
-      const matchesSpecialization = this.selectedSpecialization === 0 || doc.specializationId === this.selectedSpecialization;
-      const matchesGovernment = this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
+      const matchesSpecialization =
+        this.selectedSpecialization === 0 || doc.specializationId === this.selectedSpecialization;
 
-      const matchesGender = this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
+      const matchesGovernment =
+        this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
 
-      const matchesServiceType = this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
+      const matchesGender =
+        this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
+
+      const matchesServiceType =
+        this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
 
       const matchesAvailableTimes =
-      this.availableTimesFilters.length === 0 ||
-      this.availableTimesFilters.some((filter) => {
-        if (filter === 'اليوم') return doc.hasAvailableTimeSlotsToday;
-        if (filter === 'غداً') return doc.hasAvailableTimeSlotsTomorrow;
-        if (filter === 'أي يوم') return doc.hasAvailableTimeSlots;
-        return false;
-      });
+        this.availableTimesFilters.length === 0 ||
+        this.availableTimesFilters.some((filter) => {
+          if (filter === 'اليوم') return doc.hasAvailableTimeSlotsToday;
+          if (filter === 'غداً') return doc.hasAvailableTimeSlotsTomorrow;
+          if (filter === 'أي يوم') return doc.hasAvailableTimeSlots;
+          return false;
+        });
 
       // const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
 
-      return matchesSpecialization &&
-            matchesGovernment &&
-            matchesGender &&
-            matchesServiceType &&
-            matchesAvailableTimes;
-            // matchesPrice 
-            // &&matchesTime;
+      return (
+        matchesSpecialization &&
+        matchesGovernment &&
+        matchesGender &&
+        matchesServiceType &&
+        matchesAvailableTimes
+        // && matchesPrice
+      );
     });
-
   }
-
-
 }
