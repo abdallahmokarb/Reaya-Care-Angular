@@ -15,4 +15,7 @@ export interface Idoctorcard {
   waitingTime: number; // in minutes
   addresses: string[];
   gender: string; 
+  hasAvailableTimeSlots: boolean;
+  hasAvailableTimeSlotsToday: boolean;
+  hasAvailableTimeSlotsTomorrow: boolean;
 }
