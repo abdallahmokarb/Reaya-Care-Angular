@@ -52,4 +52,7 @@ body {
   .form-btn {
     @apply mt-3 flex h-12 w-full flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-green-700 to-[#00ba00] px-2 text-center text-xl text-white shadow-[#00ba00] duration-300 hover:bg-[#00ba00] focus:translate-y-1 disabled:cursor-not-allowed disabled:bg-gradient-to-t disabled:from-gray-400 disabled:to-gray-600;
   }
+  .btn-primary {
+    @apply bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition;
+  }
 }

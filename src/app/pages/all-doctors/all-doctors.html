@@ -33,15 +33,27 @@
         <h5 class="text-lg font-semibold mb-2">المواعيد المتاحة</h5>
         <div class="space-y-2">
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="custom-checkbox">
+            <input
+              type="checkbox"
+              [value]="'اليوم'"
+              (change)="toggleFilter(availableTimesFilters, $event)"
+            /> 
             <span>اليوم</span>
           </label>
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="custom-checkbox">
+            <input
+              type="checkbox"
+              [value]="'غداً'"
+              (change)="toggleFilter(availableTimesFilters, $event)"
+            /> 
             <span>غداً</span>
           </label>
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="custom-checkbox">
+            <input
+              type="checkbox"
+              [value]="'أي يوم'"
+              (change)="toggleFilter(availableTimesFilters, $event)"
+            /> 
             <span>أي يوم</span>
           </label>
         </div>
@@ -54,16 +66,23 @@
         <h5 class="text-lg font-semibold mb-2">الجنس</h5>
         <div class="space-y-2">
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="custom-checkbox">
+            <input
+              type="checkbox"
+              [value]="'Male'"
+              (change)="toggleFilter(genderFilters, $event)"
+            />
             <span>ذكر</span>
           </label>
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="custom-checkbox">
+            <input
+              type="checkbox"
+              [value]="'Female'"
+              (change)="toggleFilter(genderFilters, $event)"
+            />
             <span>أنثى</span>
           </label>
         </div>
       </div>
-
       <hr>
 
       <!-- Price Filter -->
@@ -83,11 +102,19 @@
         <h5 class="text-lg font-semibold mb-2">نوع الخدمة</h5>
         <div class="space-y-2">
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="custom-checkbox">
+            <input
+              type="checkbox"
+              [value]="'InClinic'"
+              (change)="toggleFilter(serviceTypesFilters, $event)"
+            /> 
             <span>في العيادة</span>
           </label>
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="custom-checkbox">
+            <input
+              type="checkbox"
+              [value]="'OnlineConsultion'"
+              (change)="toggleFilter(serviceTypesFilters, $event)"
+            />
             <span>استشارة أونلاين</span>
           </label>
         </div>
@@ -103,9 +130,10 @@
           class="w-full border rounded p-2"
           [(ngModel)]="selectedSpecialization"
           name="specialization"
+          (change)="applyFilters()"
         >
-          <option [value]="0">الكل</option> <!-- "All" option -->
-          <option *ngFor="let spec of specializations" [value]="spec.id">
+          <option [ngValue]="0">الكل</option> 
+          <option *ngFor="let spec of specializations" [ngValue]="spec.specializationId">
             {{ spec.name }}
           </option>
         </select>
@@ -119,9 +147,11 @@
             id="governmentSelect"
             class="w-full border rounded p-2"
             [(ngModel)]="selectedGovernment"
-            name="government">
-          <option [value]="0">الكل</option> <!-- "All" option -->
-          <option *ngFor="let gov of governments" [value]="gov.governmentId">
+            name="government"
+            (change)="applyFilters()"
+          >
+          <option [ngValue]="0">الكل</option>
+          <option *ngFor="let gov of governments" [ngValue]="gov.governmentId">
             {{ gov.name }}
           </option>
         </select>
@@ -132,10 +162,16 @@
     <div class="col-span-12 lg:col-span-9 bg-light p-4 rounded-xl">
 
       <div class="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded mb-4">
-        <p class="mb-2 sm:mb-0">تم العثور على 250 طبيب</p>
+        <p class="mb-2 sm:mb-0">تم العثور على {{filteredDoctors.length}} طبيب</p>
         <div class="flex items-center gap-2">
           <label for="orderBy" class="mb-0">الترتيب حسب:</label>
-          <select class="border rounded p-1" name="orderBy" id="orderBy">
+          <select
+            class="border rounded p-1"
+            name="orderBy"
+            id="orderBy"
+            [(ngModel)]="orderBy"
+            (change)="sortDoctors()"
+          >
             <option value="rating">الأعلى تقييماً</option>
             <option value="fees">الأرخص سعراً</option>
             <option value="timeslot">وقت الانتظار</option>
@@ -143,10 +179,18 @@
         </div>
       </div>
 
+      <div *ngIf="isLoading" class="flex items-center justify-center gap-4 h-64 text-lg font-semibold text-gray-700">
+        <span>جاري تحميل الأطباء</span>
+        <svg class="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+      </div>
+
       <div class="cards-section bg-white rounded-xl p-4">
         <!-- Doctor cards will appear here -->
         <div id="doctorCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  p-4">
-          @for (doctor of doctors; track $index) {
+          @for (doctor of filteredDoctors; track $index) {
             <div class="doctor-card ">
               <a [routerLink]="['/doctor-details', doctor.doctorId]">
                 <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.profilePictureUrl + ')'">
@@ -171,7 +215,7 @@
 
                 <!-- Service Type & Location -->
                 <div class="flex justify-between text-sm text-gray-500">
-                  <span>{{ doctor.service }}</span>
+                  <span>{{ doctor.doctorService }}</span>
                   <span>{{ doctor?.addresses?.length ? doctor.addresses[0] : '' }}</span>
                 </div>
 
