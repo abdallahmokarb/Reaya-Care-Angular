@@ -1,26 +1,25 @@
 <!-- specialization-card.component.html -->
-<div
-  class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-100 h-full flex flex-col"
-  dir="rtl"
->
+<div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-100 h-full flex flex-col" dir="rtl">
+  <!-- Image Header -->
+  <div class="h-48 bg-cover bg-center" [style.background-image]="'url(' + specialization.imageUrl + ')'" (error)="specialization.imageUrl = 'assets/images/specializations/default.jpg'"></div>
+  <!-- Content -->
   <div class="p-6 flex-grow">
     <div class="flex items-center mb-4">
       <div class="bg-blue-100 p-3 rounded-full">
         <i class="fas {{specialization.icon}} text-blue-600 text-xl"></i>
       </div>
-      <h3 class="text-xl font-bold text-gray-800 mr-3">
-        {{specialization.name}}
-      </h3>
+      <h3 class="text-xl font-bold text-gray-800 mr-3">{{specialization.name}}</h3>
     </div>
     <p class="text-gray-600 mb-6">{{specialization.description}}</p>
   </div>
+  
+  <!-- Footer -->
   <div class="px-6 pb-6">
-
-    <a
-      [routerLink]="['/all-doctors', specialization.specializationId]"
-      class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
-    >
-      عرض الأطباء
-    </a>
+    <a 
+  [routerLink]="['/all-doctors']"
+  [queryParams]="{ specializationId: specialization.specializationId }"
+  class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+  عرض الأطباء
+</a>
   </div>
 </div>

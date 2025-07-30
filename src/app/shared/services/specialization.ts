@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SpecializationDTO } from '../../models/SpecializationDTO';
 import { environment } from '../../../environments/environment';
+import { ISpecialization } from '../../models/ispecialization';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +15,12 @@ export class Specialization {
 
   constructor(private http: HttpClient) { }
 
-  getAllSpecializations(): Observable<SpecializationDTO[]> {
-    return this.http.get<SpecializationDTO[]>(this.apiUrl);
+  getAllSpecializations(): Observable<ISpecialization[]> {
+    return this.http.get<ISpecialization[]>(this.apiUrl);
   }
 
-  getSpecializationById(id: number): Observable<SpecializationDTO> {
-    return this.http.get<SpecializationDTO>(`${this.apiUrl}/${id}`);
+  getSpecializationById(id: number): Observable<ISpecialization> {
+    return this.http.get<ISpecialization>(`${this.apiUrl}/${id}`);
   }
 
-  getDoctorsBySpecialization(specializationId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${specializationId}/doctors`);
-  }
 }

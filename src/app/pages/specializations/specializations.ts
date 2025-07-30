@@ -3,8 +3,9 @@ import { Component,OnInit  } from '@angular/core';
 import { SpecializationCard } from './specialization-card/specialization-card';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SpecializationDTO } from '../../models/SpecializationDTO';
 import { Specialization } from '../../shared/services/specialization';
+import { ISpecialization } from '../../models/ispecialization';
+import { SpecializationEnrichmentService } from '../../shared/services/specialization-enrichment-service';
 
 
 @Component({
@@ -14,11 +15,14 @@ import { Specialization } from '../../shared/services/specialization';
   styleUrl: './specializations.css'
 })
 export class Specializations implements OnInit {
-  specializations: SpecializationDTO[] = [];
+  specializations: ISpecialization[] = [];
   isLoading = true;
   errorMessage: string | null = null;
 
-  constructor(private specializationService: Specialization) {}
+  constructor(
+    private specializationService: Specialization,
+    private enrichmentService: SpecializationEnrichmentService
+  ) {}
 
   ngOnInit() {
     this.loadSpecializations();
@@ -30,7 +34,7 @@ export class Specializations implements OnInit {
     
     this.specializationService.getAllSpecializations().subscribe({
       next: (data) => {
-        this.specializations = data;
+        this.specializations = this.enrichmentService.enrichSpecializations(data);
         this.isLoading = false;
       },
       error: (err) => {

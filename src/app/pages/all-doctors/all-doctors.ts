@@ -3,7 +3,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DoctorService } from '../../shared/services/doctor-service';
 import { Specialization } from '../../shared/services/specialization';
 import { ISpecialization } from '../../models/ispecialization';
-import { SpecializationDTO } from '../../models/SpecializationDTO';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AddressService } from '../../shared/services/address-service';
@@ -19,11 +18,10 @@ import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 })
 export class AllDoctors implements OnInit {
 
-  private doctorService = inject(DoctorService);
+   private doctorService = inject(DoctorService);
   private addressService = inject(AddressService);
-  private specializationService = inject(Specialization); // specialization service injection
-  route = inject(ActivatedRoute);
-
+  private specializationService = inject(Specialization);
+  private route = inject(ActivatedRoute);
 
   doctors: Idoctorcard[] = [];
   filteredDoctors: Idoctorcard[] = [];
@@ -31,9 +29,9 @@ export class AllDoctors implements OnInit {
 
   orderBy: string = 'rating';
 
-  specializations: SpecializationDTO[] = [];
+  specializations: ISpecialization[] = [];
   governments: Igovernment[] = [];
- 
+
   selectedSpecialization: number = 0;
   selectedGovernment: number = 0;
   genderFilters: string[] = [];
@@ -56,14 +54,11 @@ export class AllDoctors implements OnInit {
   };
 
 
-
-ngOnInit(): void {
-
-    this.selectedSpecialization = Number(this.route.snapshot.paramMap.get('id'));
+    // Load doctors and apply filters
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
         this.doctors = data;
-        this.applyFilters();
+        this.applyFilters(); // apply after loading
         this.isLoading = false;
       },
       error: (err) => {
@@ -71,7 +66,6 @@ ngOnInit(): void {
         this.isLoading = false;
       }
     });
-
 
     this.specializationService.getAllSpecializations().subscribe({
       next: (data) => {
@@ -90,19 +84,14 @@ ngOnInit(): void {
         console.error('Error fetching governments:', err);
       }
     });
+  }
 
-    
+  toggleFilters(): void {
+    const sidebar = document.getElementById('filterSidebar');
+    if (sidebar) {
+      sidebar.classList.toggle('translate-x-full');
     }
-
-    toggleFilters(): void {
-      const sidebar = document.getElementById('filterSidebar');
-      if (sidebar) {
-        sidebar.classList.toggle('translate-x-full');
-      }
-    }
-
-
-
+  }
 
   // Sorting logic
   sortDoctors() {
@@ -121,7 +110,6 @@ ngOnInit(): void {
     }
   }
 
-  // function to to apply filters
   toggleFilter(filterArray: string[], event: Event) {
     const checkbox = event.target as HTMLInputElement;
     const value = checkbox.value;
@@ -133,35 +121,33 @@ ngOnInit(): void {
       if (index > -1) filterArray.splice(index, 1);
     }
 
-    this.applyFilters(); // تحدث القائمة
+    this.applyFilters();
   }
 
-
   applyFilters() {
-
     console.log('Applying filters with:', {
-    specialization: this.selectedSpecialization,
-    government: this.selectedGovernment,
-    genderFilters: this.genderFilters,
-    serviceTypesFilters: this.serviceTypesFilters
-  });
+      specialization: this.selectedSpecialization,
+      government: this.selectedGovernment,
+      genderFilters: this.genderFilters,
+      serviceTypesFilters: this.serviceTypesFilters
+    });
 
     this.filteredDoctors = this.doctors.filter((doc) => {
-      const matchesSpecialization = this.selectedSpecialization === 0 || doc.specializationId === this.selectedSpecialization;
-      const matchesGovernment = this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
+      const matchesSpecialization =
+        this.selectedSpecialization === 0 || doc.specializationId === this.selectedSpecialization;
 
       const matchesGender = this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
       const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
       const matchesServiceType = this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
 
       const matchesAvailableTimes =
-      this.availableTimesFilters.length === 0 ||
-      this.availableTimesFilters.some((filter) => {
-        if (filter === 'اليوم') return doc.hasAvailableTimeSlotsToday;
-        if (filter === 'غداً') return doc.hasAvailableTimeSlotsTomorrow;
-        if (filter === 'أي يوم') return doc.hasAvailableTimeSlots;
-        return false;
-      });
+        this.availableTimesFilters.length === 0 ||
+        this.availableTimesFilters.some((filter) => {
+          if (filter === 'اليوم') return doc.hasAvailableTimeSlotsToday;
+          if (filter === 'غداً') return doc.hasAvailableTimeSlotsTomorrow;
+          if (filter === 'أي يوم') return doc.hasAvailableTimeSlots;
+          return false;
+        });
 
       // const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
 
