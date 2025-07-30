@@ -139,6 +139,9 @@
           </div>
           }
         </div>
+        @if(user){
+          <app-rating-form (ratingSubmitted)="onRatingAdded($event)"></app-rating-form>
+        }
       </div>
     </div>
 
