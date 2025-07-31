@@ -1,52 +1,111 @@
-<!-- profile.component.html -->
-<div class="max-w-4xl mx-auto p-6 space-y-6 font-bold tracking-wide" dir="rtl">
-  <!-- Header -->
+<div class="max-w-3xl mx-auto p-6 space-y-6 font-bold tracking-wide" dir="rtl">
+  <!-- Header with Avatar -->
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-8">
+    <!-- Left: Avatar & Info -->
+    <div class="flex items-center gap-6">
       <img src="/assets/images/avatar.jpg" alt="الملف الشخصي" class="w-16 h-16 rounded-full object-cover border-2 border-green-600 dark:border-green-400">
       <div>
-        <h2 class="text-xl font-semibold text-green-600 dark:text-green-400">رفيق الرحمن</h2>
-        <p class="text-gray-600 dark:text-gray-300">مدير الفريق</p>
-        <p class="text-sm text-gray-500 dark:text-gray-400">ليدز، المملكة المتحدة</p>
+        <h2 class="text-xl text-green-600 dark:text-green-400">{{ patient?.fullName || '---' }}</h2>
+        <p class="text-gray-600 dark:text-gray-300">مريض</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">{{ patient?.createdAt | date: 'yyyy-MM-dd' }}</p>
       </div>
     </div>
-    <button class="text-green-600 dark:text-green-400 hover:underline flex items-center gap-1">
+
+    <!-- Right: Edit Button -->
+    <button (click)="onEditClick()" class="text-green-600 dark:text-green-400 hover:underline flex items-center gap-1">
       <span>تعديل</span>
       <i class="fa fa-edit"></i>
     </button>
   </div>
 
-  <!-- معلومات شخصية -->
-  <div class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow space-y-4">
-    <div class="flex justify-between items-center">
-      <h3 class="text-lg font-medium text-green-600 dark:text-green-400">المعلومات الشخصية</h3>
-      <button class="text-green-600 dark:text-green-400 hover:underline flex items-center gap-1">
-        <i class="fa fa-edit"></i>
-      </button>
-    </div>
-    <div class="grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-200">
-      <div><strong>الاسم الأول</strong><div>رفيق</div></div>
-      <div><strong>اسم العائلة</strong><div>الرحمن</div></div>
-      <div><strong>البريد الإلكتروني</strong><div>rafiqurrahman51&#64;gmail.com</div></div>
-      <div><strong>رقم الهاتف</strong><div>+09 345 346 46</div></div>
-      <div class="col-span-2"><strong>نبذة</strong><div>مدير الفريق</div></div>
+  <!-- Patient Info Card -->
+  <div *ngIf="patient" class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow space-y-4 text-sm text-gray-700 dark:text-gray-200">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <strong>الاسم الكامل</strong>
+        <div>{{ patient.fullName }}</div>
+      </div>
+      <div>
+        <strong>رقم الهاتف</strong>
+        <div>{{ patient.phoneNumber }}</div>
+      </div>
+      <div>
+        <strong>البريد الإلكتروني</strong>
+        <div>{{ patient.email }}</div>
+      </div>
+      <div>
+        <strong>تاريخ الميلاد</strong>
+        <div>{{ patient.dateOfBirth | date: 'yyyy-MM-dd' }}</div>
+      </div>
+      <div>
+        @if (patient.gender == "0")
+        {
+          <div><strong> النوع:</strong><span >ذكر</span></div>
+        }@else if (patient.gender == "1"){
+          <div><strong>النوع:</strong> <span class="text-pink-600">أنثى</span></div>
+        }
+      </div>
+      <div>
+        <strong>تاريخ الإنشاء</strong>
+        <div>{{ patient.createdAt | date: 'yyyy-MM-dd' }}</div>
+      </div>
     </div>
   </div>
 
-  <!-- معلومات العنوان -->
-  <div class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow space-y-4">
-    <div class="flex justify-between items-center">
-      <h3 class="text-lg font-medium text-green-600 dark:text-green-400">العنوان</h3>
-      <button class="text-green-600 dark:text-green-400 hover:underline flex items-center gap-1">
-        <i class="fa fa-edit"></i>
-      </button>
-    </div>
-    <div class="grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-200">
-      <div><strong>الدولة</strong><div>المملكة المتحدة</div></div>
-      <div><strong>المدينة/الولاية</strong><div>ليدز، شرق لندن</div></div>
-      <div><strong>الرمز البريدي</strong><div>ERT 2354</div></div>
-      <div><strong>الرقم الضريبي</strong><div>AS456545756</div></div>
-    </div>
+  <!-- Edit Modal -->
+ <div *ngIf="editMode" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-xl w-full max-w-md space-y-4">
+    <h3 class="text-lg text-green-600 dark:text-green-400 font-semibold mb-2">تعديل معلومات المريض</h3>
+    <form #form="ngForm" (ngSubmit)="save(form)" class="space-y-4">
+      
+      <!-- Full Name -->
+      <div class="space-y-1">
+        <label class="block text-sm">الاسم الكامل</label>
+        <input [(ngModel)]="editedPatient.fullName" name="fullName" required
+          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Phone -->
+      <div class="space-y-1">
+        <label class="block text-sm">رقم الهاتف</label>
+        <input [(ngModel)]="editedPatient.phoneNumber" name="phoneNumber" required
+          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Email -->
+      <div class="space-y-1">
+        <label class="block text-sm">البريد الإلكتروني</label>
+        <input [(ngModel)]="editedPatient.email" name="email" type="email" required
+          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="space-y-1">
+        <label class="block text-sm">تاريخ الميلاد</label>
+        <input [(ngModel)]="editedPatient.dateOfBirth" name="dateOfBirth" type="date" required
+          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <!-- Gender (Radio Buttons) -->
+      <div class="space-y-1">
+        <label class="block text-sm mb-1">النوع</label>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-1">
+            <input type="radio" [(ngModel)]="editedPatient.gender" name="gender" [value]="0" required />
+            <span>ذكر</span>
+          </label>
+          <label class="flex items-center gap-1">
+            <input type="radio" [(ngModel)]="editedPatient.gender" name="gender" [value]="1" />
+            <span>أنثى</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end gap-4 mt-4">
+        <button type="button" (click)="cancel()" class="text-gray-600 hover:underline">إلغاء</button>
+        <button type="submit" class="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700">حفظ</button>
+      </div>
+    </form>
   </div>
 </div>
-
