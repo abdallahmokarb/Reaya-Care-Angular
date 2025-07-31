@@ -5,4 +5,6 @@ export interface LoginResponse {
   email: string;
   phoneNumber: string;
   roles: string[];
+  doctorinfo: string;
+  patientinfo: Number;
 }

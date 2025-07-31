@@ -7,8 +7,12 @@ import { AuthGuard } from './auth.guard';
 import { Unauthorized } from './pages/unauthorized/unauthorized';
 import { Contact } from './pages/contact/contact';
 import { Specializations } from './pages/specializations/specializations';
+<<<<<<< HEAD
 import { Appointment } from './pages/appointment/appointment';
  
+=======
+
+>>>>>>> d3caf5d80e1ea70233bc42a9df4a8c73f6ab76a6
 export const routes: Routes = [
   {
     path: '',
@@ -104,6 +108,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
+      // {
+      //   path: 'all-doctors/:id',
+      //   loadComponent: () =>
+      //     import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
+      // },
+
       {
         path: 'appointment',
         loadComponent: () =>
@@ -124,8 +134,17 @@ export const routes: Routes = [
           ),
       },
       { path: 'contact', component: Contact },
-        { path: 'specializations', component: Specializations },
+      { path: 'specializations', component: Specializations },
       { path: 'payment/callback', component: PaymentCallbackComponent },
+
+      {
+        path: 'booking-confirmation',
+        loadComponent: () =>
+          import(
+            './pages/payment/booking-confirmation/booking-confirmation'
+          ).then((m) => m.BookingConfirmation),
+      },
+
       {
         path: 'unauthorized',
         component: Unauthorized,

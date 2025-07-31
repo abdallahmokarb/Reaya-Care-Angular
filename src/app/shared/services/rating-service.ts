@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Irating } from '../../models/irating';
@@ -9,7 +9,6 @@ import { Irating } from '../../models/irating';
 export class RatingService {
 
   private baseUrl = 'http://localhost:5216/api/Rating'; // 👈 Update this to your real API URL
-
   constructor(private http: HttpClient) {}
 
   getAllDoctorRatings(doctorID: number): Observable<Irating[]> {
@@ -31,6 +30,16 @@ export class RatingService {
       ...Array(fullStars).fill('fas fa-star fullstar'),
       ...Array(emptyStars).fill('fas fa-star emptystar'),
     ];
+  }
+
+  addRating(rating: Irating): Observable<Irating> {
+    const token = sessionStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post<Irating>('http://localhost:5216/api/Patient/AddRating', rating, { headers });
   }
 
   }
