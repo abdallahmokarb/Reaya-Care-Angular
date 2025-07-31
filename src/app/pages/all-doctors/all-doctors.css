@@ -255,3 +255,47 @@ select:focus {
 .book-btn:hover {
     background-color: #02451f;
 }
+
+
+
+
+
+::ng-deep .ngx-slider .ngx-slider-bar {
+  background-color: #68d791 !important; 
+  height: 6px;
+  border-radius: 10px;
+  left: 8px !important;
+  right: 10px !important;
+  width: 100% !important;
+}
+
+::ng-deep .ngx-slider .ngx-slider-selection {
+  background-color: #15803d !important; 
+  height: 4px;
+  border-radius: 10px;
+}
+
+::ng-deep .ngx-slider .ngx-slider-pointer {
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 20px !important;
+  height: 20px !important;
+  background-color: #15803d !important;
+  border: 2px solid #15803d !important;
+  margin-left: 0 !important;
+}
+
+::ng-deep .ngx-slider .ngx-slider-pointer:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.2); 
+}
+
+::ng-deep .ngx-slider .ngx-slider-bubble {
+  color: #15803d;
+  font-weight: 600;
+}
+
+::ng-deep .ngx-slider .ngx-slider-pointer::after {
+  display: none !important;
+}
+

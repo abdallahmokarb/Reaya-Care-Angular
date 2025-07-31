@@ -14,10 +14,11 @@ import {
   YourBooking,
 } from '../../shared/interfaces/bookingdetails';
 import { PaymentService } from '../../shared/services/payment';
+import { RatingForm } from "../../components/rating-form/rating-form";
 
 @Component({
   selector: 'app-doctor-details',
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, RatingForm, RatingForm],
   templateUrl: './doctor-details.html',
   styleUrl: './doctor-details.css',
 })
@@ -118,9 +119,21 @@ export class DoctorDetails implements OnInit {
     return this.ratingService.getRatingAsStars(value);
   }
 
+  onRatingAdded(_: Irating) {
+    this.ratingService.getAllDoctorRatings(this.doctorId).subscribe({
+      next: (ratings) => {
+        this.ratings = ratings;
+      },
+      error: (err) => {
+        console.error('Error fetching doctor ratings:', err);
+      },
+    });
+  }
+
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0]; // YYYY-MM-DD
   }
+
 
   async pay(): Promise<void> {
     if (!this.user) return;
