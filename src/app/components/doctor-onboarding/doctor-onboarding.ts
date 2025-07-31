@@ -22,7 +22,7 @@ export class DoctorOnboarding {
   public specializations!: ISpecialization[]
   public governments: Igovernment[] = []; // Initialize to avoid undefined errors
   public cities: ICity[] = []; // Initialize to avoid undefined errors
-  private doctorId = '1'; // Replace with actual doctor ID
+  private doctorId!: string; // Replace with actual doctor ID
   private docInfo!: IDocument;
   editMode = false;
   editForm: FormGroup;
@@ -37,6 +37,11 @@ export class DoctorOnboarding {
 
   private docInfoResponse!: IDocumentResponse[]
   constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService, private addressService: AddressService) {
+    
+    let user = sessionStorage.getItem('user');
+    if(user != null)
+      this.doctorId = JSON.stringify(JSON.parse(user).doctorId);
+    
     // Initialize any data or state here
     this.getSpecializations();
     this.getDoctorInfo();
