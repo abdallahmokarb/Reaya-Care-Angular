@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Igovernment } from '../../models/igovernment';
+import { ICity } from '../../models/icity';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +16,9 @@ export class AddressService {
 
     getAllGovernments(): Observable<Igovernment[]> {
       return this.http.get<Igovernment[]>(`${this.apiUrl}governments`);
+    }
+
+    getCitiesByGovernmentId(governmentId: number): Observable<ICity[]> {
+      return this.http.get<ICity[]>(`${this.apiUrl}cityByGovernment/${governmentId}`);
     }
   }

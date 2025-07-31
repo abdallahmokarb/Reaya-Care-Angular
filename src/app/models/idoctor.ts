@@ -25,4 +25,8 @@ export interface Idoctor {
     profilePictureUrl: string; // Optional profile picture URL
     profileImageUrl: string; // URL to the doctor's profile picture
     gender:string; // Gender of the doctor
+    cityId: number; // ID of the city where the doctor practices
+    cityName?: string; // Name of the city where the doctor practices
+    governmentId: number; // ID of the governorate where the doctor practices
+    governmentName?: string; // Name of the governorate where the doctor practices
 }
