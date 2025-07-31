@@ -54,6 +54,8 @@ export class AllDoctors implements OnInit {
   };
 
 ngOnInit(): void {
+
+    this.selectedSpecialization = Number(this.route.snapshot.paramMap.get('id'));
     // Load doctors and apply filters
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
