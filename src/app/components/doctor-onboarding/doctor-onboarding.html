@@ -36,6 +36,10 @@
             }
           </p>
           <p class="text-sm">
+            <span class="font-semibold">العنوان</span> {{ doctor.governmentName || 'غير محدد' }}, {{ doctor.cityName || 'غير محدد' }}
+          </p>
+         
+          <p class="text-sm">
             الحالة:
             <span [ngClass]="doctor?.status === 1 ? 'text-green-300' : 'text-red-300'">
               {{ doctor?.status === 1 ? 'نشط' : 'غير نشط' }}
@@ -269,6 +273,20 @@
           </select>
         </div>
         <div>
+        <label class="block mb-1">المحافظة</label>
+        <select (change)="onChangeGovernment($event)" formControlName="governmentId" class="w-full rounded border px-2 py-1">
+          <option value="">اختر المحافظة</option>
+          <option *ngFor="let gov of governments" [value]="gov.governmentId">{{ gov.name }}</option>
+        </select>
+      </div> 
+         <div>
+        <label class="block mb-1">المدينة</label>
+        <select formControlName="cityId" class="w-full rounded border px-2 py-1">
+          <option value="">اختر المدينة</option>
+          <option *ngFor="let city of cities" [value]="city.cityId">{{ city.name }}</option>
+        </select>
+      </div>    
+        <div>
           <label class="block mb-1">الأجر</label>
           <input formControlName="fees" type="number" class="w-full rounded border px-2 py-1" />
         </div>
@@ -295,6 +313,9 @@
           <label class="flex items-center gap-1"><input type="radio" formControlName="service" [value]="2" /> أونلاين</label>
         </div>
       </div>
+      
+      
+   
 
       <!-- Clinic details -->
       <div *ngIf="editForm.get('service')?.value == 1" class="grid grid-cols-2 gap-3">
