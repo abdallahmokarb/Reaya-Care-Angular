@@ -28,6 +28,8 @@ export class AuthService {
           phoneNumber: res.phoneNumber,
           roles: res.roles,
           token: res.token,
+          doctorId: res.doctorinfo,
+          patientId: res.patientinfo,
         };
 
         localStorage.removeItem('token');

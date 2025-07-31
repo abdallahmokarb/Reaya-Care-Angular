@@ -7,7 +7,7 @@ import { AuthGuard } from './auth.guard';
 import { Unauthorized } from './pages/unauthorized/unauthorized';
 import { Contact } from './pages/contact/contact';
 import { Specializations } from './pages/specializations/specializations';
- 
+
 export const routes: Routes = [
   {
     path: '',
@@ -129,8 +129,17 @@ export const routes: Routes = [
           ),
       },
       { path: 'contact', component: Contact },
-        { path: 'specializations', component: Specializations },
+      { path: 'specializations', component: Specializations },
       { path: 'payment/callback', component: PaymentCallbackComponent },
+
+      {
+        path: 'booking-confirmation',
+        loadComponent: () =>
+          import(
+            './pages/payment/booking-confirmation/booking-confirmation'
+          ).then((m) => m.BookingConfirmation),
+      },
+
       {
         path: 'unauthorized',
         component: Unauthorized,
