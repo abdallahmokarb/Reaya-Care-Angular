@@ -90,11 +90,24 @@ export class DoctorDetails implements OnInit {
     this.getTimeSlots();
   }
 
+  // getTimeSlots() {
+  //   const date = new Date(this.selectedDate);
+  //   this.getAvailableTimeSlotsForDoctor(this.doctorId, date).subscribe({
+  //     next: (slots) => (this.availableTimeSlots = slots),
+  //     error: (err) => console.error(err),
+  //   });
+  // }
   getTimeSlots() {
     const date = new Date(this.selectedDate);
+    console.log('Selected date:', date); // Log the date being used
     this.getAvailableTimeSlotsForDoctor(this.doctorId, date).subscribe({
-      next: (slots) => (this.availableTimeSlots = slots),
-      error: (err) => console.error(err),
+      next: (slots) => {
+        console.log('Available time slots:', slots); // Log the received slots
+        this.availableTimeSlots = slots;
+      },
+      error: (err) => {
+        console.error('Error fetching time slots:', err); // More detailed error logging
+      },
     });
   }
 
