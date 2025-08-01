@@ -248,7 +248,7 @@
 
   <!-- Edit Modal -->
  <div *ngIf="editMode" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-  <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-lg">
+  <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
     <h2 class="text-lg font-bold mb-4 text-green-600 dark:text-green-400">تعديل بيانات الطبيب</h2>
     <form [formGroup]="editForm" (ngSubmit)="submitEdit()" class="space-y-3 text-sm">
 
@@ -325,8 +325,32 @@
         </div>
         <div>
           <label class="block mb-1">الموقع على الخريطة</label>
-          <input formControlName="location" class="w-full rounded border px-2 py-1" />
+          <div class="flex-column">
+            <input
+              formControlName="location"
+              class="w-full rounded border px-2 py-1 mb-2"
+              readonly
+            />
+            <button
+              type="button"
+              (click)="toggleMap()"
+              class="px-3 py-1 bg-blue-600 text-white rounded"
+            >
+              @if(!showMap)
+              {
+              اختر من الخريطة
+
+              }
+              @else {
+                تراجع
+              }
+            </button>
+          </div>
         </div>
+      </div>
+
+      <div *ngIf="showMap" class="mt-4 border rounded p-2 ">
+          <app-map-picker (locationSelected)="onLocationSelected($event)"></app-map-picker>
       </div>
 
       <!-- About me -->
