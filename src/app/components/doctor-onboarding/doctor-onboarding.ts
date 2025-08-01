@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DoctorInfoService } from '../../shared/services/doctor-info-service';
 import { Idoctor } from '../../models/idoctor';
@@ -50,20 +50,44 @@ export class DoctorOnboarding {
    
 
     this.editForm = this.fb.group({
-      fullName: [this.doctor?.fullName || ''],
-      email: [this.doctor?.email || ''],
-      phoneNumber: [this.doctor?.phoneNumber || ''],
-      specializationId: [this.doctor?.specializationId || null],
-      expYears: [this.doctor?.expYears || ''],
-      aboutMe: [this.doctor?.aboutMe || ''],
-      fees: [this.doctor?.fees || ''],
-      service: [this.doctor?.serviceId || null],
-      location: [this.doctor?.location || ''],
-      detailedAddress: [this.doctor?.detailedAddress || ''],
-      gender: [this.doctor?.gender || ''],
-      governmentId: [this.doctor?.governmentId || ''],
-      cityId: [this.doctor?.cityId || '']
-    });
+  fullName: [this.doctor?.fullName || '', [Validators.required, Validators.minLength(3)]],
+  email: [this.doctor?.email || '', [Validators.required, Validators.email]],
+  phoneNumber: [this.doctor?.phoneNumber || '', 
+    [Validators.required]],
+
+  expYears: [this.doctor?.expYears || '', 
+    [Validators.required, Validators.min(0), Validators.max(50)]],
+  aboutMe: [this.doctor?.aboutMe || '', 
+    [Validators.required, Validators.minLength(20)]],
+  fees: [this.doctor?.fees || '', 
+    [Validators.required, Validators.min(0), Validators.max(10000)]],
+  service: [this.doctor?.serviceId || 0, [Validators.required, Validators.min(1)]],
+  location: [this.doctor?.location || ''],
+  detailedAddress: [this.doctor?.detailedAddress || ''],
+  gender: [this.doctor?.gender || '', Validators.required],
+  specializationId: [this.doctor?.specializationId || 0, [Validators.required, Validators.min(1)]],
+  governmentId: [this.doctor?.governmentId || 0, [Validators.required, Validators.min(1)]],
+  cityId: [this.doctor?.cityId || 0, [Validators.required, Validators.min(1)]],
+});
+
+// Add conditional validation for clinic details
+this.editForm.get('service')?.valueChanges.subscribe(serviceType => {
+  const detailedAddressControl = this.editForm.get('detailedAddress');
+  const locationControl = this.editForm.get('location');
+
+  if (serviceType == 1) { // Clinic service
+    detailedAddressControl?.setValidators([Validators.required]);
+    locationControl?.setValidators([Validators.required]);
+  } else {
+    detailedAddressControl?.clearValidators();
+    locationControl?.clearValidators();
+    detailedAddressControl?.setValue('');
+    locationControl?.setValue('');
+  }
+
+  detailedAddressControl?.updateValueAndValidity();
+  locationControl?.updateValueAndValidity();
+});
     //this.docInfoResponse = JSON.parse(localStorage.getItem('docmentrespose') || 'null');
     this.docInfoResponseUrl = {
       medicalLicense: this.doctor?.medicalLicenseUrl || '',
@@ -100,49 +124,70 @@ export class DoctorOnboarding {
   }
 
   openEditModal() {
-    console.log('Opening edit modal');
-    this.editForm.patchValue(this.doctor); // doctor is your current doctor object
-    this.editForm.patchValue({
-      specializationId: this.doctor.specializationId || 0 
-    });
-    this.editForm.patchValue({
-      service: this.doctor.serviceId || 0
-    });
+  console.log('Opening edit modal');
+  this.editForm.patchValue({
+    fullName: this.doctor.fullName || '',
+    email: this.doctor.email || '',
+    phoneNumber: this.doctor.phoneNumber || '',
+    specializationId: this.doctor.specializationId ?? 0,
+    expYears: this.doctor.expYears ?? '',
+    aboutMe: this.doctor.aboutMe || '',
+    fees: this.doctor.fees ?? '',
+    service: this.doctor.serviceId ?? 0,
+    location: this.doctor.location || '',
+    detailedAddress: this.doctor.detailedAddress || '',
+    gender: this.doctor.gender || '',
+    governmentId: this.doctor.governmentId ?? 0,
+    cityId: this.doctor.cityId ?? 0
+  });
 
-    this.editMode = true;
-
-    // Reset detailedAddress and location if service is online
-    this.editForm.get('service')?.valueChanges.subscribe((val) => {
-      if (val == 2) {
-        this.editForm.patchValue({
-          detailedAddress: '',
-          location: ''
-        });
-      }
-    });
-
-  }
-
+  // Trigger the service change handler to set proper validators
+  this.editForm.get('service')?.updateValueAndValidity();
+  
+  this.editMode = true;
+}
   closeEditModal() {
     this.editMode = false;
   }
 
-  submitEdit() {
-    const updatedDoctor = this.editForm.value;
-    console.log('Submitting edited doctor info:', updatedDoctor);
-    this.doctorInfoService.updateDoctorInfo(this.doctorId, updatedDoctor).subscribe({
-      next: (res) => {
-        console.log('Doctor info updated successfully:', res);
-        this.doctor = res;
-        this.editMode = false;
-      },
-      error: (err) => {
-        console.error('Error updating doctor info:', err);
-        this.editMode = false;
-        
-      }
-    });
+ submitEdit() {
+  // Mark all controls as touched to trigger validation messages
+  this.markFormGroupTouched(this.editForm);
+
+  if (this.editForm.invalid) {
+    console.log('Form is invalid');
+    return;
   }
+
+  const updatedDoctor = this.editForm.value;
+  console.log('Submitting edited doctor info:', updatedDoctor);
+  
+  this.doctorInfoService.updateDoctorInfo(this.doctorId, updatedDoctor).subscribe({
+    next: (res) => {
+      console.log('Doctor info updated successfully:', res);
+      this.doctor = res;
+      this.editMode = false;
+      // Optionally refresh data or show success message
+    },
+    error: (err) => {
+      console.error('Error updating doctor info:', err);
+      // Show error message to user
+    }
+  });
+}
+
+// Helper method to mark all form controls as touched
+private markFormGroupTouched(formGroup: FormGroup) {
+  Object.values(formGroup.controls).forEach(control => {
+    control.markAsTouched();
+
+    if (control instanceof FormGroup) {
+      this.markFormGroupTouched(control);
+    }
+  });
+}
+
+
   getSpecializations() {
     this.doctorInfoService.getspecializations().subscribe({
       next: (specializations: ISpecialization[]) => {
