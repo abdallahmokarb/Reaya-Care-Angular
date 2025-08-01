@@ -9,9 +9,10 @@ import { IDocument, IDocumentResponse } from '../../models/idocument';
 import { AddressService } from '../../shared/services/address-service';
 import { Igovernment } from '../../models/igovernment';
 import { ICity } from '../../models/icity';
+import { MapPicker } from '../map-picker/map-picker';
 @Component({
   selector: 'app-doctor-onboarding',
-  imports: [CommonModule,
+  imports: [CommonModule, MapPicker,
     FormsModule,ReactiveFormsModule] ,
   templateUrl: './doctor-onboarding.html',
   styleUrl: './doctor-onboarding.css'
@@ -34,6 +35,8 @@ export class DoctorOnboarding {
     experienceCertificate: '',
     ProfileImage: ''
   }; // Initialize to avoid undefined errors
+
+  showMap = false;
 
   private docInfoResponse!: IDocumentResponse[]
   constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService, private addressService: AddressService) {
@@ -75,7 +78,18 @@ export class DoctorOnboarding {
     
   }
 
+  onLocationSelected(link: string) {
+    this.editForm.get('location')?.setValue(link);
+    this.showMap = false;
+  }
 
+  toggleMap(){
+    if(this.showMap == false)
+      this.showMap = true;
+
+    else
+      this.showMap = false;
+  }
 
   getDoctorInfo() {
     this.doctorInfoService.getDoctorInfo(this.doctorId).subscribe({
@@ -100,6 +114,7 @@ export class DoctorOnboarding {
   }
 
   openEditModal() {
+    document.body.style.overflow = 'hidden';
     console.log('Opening edit modal');
     this.editForm.patchValue(this.doctor); // doctor is your current doctor object
     this.editForm.patchValue({
@@ -125,6 +140,7 @@ export class DoctorOnboarding {
 
   closeEditModal() {
     this.editMode = false;
+    document.body.style.overflow = 'auto';
   }
 
   submitEdit() {
@@ -142,6 +158,8 @@ export class DoctorOnboarding {
         
       }
     });
+
+    document.body.style.overflow = 'auto';
   }
   getSpecializations() {
     this.doctorInfoService.getspecializations().subscribe({
