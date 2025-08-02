@@ -105,11 +105,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
-      // {
-      //   path: 'all-doctors/:id',
-      //   loadComponent: () =>
-      //     import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
-      // },
+      {
+        path: 'all-doctors/:id',
+        loadComponent: () =>
+          import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
+      },
 
       {
         path: 'appointment',
