@@ -1,4 +1,4 @@
-<!-- specialization-card.component.html
+<!-- specialization-card.component.html -->
 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-100 h-full flex flex-col" dir="rtl">
   <!-- Image Header -->
   <div class="h-48 bg-cover bg-center" [style.background-image]="'url(' + specialization.imageUrl + ')'" (error)="specialization.imageUrl = 'assets/images/specializations/default.jpg'"></div>
@@ -16,16 +16,10 @@
   <!-- Footer -->
   <div class="px-6 pb-6">
     <a 
-      //[routerLink]="['/doctors', specialization.id]"
-      class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
-      عرض الأطباء
-    </a>
-=======
   [routerLink]="['/all-doctors']"
   [queryParams]="{ specializationId: specialization.specializationId }"
   class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
   عرض الأطباء
 </a>
->>>>>>> d3caf5d80e1ea70233bc42a9df4a8c73f6ab76a6
   </div>
-</div> -->
+</div>

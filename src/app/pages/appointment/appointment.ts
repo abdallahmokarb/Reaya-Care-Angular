@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './appointment.html',
 })
 export class Appointment implements OnInit {
+  Appointment: IAppointment[] = [];
   previousAppointments: IAppointment[] = [];
   upcomingAppointments: IAppointment[] = [];
   isLoading = true;
@@ -18,18 +19,41 @@ export class Appointment implements OnInit {
   constructor(private appointmentService: AppointmentService,
     private router: Router) {}
 
-   ngOnInit() {
+   ngOnInit(): void {
+    console.log('upcomingAppointments:', this.upcomingAppointments);
+   console.log('previousAppointments:', this.previousAppointments);
+
   this.isLoading = true;
 
-  this.appointmentService.getMyAppointments().subscribe(res => {
-    const now = new Date();
+  this.appointmentService.getMyAppointments().subscribe({
+    next: (appointments) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-    this.upcomingAppointments = res.filter(a => new Date(a.date) >= now);
-    this.previousAppointments = res.filter(a => new Date(a.date) < now);
+      this.upcomingAppointments = appointments.filter(a => {
+        const date = new Date(a.date);
+        date.setHours(0, 0, 0, 0);
+        return date >= today;
+      });
 
-    this.isLoading = false;
+      this.previousAppointments = appointments.filter(a => {
+        const date = new Date(a.date);
+        date.setHours(0, 0, 0, 0);
+        return date < today;
+      });
+
+      this.isLoading = false;
+      this.Appointment = appointments; 
+    },
+    error: (err) => {
+      console.error('Error fetching appointments:', err);
+      this.isLoading = false; 
+    },
   });
 }
+
+
+
 
   loadAppointments(): void {
     this.isLoading = true;

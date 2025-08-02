@@ -1,31 +1,59 @@
-<div class="p-4 border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-md">
-  <div class="flex justify-between items-center mb-2">
-    <div class="text-sm font-semibold text-green-700 dark:text-green-300">
-      حالة الموعد:
-      <span [ngClass]="{
-        'text-blue-600': appointment.status === 'Scheduled',
-        'text-gray-500': appointment.status === 'Completed',
-        'text-red-600': appointment.status === 'Canceled'
-      }">
+<!-- حاوية لتوسيط الكارت في الصفحة -->
+<div class="flex justify-center px-4">
+  <!-- الكارت نفسه -->
+  <div dir="rtl" class="rounded-2xl p-5 shadow-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 text-right w-full max-w-2xl">
+    <!-- العنوان والحالة -->
+    <div class="flex flex-row-reverse justify-between items-center mb-4">
+      <div class="text-xl font-semibold text-gray-800 dark:text-white">
+        الدكتور / {{ appointment.doctorName }}
+      </div>
+      <span
+        class="text-sm font-medium px-3 py-1 rounded-full border"
+        [ngClass]="{
+          'bg-blue-100 text-blue-800 border-blue-300': appointment.status === 'Confirmed',
+          'bg-green-100 text-green-800 border-green-300': appointment.status === 'Finished',
+          'bg-red-100 text-red-800 border-red-300': appointment.status === 'Canceled'
+        }"
+      >
         {{ getStatusLabel(appointment.status) }}
       </span>
     </div>
-  </div>
 
-  <div class="grid sm:grid-cols-2 gap-2 text-sm">
-    <div><strong>الطبيب:</strong> {{ appointment.doctorName }}</div>
-    <div><strong>التخصص:</strong> {{ appointment.specialization }}</div>
-    <div><strong>التاريخ:</strong> {{ appointment.date }}</div>
-    <div><strong>الوقت:</strong> {{ appointment.timeRange }}</div>
-    <div *ngIf="appointment.notes"><strong>ملاحظات:</strong> {{ appointment.notes }}</div>
-  </div>
-</div>
+    <!-- تفاصيل الموعد -->
+    <div class="space-y-3 text-gray-700 dark:text-gray-200 text-sm">
+      <div class="flex flex-row items-center gap-2 justify-end">
+        <span><strong>التخصص:</strong> {{ appointment.specializationName }}</span>
+        <span>🩺</span>
+      </div>
 
-<div *ngIf="appointment.status === 'Scheduled'" class="mt-4 text-end">
-  <button
-    (click)="cancelAppointment()"
-    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md shadow transition"
-  >
-    إلغاء الموعد
-  </button>
+      <div class="flex flex-row items-center gap-2 justify-end">
+        <span><strong>التاريخ:</strong> {{ appointment.date | date: 'fullDate':'ar-EG' }}</span>
+        <span>📅</span>
+      </div>
+
+      <div class="flex flex-row items-center gap-2 justify-end">
+        <span><strong>الوقت:</strong> {{ getTimeRange() }}</span>
+        <span>⏰</span>
+      </div>
+    </div>
+
+    <!-- الأزرار -->
+    <div class="mt-4 flex gap-2 flex-row-reverse">
+      <button
+        *ngIf="appointment.status === 'Confirmed'"
+        class="px-4 py-2 rounded-xl bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 hover:text-red-900 transition-all"
+        (click)="cancelAppointment(appointment.appointmentId)"
+      >
+        ❌ إلغاء الموعد
+      </button>
+
+      <!-- <button
+        *ngIf="appointment.status === 'Finished'"
+        class="px-4 py-2 rounded-xl bg-yellow-100 text-yellow-800 border border-yellow-300 hover:bg-yellow-200 transition-all"
+        (click)="rateDoctor(appointment.doctorId)"
+      >
+        ⭐ تقييم الطبيب
+      </button> -->
+    </div>
+  </div>
 </div>
