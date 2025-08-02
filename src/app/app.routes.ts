@@ -110,6 +110,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
+      {
+        path: 'doctor-call/:id',
+        loadComponent: () =>
+          import('./pages/doctor-call/doctor-call').then((m) => m.DoctorCall),
+      },
+      {
+        path: 'patient-call/:id',
+        loadComponent: () =>
+          import('./pages/patient-call/patient-call').then((m) => m.PatientCall),
+      },
 
       {
         path: 'appointment',

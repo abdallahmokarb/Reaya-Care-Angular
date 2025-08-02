@@ -1,0 +1,12 @@
+<div class="video-section">
+    <h2>مكالمة الفيديو مع المريض</h2>
+
+    <iframe
+    *ngIf="jitsiUrl"
+    [src]="jitsiUrl | safeUrl"
+    allow="camera; microphone; fullscreen; display-capture"
+    allowfullscreen
+    frameborder="0">
+    </iframe>
+</div>
+
