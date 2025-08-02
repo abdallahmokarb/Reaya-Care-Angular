@@ -54,8 +54,12 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-200">
           <p><strong>البريد الإلكتروني:</strong> {{ doctor?.email }}</p>
           <p><strong>رقم الهاتف:</strong> {{ doctor?.phoneNumber }}</p>
-          <p><strong>العنوان:</strong> {{ doctor?.detailedAddress || 'غير محدد' }}</p>
-          <p><strong>الموقع:</strong> {{ doctor?.location || 'غير محدد' }}</p>
+          <!-- <p><strong>العنوان:</strong> {{ doctor?.detailedAddress || 'غير محدد' }}</p>
+          <p><strong>الموقع:</strong> {{ doctor?.location || 'غير محدد' }}</p> -->
+          <p><strong>العنوان:</strong>
+          <a [href]="doctor?.location">
+            {{ doctor?.detailedAddress || 'غير محدد' }}
+          </a>
         </div>
       </div>
 
