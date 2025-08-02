@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   private readonly apiUrl = `${environment.apiBaseUrl}Account/login`;
+
   constructor(private http: HttpClient, private router: Router) {}
 
   login(
@@ -18,8 +19,7 @@ export class AuthService {
   ): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
       tap((res) => {
-        const token = res.token;
-        const role = res.roles?.[0]?.toLowerCase(); // first role
+        const role = res.roles?.[0]?.toLowerCase();
 
         const user = {
           id: res.id,
@@ -32,22 +32,17 @@ export class AuthService {
           patientId: res.patientinfo,
         };
 
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('user');
+        // مسح البيانات السابقة
+        localStorage.clear();
+        sessionStorage.clear();
 
-        if (remember) {
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(user));
-        } else {
-          sessionStorage.setItem('token', token);
-          sessionStorage.setItem('user', JSON.stringify(user));
-        }
+        // حفظ البيانات حسب تفضيل المستخدم
+        const storage = remember ? localStorage : sessionStorage;
+        storage.setItem('token', res.token);
+        storage.setItem('user', JSON.stringify(user));
 
-        setTimeout(() => {
-          this.redirectByRole(role);
-        });
+        // توجيه حسب الدور
+        setTimeout(() => this.redirectByRole(role));
       })
     );
   }
@@ -59,13 +54,14 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+    console.log('%c[AuthService] token:', 'color: blue', token);
+    return token;
   }
 
   getUser(): any {
-    const userData =
-      localStorage.getItem('user') || sessionStorage.getItem('user');
-    return userData ? JSON.parse(userData) : null;
+    const user = sessionStorage.getItem('user') || localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 
   isLoggedIn(): boolean {
@@ -85,7 +81,6 @@ export class AuthService {
         break;
       default:
         this.router.navigate(['/auth/login']);
-        break;
     }
   }
 }
