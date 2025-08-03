@@ -1,4 +1,4 @@
-import { Component, inject, Pipe } from '@angular/core';
+import { Component, inject, OnInit, Pipe } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VideoCallService } from '../../shared/services/video-call-service';
 import { SafeUrlPipe } from '../../pipes/safe-url-pipe';
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './doctor-call.html',
   styleUrl: './doctor-call.css'
 })
-export class DoctorCall {
+export class DoctorCall implements OnInit{
   jitsiUrl: string = '';
   appointmentId!: number;
   notes: string = '';
