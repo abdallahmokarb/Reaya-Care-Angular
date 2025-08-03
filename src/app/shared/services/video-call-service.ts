@@ -28,7 +28,7 @@ export class VideoCallService {
   AddDoctorNotes(appointmentId: number, notes: string) {
     const headers = this.getAuthHeaders();
     return this.http.post(
-      `${this.baseUrl}/${appointmentId}/notes`,
+      `${this.baseUrl}/AddNotes/${appointmentId}`,
       { notes },
       { headers }
     );
