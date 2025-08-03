@@ -1,0 +1,76 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
+    تفاصيل مدفوعاتي
+  </h2>
+
+  <div *ngIf="payments.length > 0; else noPayments" class="overflow-x-auto">
+    <div class="rounded-xl overflow-hidden shadow-lg bg-white dark:bg-gray-900">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-green-600 dark:bg-green-800 text-white text-sm">
+          <tr>
+            <th class="px-6 py-3 text-right">رقم الدفع</th>
+            <th class="px-6 py-3 text-right">المبلغ</th>
+            <th class="px-6 py-3 text-right">الحالة</th>
+            <th class="px-6 py-3 text-right">رقم مرجع العملية</th>
+            <th class="px-6 py-3 text-right">تاريخ ووقت انشاء العملية</th>
+            <th class="px-6 py-3 text-right">نوع البطاقة</th>
+            <th class="px-6 py-3 text-right">آخر أربع أرقام</th>
+            <th class="px-6 py-3 text-right">عكس العملية</th>
+            <th class="px-6 py-3 text-right">استرداد</th>
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr
+            *ngFor="let payment of payments"
+            class="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+          >
+            <td class="px-6 py-4">{{ payment.paymentId }}</td>
+            <td class="px-6 py-4">{{ payment.amount }} جنيه</td>
+            <td class="px-6 py-4">
+              <span
+                [ngClass]="{
+                  'text-green-600 dark:text-green-400 font-semibold': payment.status == 1,
+                  'text-red-600 dark:text-red-400 font-semibold': payment.status == 0
+                }"
+              >
+                {{ payment.status == 1 ? 'ناجحة' : 'فشلت' }}
+              </span>
+            </td>
+            <td class="px-6 py-4">{{ payment.transactionId }}</td>
+            <td class="px-6 py-4">
+              {{ payment.createdAt | date: 'yyyy/MM/dd - h:mm a' }}
+            </td>
+            <td class="px-6 py-4">Visa Gold</td>
+            <td class="px-6 py-4">4242</td>
+            <td class="px-6 py-4 text-gray-400">null</td>
+            <td class="px-6 py-4">
+              <a class="text-blue-600 dark:text-blue-400 hover:underline"
+                >اضغط هنا</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #noPayments>
+    <div
+      class="flex flex-col items-center justify-center min-h-[400px] bg-white dark:bg-gray-800 rounded-xl shadow-md p-6"
+    >
+      <h2 class="text-2xl font-bold mb-4 dark:text-white">مدفوعاتي</h2>
+
+      <img
+        src="https://cdn3d.iconscout.com/3d/premium/thumb/debit-card-5296099-4431733.png"
+        alt="No Bookings"
+        class="w-40 h-40 mb-6 opacity-80"
+      />
+
+      <p class="text-gray-500 text-lg text-center dark:text-gray-300">
+        لا يوجد أي مدفوعات لك حالياً
+      </p>
+    </div>
+  </ng-template>
+</div>
