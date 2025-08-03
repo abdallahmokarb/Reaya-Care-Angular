@@ -11,4 +11,8 @@ export class PaymentService {
   createPayment(bookingDetails: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Create`, bookingDetails);
   }
+
+  getPaymentsByUserId(userId: string | number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}`);
+  }
 }
