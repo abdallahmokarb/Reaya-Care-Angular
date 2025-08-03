@@ -58,8 +58,11 @@ export const routes: Routes = [
               import('./components/doctor-onboarding/doctor-onboarding').then(
                 (m) => m.DoctorOnboarding
               ),
-          },
-        ],
+          },{
+      path: 'doctor/timeslots',
+      loadComponent: () => 
+        import('./pages/dashboard/doctor-timeslots/doctor-timeslots').then(m => m.DoctorTimeslots)
+    }],
       },
 
       {
