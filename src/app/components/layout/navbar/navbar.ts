@@ -12,6 +12,23 @@ import { Router, RouterModule } from '@angular/router';
 export class Navbar {
   isMobMenuOpen = signal(false);
   user = signal<any>(null);
+  loginUser() {
+    const userData = sessionStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
+  }
+  getDashboardLink(user: any): string {
+    const roles = user?.roles ?? [];
+
+    if (roles.includes('Doctor')) {
+      return '/dashboard/doctor';
+    } else if (roles.includes('Patient')) {
+      return '/dashboard/patient';
+    } else if (roles.includes('Admin')) {
+      return '/dashboard/admin';
+    }
+
+    return '/unauthorized';
+  }
 
   darkMode = signal<boolean>(
     JSON.parse(localStorage.getItem('darkMode') ?? 'false')
