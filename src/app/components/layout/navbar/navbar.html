@@ -64,13 +64,14 @@
           >اتصل بنا</a
         >
       </li>
-      <li>
+      <li *ngIf="user() as user">
         <a
-          [routerLink]="['/help-center']"
+          [routerLink]="getDashboardLink(user)"
           class="hover:text-green-600"
           routerLinkActive="text-green-700"
-          >مركز الدعم</a
         >
+          لوحة المعلومات
+        </a>
       </li>
     </ul>
 
