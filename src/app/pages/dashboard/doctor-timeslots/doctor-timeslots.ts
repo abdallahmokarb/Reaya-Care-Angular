@@ -184,26 +184,35 @@ export class DoctorTimeslots implements OnInit {
     
     // Create start datetime in local timezone (Egypt)
     const [startHour, startMinute] = this.formData.startTime.split(':');
-    const startDateTime = new Date(year, month, day, parseInt(startHour), parseInt(startMinute), 0, 0);
+    // const startDateTime = new Date(year, month, day, parseInt(startHour), parseInt(startMinute), 0, 0);
     
     // Create end datetime in local timezone (Egypt)
     const [endHour, endMinute] = this.formData.endTime.split(':');
-    const endDateTime = new Date(year, month, day, parseInt(endHour), parseInt(endMinute), 0, 0);
+    // const endDateTime = new Date(year, month, day, parseInt(endHour), parseInt(endMinute), 0, 0);
     
-    // Get day of week enum value
-    const dayOfWeek = this.getDayOfWeekEnum(startDateTime.getDay());
+    // Construct the local time ISO format without "Z"
+    const formatLocal = (h: string, m: string) =>
+      `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${h.padStart(2, '0')}:${m.padStart(2, '0')}:00`;
 
-    console.log('Sending times:', {
-      startTime: startDateTime.toISOString(),
-      endTime: endDateTime.toISOString(),
-      localStart: startDateTime.toString(),
-      localEnd: endDateTime.toString()
-    });
+
+    const startTime = formatLocal(startHour, startMinute);
+    const endTime = formatLocal(endHour, endMinute);
+
+    // Get day of week enum value
+    // const dayOfWeek = this.getDayOfWeekEnum(startDateTime.getDay());
+    const dayOfWeek = this.getDayOfWeekEnum(new Date(year, month, day).getDay());
+
+    // console.log('Sending times:', {
+    //   startTime: startDateTime.toISOString(),
+    //   endTime: endDateTime.toISOString(),
+    //   localStart: startDateTime.toString(),
+    //   localEnd: endDateTime.toString()
+    // });
 
     return {
       doctorId: this.currentDoctorId,
-      startTime: startDateTime,
-      endTime: endDateTime,
+      startTime: startTime,
+      endTime: endTime,
       dayOfWeek: dayOfWeek
     };
   }

@@ -21,8 +21,8 @@ export class DoctorTimeslotService {
         map(slots => slots.map(slot => ({
           ...slot,
           // Quick fix: remove 3-hour UTC shift when displaying
-          startTime: new Date(new Date(slot.startTime).getTime() + (3 * 60 * 60 * 1000)),
-          endTime: new Date(new Date(slot.endTime).getTime() + (3 * 60 * 60 * 1000))
+          startTime: new Date(new Date(slot.startTime).getTime()),
+          endTime: new Date(new Date(slot.endTime).getTime())
         })))
       );
   }
