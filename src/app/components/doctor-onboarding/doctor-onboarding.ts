@@ -6,9 +6,13 @@ import { DoctorInfoService } from '../../shared/services/doctor-info-service';
 import { Idoctor } from '../../models/idoctor';
 import { ISpecialization } from '../../models/ispecialization';
 import { IDocument, IDocumentResponse } from '../../models/idocument';
+import { AddressService } from '../../shared/services/address-service';
+import { Igovernment } from '../../models/igovernment';
+import { ICity } from '../../models/icity';
+import { MapPicker } from '../map-picker/map-picker';
 @Component({
   selector: 'app-doctor-onboarding',
-  imports: [CommonModule,
+  imports: [CommonModule, MapPicker,
     FormsModule,ReactiveFormsModule] ,
   templateUrl: './doctor-onboarding.html',
   styleUrl: './doctor-onboarding.css'
@@ -17,7 +21,9 @@ export class DoctorOnboarding {
 
   public doctor!: Idoctor;
   public specializations!: ISpecialization[]
-  private doctorId = '1'; // Replace with actual doctor ID
+  public governments: Igovernment[] = []; // Initialize to avoid undefined errors
+  public cities: ICity[] = []; // Initialize to avoid undefined errors
+  private doctorId!: string; // Replace with actual doctor ID
   private docInfo!: IDocument;
   editMode = false;
   editForm: FormGroup;
@@ -30,13 +36,21 @@ export class DoctorOnboarding {
     ProfileImage: ''
   }; // Initialize to avoid undefined errors
 
+  showMap = false;
+
   private docInfoResponse!: IDocumentResponse[]
-  constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService) {
+  constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService, private addressService: AddressService) {
+    
+    let user = sessionStorage.getItem('user');
+    if(user != null)
+      this.doctorId = JSON.stringify(JSON.parse(user).doctorId);
+    
     // Initialize any data or state here
     this.getSpecializations();
     this.getDoctorInfo();
     this.getAllDocuments();
-
+    this.getGovernments(); 
+   
 
     this.editForm = this.fb.group({
       fullName: [this.doctor?.fullName || ''],
@@ -50,6 +64,8 @@ export class DoctorOnboarding {
       location: [this.doctor?.location || ''],
       detailedAddress: [this.doctor?.detailedAddress || ''],
       gender: [this.doctor?.gender || ''],
+      governmentId: [this.doctor?.governmentId || ''],
+      cityId: [this.doctor?.cityId || '']
     });
     //this.docInfoResponse = JSON.parse(localStorage.getItem('docmentrespose') || 'null');
     this.docInfoResponseUrl = {
@@ -59,10 +75,21 @@ export class DoctorOnboarding {
       experienceCertificate: this.doctor?.experienceCertificateUrl || '',
       ProfileImage: this.doctor?.profilePictureUrl || ''
     }
-    console.log('Document response URL:', this.docInfoResponseUrl);
+    
   }
 
+  onLocationSelected(link: string) {
+    this.editForm.get('location')?.setValue(link);
+    this.showMap = false;
+  }
 
+  toggleMap(){
+    if(this.showMap == false)
+      this.showMap = true;
+
+    else
+      this.showMap = false;
+  }
 
   getDoctorInfo() {
     this.doctorInfoService.getDoctorInfo(this.doctorId).subscribe({
@@ -77,6 +104,7 @@ export class DoctorOnboarding {
       experienceCertificate: this.doctor?.experienceCertificateUrl || '',
       ProfileImage: this.doctor?.profilePictureUrl || ''
     }
+     this.getCitiesByGovernmentId(this.doctor?.governmentId || 0);
     console.log('Document response URL:', this.docInfoResponseUrl);
       },
       error: (error) => {
@@ -86,6 +114,7 @@ export class DoctorOnboarding {
   }
 
   openEditModal() {
+    document.body.style.overflow = 'hidden';
     console.log('Opening edit modal');
     this.editForm.patchValue(this.doctor); // doctor is your current doctor object
     this.editForm.patchValue({
@@ -111,10 +140,12 @@ export class DoctorOnboarding {
 
   closeEditModal() {
     this.editMode = false;
+    document.body.style.overflow = 'auto';
   }
 
   submitEdit() {
     const updatedDoctor = this.editForm.value;
+    console.log('Submitting edited doctor info:', updatedDoctor);
     this.doctorInfoService.updateDoctorInfo(this.doctorId, updatedDoctor).subscribe({
       next: (res) => {
         console.log('Doctor info updated successfully:', res);
@@ -127,6 +158,8 @@ export class DoctorOnboarding {
         
       }
     });
+
+    document.body.style.overflow = 'auto';
   }
   getSpecializations() {
     this.doctorInfoService.getspecializations().subscribe({
@@ -240,6 +273,37 @@ export class DoctorOnboarding {
         console.error('Error fetching documents:', error);
       }
     });
+  }
+
+  getGovernments() {
+    this.addressService.getAllGovernments().subscribe({
+      next: (governments: Igovernment[]) => {
+        this.governments = governments;
+      },
+      error: (error) => {
+        console.error('Error fetching governments:', error);
+      }
+    });
+  }
+  getCitiesByGovernmentId(governmentId: number) {
+    this.addressService.getCitiesByGovernmentId(governmentId).subscribe({
+      next: (date: ICity[]) => {
+        // Handle the cities data as needed
+        this.cities = date;
+        console.log('Cities for government ID', governmentId, ':', this.cities);
+       
+      },
+      error: (error) => {
+        console.error('Error fetching cities:', error);
+      }
+    });
+  }
+  onChangeGovernment(event: any) {
+    const governmentId = event.target.value;
+    console.log('Selected government ID:', governmentId);
+
+    this.editForm.patchValue({ cityId: '' });
+    this.getCitiesByGovernmentId(governmentId);
   }
 }
 

@@ -12,4 +12,5 @@ export interface Idoctordetails {
     waitingTime: number; // Estimated waiting time in minutes
     ratingValue: number; // Rating out of 5
     about?: string; // Optional field for doctor's biography
+    location: string;
 }

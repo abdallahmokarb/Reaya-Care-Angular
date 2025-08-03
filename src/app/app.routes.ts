@@ -7,6 +7,8 @@ import { AuthGuard } from './auth.guard';
 import { Unauthorized } from './pages/unauthorized/unauthorized';
 import { Contact } from './pages/contact/contact';
 import { Specializations } from './pages/specializations/specializations';
+import { Appointment } from './pages/appointment/appointment';
+ 
 
 export const routes: Routes = [
   {
@@ -106,17 +108,27 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
-      // {
-      //   path: 'all-doctors/:id',
-      //   loadComponent: () =>
-      //     import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
-      // },
+      {
+        path: 'all-doctors/:id',
+        loadComponent: () =>
+          import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
+      },
+      {
+        path: 'doctor-call/:id',
+        loadComponent: () =>
+          import('./pages/doctor-call/doctor-call').then((m) => m.DoctorCall),
+      },
+      {
+        path: 'patient-call/:id',
+        loadComponent: () =>
+          import('./pages/patient-call/patient-call').then((m) => m.PatientCall),
+      },
 
       {
         path: 'appointment',
         loadComponent: () =>
           import('./pages/appointment/appointment').then(
-            (m) => m.AppointmentComponent
+            (m) => m.Appointment
           ),
       },
 
@@ -147,6 +159,10 @@ export const routes: Routes = [
         path: 'unauthorized',
         component: Unauthorized,
       },
+   
+       { path: 'appointments', component: Appointment },
+       { path: 'all-doctors', component: AllDoctors }, // for routing
+
     ],
   },
 ];
