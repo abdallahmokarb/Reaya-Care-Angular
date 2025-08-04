@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, FormsModule],
 })
 export class PatientProfile {
-  patientId: string = '10'; // Replace with dynamic ID as needed
+  patientId!: string; // Replace with dynamic ID as needed
   editMode: boolean = false;
 
   patient: Ipatient | null = null;
@@ -26,6 +26,9 @@ export class PatientProfile {
   };
 
   constructor(private patientService: Patientservice) {
+    let user = sessionStorage.getItem('user');
+    if(user != null)
+      this.patientId = JSON.stringify(JSON.parse(user).patientId);
     this.getPatientProfile();
   }
 

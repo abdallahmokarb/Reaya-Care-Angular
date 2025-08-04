@@ -17,7 +17,7 @@ export class Patientservice {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
     });
     return this.http.get<Ipatient>(`${this.apiUrl}patient/${patientId}`, { headers });
   }
