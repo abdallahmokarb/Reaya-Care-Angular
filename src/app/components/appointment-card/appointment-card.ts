@@ -21,7 +21,7 @@ export class AppointmentCard {
     switch (status) {
       case 'Confirmed': return 'قادم';
       case 'Finished': return 'تم';
-      case 'Canceled': return 'ملغي';
+      case 'Cancelled': return 'ملغي';
       default: return status;
     }
   }
@@ -31,12 +31,34 @@ export class AppointmentCard {
   }
 
 
+shouldShowVideoLink(appointment: IAppointment): boolean {
+  if (
+    appointment.status !== 'Confirmed' ||
+    !appointment.videoCallUrl
+  ) {
+    return false;
+  }
+
+  const now = new Date();
+
+  const dateOnly = this.appointment.date.split('T')[0]; // "2025-08-03"
+
+  const start = new Date(`${dateOnly}T${this.appointment.startTime}:00`);
+  const end = new Date(`${dateOnly}T${this.appointment.endTime}:00`);
+
+  return now >= start && now <= end;
+}
+
+
+
+
+
 
 
 cancelAppointment(appointmentId: number): void {
     if (!confirm('هل أنت متأكد من إلغاء هذا الموعد؟')) return;
 
-    this.AppointmentService.cancelAppointment(appointmentId).subscribe({
+    this.AppointmentService.cancelAppointment(this.appointment).subscribe({
       next: () => {
         this.appointment.status = 'Canceled';
         alert('تم إلغاء الموعد بنجاح');
@@ -48,8 +70,8 @@ cancelAppointment(appointmentId: number): void {
     });
   }
 
-  rateDoctor(doctorId: number) {
-    this.router.navigate(['/rate-doctor', doctorId]);
-  }
+  // rateDoctor(doctorId: number) {
+  //   this.router.navigate(['/all-doctors', doctorId]);
+  // }
 
 }
