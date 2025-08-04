@@ -21,6 +21,10 @@ export class DashboardPatient implements OnInit, AfterViewInit {
   payments: Payment[] = [];
   userId = '';
   patientId: number = 0;
+  confirmedCount = 0;
+  cancelledCount = 0;
+  finishedCount = 0;
+  nonAttendenceCount = 0;
 
   constructor(
     private appointmentService: AppointmentService,
@@ -28,6 +32,12 @@ export class DashboardPatient implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.finishedCount = this.appointments.filter(
+      (a) => a.status === 'Confirmed'
+    ).length;
+
+    console.log(this.finishedCount);
+
     const storedUser =
       localStorage.getItem('user') || sessionStorage.getItem('user');
     if (storedUser) {
@@ -46,10 +56,29 @@ export class DashboardPatient implements OnInit, AfterViewInit {
         });
       }
     }
-
     this.appointmentService.getMyAppointments().subscribe({
       next: (data) => {
         this.appointments = data;
+
+        // Count statuses
+        this.confirmedCount = data.filter(
+          (a) => a.status === 'Confirmed'
+        ).length;
+        this.cancelledCount = data.filter(
+          (a) => a.status === 'Cancelled'
+        ).length;
+        this.finishedCount = data.filter((a) => a.status === 'Finished').length;
+        this.nonAttendenceCount = data.filter(
+          (a) => a.status === 'NonAttendence'
+        ).length;
+
+        console.log({
+          Confirmed: this.confirmedCount,
+          Cancelled: this.cancelledCount,
+          Finished: this.finishedCount,
+          NonAttendence: this.nonAttendenceCount,
+        });
+
         this.loading = false;
       },
       error: () => {

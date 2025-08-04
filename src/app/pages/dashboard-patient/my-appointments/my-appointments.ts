@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '../../../shared/services/appointments-service';
 import { IAppointment } from '../../../models/iappointment';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-my-appointments',
   templateUrl: './my-appointments.html',
   styleUrls: ['./my-appointments.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class MyAppointments implements OnInit {
   appointments: IAppointment[] = [];

@@ -25,6 +25,66 @@
       </a>
 
       <nav class="space-y-1 text-[15px] font-medium mt-4">
+        <!-- admin -->
+        <ng-container *ngIf="dashboardType() === 'admin'">
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/']"
+            routerLinkActive="text-green-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            الصفحة الرئيسية لرعاية
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/admin/manage-admins']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            إدارة الادمنز
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/admin/manage-doctors']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            إدارة الدكاترة
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/admin/manage-patients']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            إدارة المستخدمين
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/admin/statistics']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            تقارير رعاية
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/admin/payments']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            المدفوعات
+          </a>
+
+          <a
+            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            [routerLink]="['/dashboard/admin/profile']"
+            routerLinkActive="text-green-600 font-bold"
+          >
+            الملف الشخصي
+          </a>
+        </ng-container>
+
         <!-- doctor -->
         <ng-container *ngIf="dashboardType() === 'doctor'">
           <a
