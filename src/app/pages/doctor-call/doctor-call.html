@@ -1,0 +1,20 @@
+<div class="video-section">
+    <h2>مكالمة الفيديو مع المريض</h2>
+
+    <iframe
+    *ngIf="jitsiUrl"
+    [src]="jitsiUrl | safeUrl"
+    allow="camera; microphone; fullscreen; display-capture"
+    allowfullscreen
+    frameborder="0">
+    </iframe>
+
+    <div class="notes-section">
+    <h3>ملاحظاتك للمريض :</h3>
+    <form (submit)="submitNotes()">
+        <textarea [(ngModel)]="notes" name="notes" class="form-control" rows="5"></textarea>
+        <button type="submit" class="btn btn-success mt-2">حفظ الملاحظات</button>
+    </form>
+    </div>
+</div>
+

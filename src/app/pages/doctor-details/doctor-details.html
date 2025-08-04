@@ -26,17 +26,19 @@
           <h2 class="text-xl font-bold text-gray-800 dark:text-white">
             د. {{doctor?.fullName}} - طبيب {{doctor?.specialization}}
           </h2>
-          <div class="flex items-center text-yellow-500 space-x-1 mt-2">
+          <div class="flex items-center text-yellow-500 space-x-1 mt-2 mb-2">
             <span>
               @for (star of getStars(doctor?.ratingValue); track $index) {
               <i class="{{star}}"></i>
               }
             </span>
-            <span id="ratingvalue">{{doctor?.ratingValue}} / 10</span>
+            <span id="ratingvalue">{{doctor?.ratingValue}} / 5</span>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mt-2">
+          <a [href]="doctor?.location" class="text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-location-dot"></i>
+            &ThinSpace;
             {{doctor?.addresses?.[0]}}
-          </p>
+          </a>
           <p class="text-sm text-gray-700 dark:text-gray-400 mt-4">
             {{doctor?.about}}.
           </p>

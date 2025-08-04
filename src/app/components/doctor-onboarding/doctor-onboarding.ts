@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DoctorInfoService } from '../../shared/services/doctor-info-service';
 import { Idoctor } from '../../models/idoctor';
@@ -9,9 +9,10 @@ import { IDocument, IDocumentResponse } from '../../models/idocument';
 import { AddressService } from '../../shared/services/address-service';
 import { Igovernment } from '../../models/igovernment';
 import { ICity } from '../../models/icity';
+import { MapPicker } from '../map-picker/map-picker';
 @Component({
   selector: 'app-doctor-onboarding',
-  imports: [CommonModule,
+  imports: [CommonModule, MapPicker,
     FormsModule,ReactiveFormsModule] ,
   templateUrl: './doctor-onboarding.html',
   styleUrl: './doctor-onboarding.css'
@@ -35,6 +36,8 @@ export class DoctorOnboarding {
     ProfileImage: ''
   }; // Initialize to avoid undefined errors
 
+  showMap = false;
+
   private docInfoResponse!: IDocumentResponse[]
   constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService, private addressService: AddressService) {
     
@@ -50,44 +53,20 @@ export class DoctorOnboarding {
    
 
     this.editForm = this.fb.group({
-  fullName: [this.doctor?.fullName || '', [Validators.required, Validators.minLength(3)]],
-  email: [this.doctor?.email || '', [Validators.required, Validators.email]],
-  phoneNumber: [this.doctor?.phoneNumber || '', 
-    [Validators.required]],
-
-  expYears: [this.doctor?.expYears || '', 
-    [Validators.required, Validators.min(0), Validators.max(50)]],
-  aboutMe: [this.doctor?.aboutMe || '', 
-    [Validators.required, Validators.minLength(20)]],
-  fees: [this.doctor?.fees || '', 
-    [Validators.required, Validators.min(0), Validators.max(10000)]],
-  service: [this.doctor?.serviceId || 0, [Validators.required, Validators.min(1)]],
-  location: [this.doctor?.location || ''],
-  detailedAddress: [this.doctor?.detailedAddress || ''],
-  gender: [this.doctor?.gender || '', Validators.required],
-  specializationId: [this.doctor?.specializationId || 0, [Validators.required, Validators.min(1)]],
-  governmentId: [this.doctor?.governmentId || 0, [Validators.required, Validators.min(1)]],
-  cityId: [this.doctor?.cityId || 0, [Validators.required, Validators.min(1)]],
-});
-
-// Add conditional validation for clinic details
-this.editForm.get('service')?.valueChanges.subscribe(serviceType => {
-  const detailedAddressControl = this.editForm.get('detailedAddress');
-  const locationControl = this.editForm.get('location');
-
-  if (serviceType == 1) { // Clinic service
-    detailedAddressControl?.setValidators([Validators.required]);
-    locationControl?.setValidators([Validators.required]);
-  } else {
-    detailedAddressControl?.clearValidators();
-    locationControl?.clearValidators();
-    detailedAddressControl?.setValue('');
-    locationControl?.setValue('');
-  }
-
-  detailedAddressControl?.updateValueAndValidity();
-  locationControl?.updateValueAndValidity();
-});
+      fullName: [this.doctor?.fullName || ''],
+      email: [this.doctor?.email || ''],
+      phoneNumber: [this.doctor?.phoneNumber || ''],
+      specializationId: [this.doctor?.specializationId || null],
+      expYears: [this.doctor?.expYears || ''],
+      aboutMe: [this.doctor?.aboutMe || ''],
+      fees: [this.doctor?.fees || ''],
+      service: [this.doctor?.serviceId || null],
+      location: [this.doctor?.location || ''],
+      detailedAddress: [this.doctor?.detailedAddress || ''],
+      gender: [this.doctor?.gender || ''],
+      governmentId: [this.doctor?.governmentId || ''],
+      cityId: [this.doctor?.cityId || '']
+    });
     //this.docInfoResponse = JSON.parse(localStorage.getItem('docmentrespose') || 'null');
     this.docInfoResponseUrl = {
       medicalLicense: this.doctor?.medicalLicenseUrl || '',
@@ -99,7 +78,18 @@ this.editForm.get('service')?.valueChanges.subscribe(serviceType => {
     
   }
 
+  onLocationSelected(link: string) {
+    this.editForm.get('location')?.setValue(link);
+    this.showMap = false;
+  }
 
+  toggleMap(){
+    if(this.showMap == false)
+      this.showMap = true;
+
+    else
+      this.showMap = false;
+  }
 
   getDoctorInfo() {
     this.doctorInfoService.getDoctorInfo(this.doctorId).subscribe({
@@ -124,70 +114,53 @@ this.editForm.get('service')?.valueChanges.subscribe(serviceType => {
   }
 
   openEditModal() {
-  console.log('Opening edit modal');
-  this.editForm.patchValue({
-    fullName: this.doctor.fullName || '',
-    email: this.doctor.email || '',
-    phoneNumber: this.doctor.phoneNumber || '',
-    specializationId: this.doctor.specializationId ?? 0,
-    expYears: this.doctor.expYears ?? '',
-    aboutMe: this.doctor.aboutMe || '',
-    fees: this.doctor.fees ?? '',
-    service: this.doctor.serviceId ?? 0,
-    location: this.doctor.location || '',
-    detailedAddress: this.doctor.detailedAddress || '',
-    gender: this.doctor.gender || '',
-    governmentId: this.doctor.governmentId ?? 0,
-    cityId: this.doctor.cityId ?? 0
-  });
+    document.body.style.overflow = 'hidden';
+    console.log('Opening edit modal');
+    this.editForm.patchValue(this.doctor); // doctor is your current doctor object
+    this.editForm.patchValue({
+      specializationId: this.doctor.specializationId || 0 
+    });
+    this.editForm.patchValue({
+      service: this.doctor.serviceId || 0
+    });
 
-  // Trigger the service change handler to set proper validators
-  this.editForm.get('service')?.updateValueAndValidity();
-  
-  this.editMode = true;
-}
+    this.editMode = true;
+
+    // Reset detailedAddress and location if service is online
+    this.editForm.get('service')?.valueChanges.subscribe((val) => {
+      if (val == 2) {
+        this.editForm.patchValue({
+          detailedAddress: '',
+          location: ''
+        });
+      }
+    });
+
+  }
+
   closeEditModal() {
     this.editMode = false;
+    document.body.style.overflow = 'auto';
   }
 
- submitEdit() {
-  // Mark all controls as touched to trigger validation messages
-  this.markFormGroupTouched(this.editForm);
+  submitEdit() {
+    const updatedDoctor = this.editForm.value;
+    console.log('Submitting edited doctor info:', updatedDoctor);
+    this.doctorInfoService.updateDoctorInfo(this.doctorId, updatedDoctor).subscribe({
+      next: (res) => {
+        console.log('Doctor info updated successfully:', res);
+        this.doctor = res;
+        this.editMode = false;
+      },
+      error: (err) => {
+        console.error('Error updating doctor info:', err);
+        this.editMode = false;
+        
+      }
+    });
 
-  if (this.editForm.invalid) {
-    console.log('Form is invalid');
-    return;
+    document.body.style.overflow = 'auto';
   }
-
-  const updatedDoctor = this.editForm.value;
-  console.log('Submitting edited doctor info:', updatedDoctor);
-  
-  this.doctorInfoService.updateDoctorInfo(this.doctorId, updatedDoctor).subscribe({
-    next: (res) => {
-      console.log('Doctor info updated successfully:', res);
-      this.doctor = res;
-      this.editMode = false;
-      // Optionally refresh data or show success message
-    },
-    error: (err) => {
-      console.error('Error updating doctor info:', err);
-      // Show error message to user
-    }
-  });
-}
-
-// Helper method to mark all form controls as touched
-private markFormGroupTouched(formGroup: FormGroup) {
-  Object.values(formGroup.controls).forEach(control => {
-    control.markAsTouched();
-
-    if (control instanceof FormGroup) {
-      this.markFormGroupTouched(control);
-    }
-  });
-}
-
-
   getSpecializations() {
     this.doctorInfoService.getspecializations().subscribe({
       next: (specializations: ISpecialization[]) => {
@@ -333,4 +306,3 @@ private markFormGroupTouched(formGroup: FormGroup) {
     this.getCitiesByGovernmentId(governmentId);
   }
 }
-
