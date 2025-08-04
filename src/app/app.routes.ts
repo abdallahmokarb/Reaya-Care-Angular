@@ -146,4 +146,9 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'recorder',
+    loadComponent: () =>
+      import('./components/recorder/recorder').then((m) => m.RecorderComponent),
+  }
 ];
