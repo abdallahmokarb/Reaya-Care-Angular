@@ -36,6 +36,7 @@ export class AllDoctors implements OnInit {
   genderFilters: string[] = [];
   availableTimesFilters: string[] = [];
   serviceTypesFilters: string[] = [];
+  filterDoctorIds: number[] = [];
 
   minPrice: number = 0;
   maxPrice: number = 500;
@@ -53,6 +54,10 @@ export class AllDoctors implements OnInit {
   };
 
   ngOnInit(): void {
+
+    const doctorIdParams = this.route.snapshot.queryParamMap.getAll('doctorIds');
+    this.filterDoctorIds = doctorIdParams.map(id => Number(id));
+
     // Read specializationId from query string ONCE
     const specializationId = Number(
       this.route.snapshot.queryParamMap.get('specializationId')
@@ -148,6 +153,9 @@ export class AllDoctors implements OnInit {
     });
 
     this.filteredDoctors = this.doctors.filter((doc) => {
+      const matchesDoctorIds =
+       this.filterDoctorIds.length === 0 ||
+        this.filterDoctorIds.includes(doc.doctorId);
       const matchesSpecialization =
         this.selectedSpecialization === 0 ||
         doc.specializationId === this.selectedSpecialization;
@@ -180,7 +188,8 @@ export class AllDoctors implements OnInit {
         matchesGender &&
         matchesServiceType &&
         matchesAvailableTimes &&
-        matchesPrice
+        matchesPrice &&
+        matchesDoctorIds
       );
     });
 
