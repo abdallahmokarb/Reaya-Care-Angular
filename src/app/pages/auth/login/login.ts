@@ -1,4 +1,3 @@
-// login.component.ts
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -19,24 +18,32 @@ export class LoginComponent {
   };
 
   loginError: string | null = null;
+  loginSuccess: string | null = null;
+  loading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(form: NgForm) {
-    this.loginError = null; // clear previous error
+    this.loginError = null;
+    this.loginSuccess = null;
 
     if (form.valid) {
       const { username, password, remember } = this.model;
       const credentials = { username, password };
 
+      this.loading = true;
+
       this.authService.login(credentials, remember).subscribe({
         next: (response) => {
-          console.log('تم تسجيل الدخول:', response);
+          console.log(response);
+          this.loginSuccess = 'تم تسجيل الدخول بنجاح';
+          this.loading = false;
         },
         error: (error) => {
-          console.error('فشل تسجيل الدخول:', error);
+          console.error('فشل تسجيل الدخول', error);
           this.loginError =
             'عفوا فشل تسجيل الدخول: اسم المستخدم أو كلمة المرور غير صحيحة';
+          this.loading = false;
         },
       });
     } else {
