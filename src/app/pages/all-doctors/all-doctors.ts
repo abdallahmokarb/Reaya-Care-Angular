@@ -55,7 +55,7 @@ export class AllDoctors implements OnInit {
 
   ngOnInit(): void {
 
-    const doctorIdParams = this.route.snapshot.queryParamMap.getAll('doctorIds');
+    const doctorIdParams = this.route.snapshot.queryParamMap.getAll('doctorId');
     this.filterDoctorIds = doctorIdParams.map(id => Number(id));
 
     // Read specializationId from query string ONCE
