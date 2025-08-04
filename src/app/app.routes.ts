@@ -8,7 +8,6 @@ import { Unauthorized } from './pages/unauthorized/unauthorized';
 import { Contact } from './pages/contact/contact';
 import { Specializations } from './pages/specializations/specializations';
 import { Appointment } from './pages/appointment/appointment';
- 
 
 export const routes: Routes = [
   {
@@ -60,8 +59,11 @@ export const routes: Routes = [
               import('./components/doctor-onboarding/doctor-onboarding').then(
                 (m) => m.DoctorOnboarding
               ),
-          },
-        ],
+          },{
+      path: 'doctor/timeslots',
+      loadComponent: () => 
+        import('./pages/dashboard/doctor-timeslots/doctor-timeslots').then(m => m.DoctorTimeslots)
+    }],
       },
 
       {
@@ -99,6 +101,22 @@ export const routes: Routes = [
             (m) => m.PatientProfile
           ),
       },
+      {
+        path: 'dashboard/patient/my-payments',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./pages/dashboard-patient/my-payments/my-payments').then(
+            (m) => m.MyPayments
+          ),
+      },
+      {
+        path: 'dashboard/patient/my-appointments',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import(
+            './pages/dashboard-patient/my-appointments/my-appointments'
+          ).then((m) => m.MyAppointments),
+      },
 
       {
         path: 'all-doctors',
@@ -110,13 +128,23 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
       },
+      {
+        path: 'doctor-call/:id',
+        loadComponent: () =>
+          import('./pages/doctor-call/doctor-call').then((m) => m.DoctorCall),
+      },
+      {
+        path: 'patient-call/:id',
+        loadComponent: () =>
+          import('./pages/patient-call/patient-call').then(
+            (m) => m.PatientCall
+          ),
+      },
 
       {
         path: 'appointment',
         loadComponent: () =>
-          import('./pages/appointment/appointment').then(
-            (m) => m.Appointment
-          ),
+          import('./pages/appointment/appointment').then((m) => m.Appointment),
       },
 
       {
@@ -146,10 +174,14 @@ export const routes: Routes = [
         path: 'unauthorized',
         component: Unauthorized,
       },
-   
-       { path: 'appointments', component: Appointment },
-       { path: 'all-doctors', component: AllDoctors }, // for routing
 
+      { path: 'appointments', component: Appointment },
+      { path: 'all-doctors', component: AllDoctors }, // for routing
     ],
   },
+  {
+    path: 'recorder',
+    loadComponent: () =>
+      import('./components/recorder/recorder').then((m) => m.RecorderComponent),
+  }
 ];

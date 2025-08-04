@@ -28,11 +28,11 @@ export class Dashboard implements AfterViewInit {
     new Chart(document.getElementById('specialtyChart') as HTMLCanvasElement, {
       type: 'bar',
       data: {
-        labels: ['طب الأطفال'],
+        labels: ['طب القلب'],
         datasets: [
           {
             label: 'الذكور',
-            data: [59, 25],
+            data: [2, 2],
             backgroundColor: '#194ad6',
             borderColor: '#24ace4',
             borderWidth: 1,
@@ -40,7 +40,7 @@ export class Dashboard implements AfterViewInit {
           },
           {
             label: 'الإناث',
-            data: [40, 51],
+            data: [1, 2],
             backgroundColor: '#f514a0',
             borderColor: '#ff7cad',
             borderWidth: 1,
@@ -61,11 +61,11 @@ export class Dashboard implements AfterViewInit {
     new Chart(document.getElementById('statusChart') as HTMLCanvasElement, {
       type: 'pie',
       data: {
-        labels: ['مؤكد', 'عدم حضور', 'غير مدفوع'],
+        labels: ['مؤكد', 'عدم حضور', 'ملغي'],
         datasets: [
           {
-            data: [110, 20, 9],
-            backgroundColor: ['#007b35', '#b70011', '#d69400'],
+            data: [3, 0, 0],
+            backgroundColor: ['#00a543', '#e4a300', '#d50a1c'],
           },
         ],
       },

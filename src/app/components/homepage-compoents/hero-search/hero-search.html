@@ -19,8 +19,8 @@
       <!-- text header -->
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">
-          {{ activeTab === 'find' ? 'احجز دكتور' : activeTab === 'video' ? 'ابدأ
-          مكالمة مع دكتور الآن' : 'احجز زيارة منزلية مع ممرض / ممرضة' }}
+          {{ activeTab === 'find' ? 'احجز دكتور' : activeTab === 'voice' ? 'ابدأ
+          بالتحدث مع AI ' : 'احجز زيارة منزلية مع ممرض / ممرضة' }}
         </h1>
       </div>
 
@@ -39,12 +39,12 @@
         <button
           class="py-2 px-4 font-medium border-b-4 transition cursor-pointer"
           [ngClass]="{
-            'border-green-500 text-green-600  ': activeTab === 'video',
-            'border-transparent text-gray-300  hover:text-green-500': activeTab !== 'video'
+            'border-green-500 text-green-600  ': activeTab === 'voice',
+            'border-transparent text-gray-300  hover:text-green-500': activeTab !== 'voice'
           }"
-          (click)="setActiveTab('video')"
+          (click)="setActiveTab('voice')"
         >
-          مكالمة دكتور
+          تحدث مع AI
           <span
             class="bg-green-500 text-[11px] text-white rounded-xl px-2.5 py-1"
             >جديد</span
@@ -66,168 +66,108 @@
       </div>
 
       <div class="min-h-[160px] transition-all">
-        <!-- find doc tab -->
         <div
           *ngIf="activeTab === 'find'"
           class="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           <div>
-            <label class="block font-semibold mb-1"> التخصص الطبي</label>
-            <select class="form-control">
-              <option>اختر التخصص</option>
-              <option>طب الأسنان</option>
-              <option>الجراحة</option>
-              <option>أمراض القلب</option>
-              <option>طب الأعصاب</option>
-              <option>الأمراض الجلدية</option>
-              <option>طب العيون</option>
-              <option>الأنف والأذن والحنجرة</option>
-              <option>طب الأطفال</option>
-              <option>النساء والتوليد</option>
-              <option>الباطنة</option>
-              <option>العظام</option>
-              <option>المسالك البولية</option>
-              <option>الصدرية</option>
-              <option>الأورام</option>
-              <option>الغدد الصماء</option>
-              <option>التغذية العلاجية</option>
-              <option>العلاج الطبيعي</option>
-              <option>الطب النفسي</option>
-              <option>جراحة المخ والأعصاب</option>
-              <option>التحاليل الطبية</option>
+            <label
+              for="specializationSelect"
+              class="block mb-2 font-semibold text-zinc-100 font-cairo"
+            >
+              التخصصات
+            </label>
+            <select
+              id="specializationSelect"
+              name="specialization"
+              [(ngModel)]="selectedSpecialization"
+              (change)="applyFilters()"
+              class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800/75 text-zinc-900 dark:text-zinc-100 font-cairo focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            >
+              <option [ngValue]="0">الكل</option>
+              <option
+                *ngFor="let spec of specializations"
+                [ngValue]="spec.specializationId"
+              >
+                {{ spec.name }}
+              </option>
             </select>
           </div>
 
           <div>
-            <label class="block font-semibold mb-1">المحافظة </label>
-            <select class="form-control">
-              <option>اختر المحافظة</option>
-              <option>القاهرة</option>
-              <option>الجيزة</option>
-              <option>أسيوط</option>
-              <option>المنيا</option>
-              <option>الإسكندرية</option>
-              <option>الدقهلية</option>
-              <option>البحر الأحمر</option>
-              <option>البحيرة</option>
-              <option>الفيوم</option>
-              <option>الغربية</option>
-              <option>الإسماعيلية</option>
-              <option>المنوفية</option>
-              <option>القليوبية</option>
-              <option>الوادي الجديد</option>
-              <option>السويس</option>
-              <option>أسوان</option>
-              <option>بني سويف</option>
-              <option>بورسعيد</option>
-              <option>دمياط</option>
-              <option>جنوب سيناء</option>
-              <option>كفر الشيخ</option>
-              <option>مطروح</option>
-              <option>الأقصر</option>
-              <option>قنا</option>
-              <option>شمال سيناء</option>
-              <option>الشرقية</option>
+            <label
+              for="governmentSelect"
+              class="block font-semibold mb-2 text-zinc-800 dark:text-zinc-100 font-cairo"
+            >
+              المحافظة
+            </label>
+            <select
+              id="governmentSelect"
+              name="government"
+              [(ngModel)]="selectedGovernment"
+              (change)="applyFilters()"
+              class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800/70 text-zinc-900 dark:text-zinc-100 font-care focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            >
+              <option [ngValue]="0">الكل</option>
+              <option
+                *ngFor="let gov of governments"
+                [ngValue]="gov.governmentId"
+              >
+                {{ gov.name }}
+              </option>
             </select>
           </div>
+          <div class="relative">
+            <label class="block font-semibold mb-2">او ابحث باسم الدكتور</label>
 
-          <div>
-            <label class="block font-semibold mb-1">او ابحث باسم الدكتور</label>
             <input
               type="text"
+              [(ngModel)]="searchTermBtn"
+              (input)="applyFilters()"
               placeholder="اكتب اسم الدكتور"
-              class="form-control"
+              class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800/70 text-zinc-900 dark:text-zinc-100 font-care focus:outline-none focus:ring-2 focus:ring-green-500 transition"
             />
+
+            <div
+              *ngIf="filteredDoctors.length > 0"
+              class="mt-2 flex flex-col gap-2 overflow-y-auto max-h-[150px] pr-1 p-1 absolute w-full z-10"
+            >
+              <a
+                *ngFor="let doctor of filteredDoctors"
+                [routerLink]="['/doctor-details', doctor.doctorId]"
+                class="block p-3 rounded-lg shadow-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white hover:ring-2 hover:ring-green-500 transition cursor-pointer text-sm"
+              >
+                <h3 class="text-base font-semibold mb-0.5 truncate">
+                  {{ doctor.fullName }}
+                </h3>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 truncate">
+                  التخصص: {{ doctor.specialization }}
+                </p>
+              </a>
+            </div>
           </div>
 
           <div class="flex items-end">
-            <button
-              class="bg-green-600 text-white px-6 py-3 w-full rounded-lg hover:bg-green-700 transition cursor-pointer"
-            >
-              ابحث عن دكتور
-            </button>
+            <div class="flex items-end">
+              <button
+                (click)="searchDoctors()"
+                class="bg-green-600 text-white px-6 py-3 w-full rounded-lg hover:bg-green-700 transition cursor-pointer"
+              >
+                ابحث عن دكتور
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- video call tab -->
-        <div
-          *ngIf="activeTab === 'video'"
-          class="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          <div>
-            <label class="block font-semibold mb-1"> التخصص الطبي</label>
-            <select class="form-control">
-              <option>اختر التخصص</option>
-              <option>طب الأسنان</option>
-              <option>الجراحة</option>
-              <option>أمراض القلب</option>
-              <option>طب الأعصاب</option>
-              <option>الأمراض الجلدية</option>
-              <option>طب العيون</option>
-              <option>الأنف والأذن والحنجرة</option>
-              <option>طب الأطفال</option>
-              <option>النساء والتوليد</option>
-              <option>الباطنة</option>
-              <option>العظام</option>
-              <option>المسالك البولية</option>
-              <option>الصدرية</option>
-              <option>الأورام</option>
-              <option>الغدد الصماء</option>
-              <option>التغذية العلاجية</option>
-              <option>العلاج الطبيعي</option>
-              <option>الطب النفسي</option>
-              <option>جراحة المخ والأعصاب</option>
-              <option>التحاليل الطبية</option>
-            </select>
-          </div>
+        <!--   voice tab -->
+        <div *ngIf="activeTab === 'voice'" class="flex flex-col gap-4">
+          <h1>اخبر ai عن حالتك الصحية وسنرشح لك دكتور مناسب في اقرب موعد</h1>
 
-          <div>
-            <label class="block font-semibold mb-1">المحافظة </label>
-            <select class="form-control">
-              <option>اختر المحافظة</option>
-              <option>القاهرة</option>
-              <option>الجيزة</option>
-              <option>أسيوط</option>
-              <option>المنيا</option>
-              <option>الإسكندرية</option>
-              <option>الدقهلية</option>
-              <option>البحر الأحمر</option>
-              <option>البحيرة</option>
-              <option>الفيوم</option>
-              <option>الغربية</option>
-              <option>الإسماعيلية</option>
-              <option>المنوفية</option>
-              <option>القليوبية</option>
-              <option>الوادي الجديد</option>
-              <option>السويس</option>
-              <option>أسوان</option>
-              <option>بني سويف</option>
-              <option>بورسعيد</option>
-              <option>دمياط</option>
-              <option>جنوب سيناء</option>
-              <option>كفر الشيخ</option>
-              <option>مطروح</option>
-              <option>الأقصر</option>
-              <option>قنا</option>
-              <option>شمال سيناء</option>
-              <option>الشرقية</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block font-semibold mb-1">او ابحث باسم الدكتور</label>
-            <input
-              type="text"
-              placeholder="اكتب اسم الدكتور"
-              class="form-control"
-            />
-          </div>
-
-          <div class="flex items-end">
+          <div class="flex items-end w-1/4 pt-16">
             <button
               class="bg-green-600 text-white px-6 py-3 w-full rounded-lg hover:bg-green-700 transition cursor-pointer"
             >
-              ابدأ مكالمة الفيديو
+              تحدث الان
             </button>
           </div>
         </div>

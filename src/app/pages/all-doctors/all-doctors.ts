@@ -14,11 +14,10 @@ import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
   selector: 'app-all-doctors',
   imports: [RouterModule, FormsModule, CommonModule, NgxSliderModule],
   templateUrl: './all-doctors.html',
-  styleUrl: './all-doctors.css'
+  styleUrl: './all-doctors.css',
 })
 export class AllDoctors implements OnInit {
-
-   private doctorService = inject(DoctorService);
+  private doctorService = inject(DoctorService);
   private addressService = inject(AddressService);
   private specializationService = inject(Specialization);
   private route = inject(ActivatedRoute);
@@ -37,6 +36,7 @@ export class AllDoctors implements OnInit {
   genderFilters: string[] = [];
   availableTimesFilters: string[] = [];
   serviceTypesFilters: string[] = [];
+  filterDoctorIds: number[] = [];
 
   minPrice: number = 0;
   maxPrice: number = 500;
@@ -50,12 +50,30 @@ export class AllDoctors implements OnInit {
     step: 10,
     translate: (value: number): string => {
       return `${value} ج.م`;
-    }
+    },
   };
 
-ngOnInit(): void {
+  ngOnInit(): void {
 
-    this.selectedSpecialization = Number(this.route.snapshot.paramMap.get('id'));
+    const doctorIdParams = this.route.snapshot.queryParamMap.getAll('doctorId');
+    this.filterDoctorIds = doctorIdParams.map(id => Number(id));
+
+    // Read specializationId from query string ONCE
+    const specializationId = Number(
+      this.route.snapshot.queryParamMap.get('specializationId')
+    );
+    if (!isNaN(specializationId)) {
+      this.selectedSpecialization = specializationId;
+    }
+
+    // ✅ Read governmentId from query string (you were missing this)
+    const governmentId = Number(
+      this.route.snapshot.queryParamMap.get('governmentId')
+    );
+    if (!isNaN(governmentId)) {
+      this.selectedGovernment = governmentId;
+    }
+
     // Load doctors and apply filters
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
@@ -66,7 +84,7 @@ ngOnInit(): void {
       error: (err) => {
         console.error('Error fetching doctors:', err);
         this.isLoading = false;
-      }
+      },
     });
 
     this.specializationService.getAllSpecializations().subscribe({
@@ -75,7 +93,7 @@ ngOnInit(): void {
       },
       error: (err) => {
         console.error('Error fetching specializations:', err);
-      }
+      },
     });
 
     this.addressService.getAllGovernments().subscribe({
@@ -84,7 +102,7 @@ ngOnInit(): void {
       },
       error: (err) => {
         console.error('Error fetching governments:', err);
-      }
+      },
     });
   }
 
@@ -131,16 +149,27 @@ ngOnInit(): void {
       specialization: this.selectedSpecialization,
       government: this.selectedGovernment,
       genderFilters: this.genderFilters,
-      serviceTypesFilters: this.serviceTypesFilters
+      serviceTypesFilters: this.serviceTypesFilters,
     });
 
     this.filteredDoctors = this.doctors.filter((doc) => {
+      const matchesDoctorIds =
+       this.filterDoctorIds.length === 0 ||
+        this.filterDoctorIds.includes(doc.doctorId);
       const matchesSpecialization =
-        this.selectedSpecialization === 0 || doc.specializationId === this.selectedSpecialization;
-      const matchesGovernment = this.selectedGovernment === 0 || doc.governemntId === this.selectedGovernment;
-      const matchesGender = this.genderFilters.length === 0 || this.genderFilters.includes(doc.gender);
-      const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
-      const matchesServiceType = this.serviceTypesFilters.length === 0 || this.serviceTypesFilters.includes(doc.doctorService);
+        this.selectedSpecialization === 0 ||
+        doc.specializationId === this.selectedSpecialization;
+      const matchesGovernment =
+        this.selectedGovernment === 0 ||
+        doc.governemntId === this.selectedGovernment;
+      const matchesGender =
+        this.genderFilters.length === 0 ||
+        this.genderFilters.includes(doc.gender);
+      const matchesPrice =
+        doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
+      const matchesServiceType =
+        this.serviceTypesFilters.length === 0 ||
+        this.serviceTypesFilters.includes(doc.doctorService);
 
       const matchesAvailableTimes =
         this.availableTimesFilters.length === 0 ||
@@ -153,12 +182,15 @@ ngOnInit(): void {
 
       // const matchesPrice = doc.fees >= this.minPrice && doc.fees <= this.maxPrice;
 
-      return matchesSpecialization &&
-            matchesGovernment &&
-            matchesGender &&
-            matchesServiceType &&
-            matchesAvailableTimes &&
-            matchesPrice;
+      return (
+        matchesSpecialization &&
+        matchesGovernment &&
+        matchesGender &&
+        matchesServiceType &&
+        matchesAvailableTimes &&
+        matchesPrice &&
+        matchesDoctorIds
+      );
     });
 
     this.sortDoctors();
@@ -169,5 +201,4 @@ ngOnInit(): void {
     this.maxPrice = this.priceSliderHighValue;
     this.applyFilters();
   }
-
 }

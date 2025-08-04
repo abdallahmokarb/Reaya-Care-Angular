@@ -62,36 +62,38 @@
     <div class="container mx-auto p-2 sm:p-4" dir="rtl">
       <!-- Doctor Details -->
       <div
-        class="border-[#186429] bg-[#08210e] dark:bg-[#08210e]/50 p-4 text-sm font-bold text-[#7eca8f] rounded-xl p-6 shadow-md border"
+        class="bg-gradient-to-br from-[#0f2c1b] to-[#186429] dark:from-[#08210e]/80 dark:to-[#104b2d]/80 border border-[#2b945a] rounded-2xl p-4 shadow-2xl text-white"
       >
-        <h3 class="text-2xl font-medium mb-4 text-green-600">
-          مرحباً بعودتك دكتور / {{ user.userName }}
-        </h3>
+        <div class="flex flex-col gap-3 mb-4">
+          <h3 class="text-2xl font-bold text-green-300">
+            مرحباً بعودتك دكتور / {{ user.userName }}
+          </h3>
+          <h3 class="text-lg font-semibold text-green-400">
+            سعدنا لرؤيتك مرة تانية
+          </h3>
+        </div>
 
-        <div class="flex items-center gap-6" *ngIf="user">
+        <div class="flex items-center gap-4" *ngIf="user">
           <img
             [src]="user.photoUrl || 'https://ui-avatars.com/api/?name=' + user.userName"
             alt="User photo"
-            class="w-16 h-16 rounded-full"
+            class="w-16 h-16 rounded-full shadow-lg"
           />
           <div>
-            <h2 class="text-xl font-semibold text-white">{{ user.email }}</h2>
-            <p class="text-lg mt-1 text-green-600">
+            <h2 class="text-base font-semibold text-white">{{ user.email }}</h2>
+            <p class="text-sm mt-1 text-green-300">
               {{ user.roles.join(', ') }}
             </p>
           </div>
         </div>
 
-        <div class="mt-6">
-          <h3 class="text-lg font-medium mb-2 text-green-600">
-            سعدنا لرؤيتك مرة تانية
-          </h3>
-          <p class="text-gray-400 leading-relaxed">
+        <div class="mt-6 border-t border-green-700 pt-4">
+          <p class="text-gray-300 leading-relaxed text-sm">
             لقد قرأت رسالة التنبيه المهمة هذه بنجاح. سيتم وضع هذا التنبيه لفترة
-            أطول قليلاً حتى تتمكن من رؤية تفاصيل تسجيل الدخول بشكل اكثر تفصيلاً.
+            أطول قليلاً حتى تتمكن من رؤية تفاصيل تسجيل الدخول بشكل أكثر تفصيلاً.
             <br />
-            <span class="font-medium">آخر تسجيل دخول:</span>
-            الساعة 7:00 مساءً بالتوقيت العالمي (UTC)
+            <span class="font-medium text-green-300">آخر تسجيل دخول:</span>
+            الساعة 3:44 مساءً بالتوقيت العالمي (UTC)
           </p>
         </div>
       </div>
@@ -99,7 +101,58 @@
       <!-- Appointment Summary -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
         <div
-          class="rounded-2xl p-6 text-white bg-gradient-to-br from-blue-500 to-blue-700 shadow-lg dark:from-blue-600 dark:to-blue-800"
+          class="rounded-2xl p-6 transform transition duration-300 hover:scale-105 text-white bg-gradient-to-br from-purple-500 to-purple-700 shadow-lg dark:from-purple-600 dark:to-purple-800"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold">الرصيد</h3>
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 9V7a4 4 0 00-8 0v2m-2 0a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2m-6 4h.01"
+              />
+            </svg>
+          </div>
+          <p class="text-3xl font-semibold text-right">359 جنيه</p>
+        </div>
+
+        <div
+          class="rounded-2xl p-6 transform transition duration-300 hover:scale-105 text-white bg-gradient-to-br from-cyan-500 to-cyan-700 shadow-lg dark:from-cyan-600 dark:to-cyan-800"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold">عدد المشاهدات</h3>
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+              />
+            </svg>
+          </div>
+          <p class="text-3xl font-semibold text-right">17</p>
+        </div>
+
+        <div
+          class="rounded-2xl p-6 transform transition duration-300 hover:scale-105 text-white bg-gradient-to-br from-blue-500 to-blue-700 shadow-lg dark:from-blue-600 dark:to-blue-800"
         >
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-bold">إجمالي الحجوزات</h3>
@@ -118,11 +171,11 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">25</p>
+          <p class="text-3xl font-semibold text-right">3</p>
         </div>
 
         <div
-          class="rounded-2xl p-6 text-white bg-gradient-to-br from-green-500 to-green-700 shadow-lg dark:from-green-600 dark:to-green-800"
+          class="rounded-2xl p-6 transform transition duration-300 hover:scale-105 text-white bg-gradient-to-br from-green-500 to-green-700 shadow-lg dark:from-green-600 dark:to-green-800"
         >
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-bold">الحجوزات المؤكدة</h3>
@@ -141,14 +194,14 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">18</p>
+          <p class="text-3xl font-semibold text-right">3</p>
         </div>
 
         <div
-          class="rounded-2xl p-6 text-white bg-gradient-to-br from-red-500 to-red-700 shadow-lg dark:from-red-600 dark:to-red-800"
+          class="rounded-2xl p-6 transform transition duration-300 hover:scale-105 text-white bg-gradient-to-br from-red-500 to-red-700 shadow-lg dark:from-red-600 dark:to-red-800"
         >
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-bold">عدم حضور</h3>
+            <h3 class="text-xl font-bold">حجوزات ملغيه</h3>
             <svg
               class="w-8 h-8 text-white"
               fill="none"
@@ -164,14 +217,14 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">4</p>
+          <p class="text-3xl font-semibold text-right">0</p>
         </div>
 
         <div
-          class="rounded-2xl p-6 text-white bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-lg dark:from-yellow-500 dark:to-yellow-700"
+          class="rounded-2xl transform transition duration-300 hover:scale-105 p-6 text-white bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-lg dark:from-yellow-500 dark:to-yellow-700"
         >
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-bold">قيد الدفع</h3>
+            <h3 class="text-xl font-bold">حجوزات عدم حضور</h3>
             <svg
               class="w-8 h-8 text-white"
               fill="none"
@@ -187,7 +240,49 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">3</p>
+          <p class="text-3xl font-semibold text-right">0</p>
+        </div>
+
+        <div
+          class="rounded-2xl p-6 text-white bg-gradient-to-br from-pink-500 to-pink-700 shadow-lg dark:from-pink-600 dark:to-pink-800 transform transition duration-300 hover:scale-105"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold">متوسط التقييمات</h3>
+            <svg
+              class="w-8 h-8 text-white"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+              />
+            </svg>
+          </div>
+          <p class="text-3xl font-semibold text-right">4.6</p>
+        </div>
+
+        <div
+          class="rounded-2xl p-6 text-white bg-gradient-to-br from-indigo-500 to-indigo-700 shadow-lg dark:from-indigo-600 dark:to-indigo-800 transform transition duration-300 hover:scale-105"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold">عدد التقييمات</h3>
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 20l-6.16 3.24 1.18-6.88L2 10.5l6.92-1.01L12 3l3.08 6.49L22 10.5l-5.02 5.86 1.18 6.88z"
+              />
+            </svg>
+          </div>
+          <p class="text-3xl font-semibold text-right">2</p>
         </div>
       </div>
 
@@ -215,26 +310,31 @@
           </div>
         </div>
       </div>
-
-      <!-- Appointments Card -->
+      <!-- Appointment Card -->
       <div
-        class="rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 mb-6 backdrop-blur-md transition-all duration-300"
+        class="bg-white/80 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl p-6 shadow-lg space-y-6"
       >
         <h2
-          class="text-xl md:text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2 mb-4"
+          class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2"
         >
-          <i class="fa-solid fa-calendar-check"></i>
-          الحجوزات الخاصة بالدكتور
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7 11h10v2H7z" />
+            <path
+              d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 20V9h14v11H5z"
+            />
+          </svg>
+          حجوزات العيادة / الاونلاين
         </h2>
 
-        <div class="overflow-x-auto rounded-lg border dark:border-zinc-700">
+        <div class="overflow-x-auto border dark:border-zinc-700 rounded-lg">
           <table
-            class="w-full text-sm text-center rtl text-zinc-700 dark:text-zinc-200"
+            class="w-full text-center text-sm text-zinc-700 dark:text-zinc-200"
           >
             <thead
-              class="bg-green-200 dark:bg-green-800 text-green-900 dark:text-green-100"
+              class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100"
             >
               <tr>
+                <th class="px-4 py-2">رقم الحجز</th>
                 <th class="px-4 py-2">التاريخ</th>
                 <th class="px-4 py-2">الوقت</th>
                 <th class="px-4 py-2">المريض</th>
@@ -242,289 +342,129 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">01/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">10:00 ص</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">عبدالله مقرب</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">مؤكد</td>
+              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
+                <td class="px-4 py-2">80</td>
+                <td class="px-4 py-2">01/08/2025</td>
+                <td class="px-4 py-2">10:00 ص</td>
+                <td class="px-4 py-2">عبدالله مقرب</td>
+                <td class="px-4 py-2">مؤكد</td>
               </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">20/07/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">02:00 م</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">سيد علي</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">منتهي</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">03/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">11:30 ص</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">أحمد سمير</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">مؤجل</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">04/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">09:00 ص</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">منى سامي</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">مؤكد</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">05/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">01:00 م</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">محمود إبراهيم</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">ملغي</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">06/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">03:00 م</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">فاطمة الزهراء</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">مؤكد</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">07/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">05:00 م</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">علي حسن</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">مؤكد</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">08/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">11:00 ص</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">نورا عبدالعزيز</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">مؤجل</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">09/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">12:00 م</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">أميرة حمدي</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">مؤكد</td>
-              </tr>
-              <tr
-                class="hover:bg-green-100 dark:hover:bg-green-700 text-center"
-              >
-                <td class="border px-1 sm:px-2 md:px-4 py-2">10/08/2025</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">04:00 م</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">حسن محمود</td>
-                <td class="border px-1 sm:px-2 md:px-4 py-2">منتهي</td>
+              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
+                <td class="px-4 py-2">81</td>
+                <td class="px-4 py-2">20/07/2025</td>
+                <td class="px-4 py-2">02:00 م</td>
+                <td class="px-4 py-2">سيد علي</td>
+                <td class="px-4 py-2">مؤكد</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div class="text-end mt-4">
+        <div class="text-end">
           <a
             href="#"
-            class="inline-flex items-center gap-1 text-sm sm:text-base text-green-600 dark:text-green-400 hover:underline transition"
+            class="text-green-600 dark:text-green-400 text-sm hover:underline inline-flex items-center gap-1"
           >
             عرض كل الحجوزات
-            <i class="fa-solid fa-arrow-left-long"></i>
           </a>
         </div>
       </div>
 
-      <!-- Payments -->
+      <!-- Payment Card -->
       <div
-        class="bg-white/95 dark:bg-black/25 rounded-lg shadow-lg p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 md:mb-8 backdrop-blur-md text-right"
+        class="bg-white/80 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl p-6 shadow-lg space-y-6 mt-8"
       >
         <h2
-          class="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 text-green-600 dark:text-green-400"
+          class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2"
         >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M2 7a2 2 0 012-2h16a2 2 0 012 2v2H2V7zm0 4h20v6a2 2 0 01-2 2H4a2 2 0 01-2-2v-6z"
+            />
+          </svg>
           آخر عمليات الدفع الإلكتروني
         </h2>
-        <div class="overflow-x-auto">
-          <table class="w-full table-auto text-xs sm:text-sm md:text-base">
-            <thead>
-              <tr
-                class="bg-green-200 dark:bg-green-800 text-gray-900 dark:text-white"
-              >
-                <th class="px-1 sm:px-2 md:px-4 py-2">رقم المرجع</th>
-                <th class="px-1 sm:px-2 md:px-4 py-2">التاريخ</th>
-                <th class="px-1 sm:px-2 md:px-4 py-2">المبلغ</th>
-                <th class="px-1 sm:px-2 md:px-4 py-2">طريقة الدفع</th>
-                <th class="px-1 sm:px-2 md:px-4 py-2">المريض</th>
+
+        <div class="overflow-x-auto border dark:border-zinc-700 rounded-lg">
+          <table
+            class="w-full text-center text-sm text-zinc-700 dark:text-zinc-200"
+          >
+            <thead
+              class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100"
+            >
+              <tr>
+                <th class="px-4 py-2">رقم المرجع</th>
+                <th class="px-4 py-2">التاريخ</th>
+                <th class="px-4 py-2">المبلغ</th>
+                <th class="px-4 py-2">طريقة الدفع</th>
+                <th class="px-4 py-2">المريض</th>
               </tr>
             </thead>
-            <tbody class="text-center">
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346100</td>
-                <td class="border px-2 py-2">20/07/2025</td>
-                <td class="border px-2 py-2">5 جنيه</td>
-                <td class="border px-2 py-2">
-                  بطاقة ائتمان - Master Card Bank Masr
-                </td>
-                <td class="border px-2 py-2">عبدالله مقرب</td>
+            <tbody>
+              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
+                <td class="px-4 py-2">180096303193346100</td>
+                <td class="px-4 py-2">20/07/2025</td>
+                <td class="px-4 py-2">169جنيه</td>
+                <td class="px-4 py-2">Visa</td>
+                <td class="px-4 py-2">عبدالله مقرب</td>
               </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346101</td>
-                <td class="border px-2 py-2">19/07/2025</td>
-                <td class="border px-2 py-2">15 جنيه</td>
-                <td class="border px-2 py-2">فودافون كاش</td>
-                <td class="border px-2 py-2">أحمد علي</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346102</td>
-                <td class="border px-2 py-2">18/07/2025</td>
-                <td class="border px-2 py-2">20 جنيه</td>
-                <td class="border px-2 py-2">بطاقة فيزا QNB</td>
-                <td class="border px-2 py-2">منى محمود</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346103</td>
-                <td class="border px-2 py-2">17/07/2025</td>
-                <td class="border px-2 py-2">10 جنيه</td>
-                <td class="border px-2 py-2">محفظة اتصالات</td>
-                <td class="border px-2 py-2">سارة حسن</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346104</td>
-                <td class="border px-2 py-2">16/07/2025</td>
-                <td class="border px-2 py-2">50 جنيه</td>
-                <td class="border px-2 py-2">Master Card CIB</td>
-                <td class="border px-2 py-2">ياسر كمال</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346105</td>
-                <td class="border px-2 py-2">15/07/2025</td>
-                <td class="border px-2 py-2">35 جنيه</td>
-                <td class="border px-2 py-2">محفظة أورانج</td>
-                <td class="border px-2 py-2">ليلى عبدالعزيز</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346106</td>
-                <td class="border px-2 py-2">14/07/2025</td>
-                <td class="border px-2 py-2">40 جنيه</td>
-                <td class="border px-2 py-2">بطاقة فيزا الأهلي</td>
-                <td class="border px-2 py-2">محمد شريف</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346107</td>
-                <td class="border px-2 py-2">13/07/2025</td>
-                <td class="border px-2 py-2">60 جنيه</td>
-                <td class="border px-2 py-2">فودافون كاش</td>
-                <td class="border px-2 py-2">هند علاء</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346108</td>
-                <td class="border px-2 py-2">12/07/2025</td>
-                <td class="border px-2 py-2">25 جنيه</td>
-                <td class="border px-2 py-2">بطاقة بنك فيصل</td>
-                <td class="border px-2 py-2">عمرو حسن</td>
-              </tr>
-              <tr class="hover:bg-green-100 dark:hover:bg-green-700">
-                <td class="border px-2 py-2">180096303193346109</td>
-                <td class="border px-2 py-2">11/07/2025</td>
-                <td class="border px-2 py-2">30 جنيه</td>
-                <td class="border px-2 py-2">محفظة فودافون</td>
-                <td class="border px-2 py-2">نورا مصطفى</td>
+              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
+                <td class="px-4 py-2">180096303193346101</td>
+                <td class="px-4 py-2">19/07/2025</td>
+                <td class="px-4 py-2">100 جنيه</td>
+                <td class="px-4 py-2">Mastercard</td>
+                <td class="px-4 py-2">سيد علي</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <h1
-          class="pt-3 hover:text-green-600 dark:hover:text-green-300 text-green-800 dark:text-green-200 cursor-pointer"
-        >
-          عرض كل عمليات الدفع
-        </h1>
+
+        <div class="text-end">
+          <a
+            href="#"
+            class="text-green-600 dark:text-green-400 text-sm hover:underline inline-flex items-center gap-1"
+          >
+            عرض كل عمليات الدفع
+          </a>
+        </div>
       </div>
 
       <!-- Patient Summary -->
       <div
-        class="bg-white/95 dark:bg-black/25 rounded-lg shadow-lg p-3 sm:p-4 md:p-6 backdrop-blur-md"
+        class="bg-white/80 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl p-6 shadow-lg mt-8"
       >
         <h2
-          class="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 text-green-600 dark:text-green-400"
+          class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2 mb-4"
         >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
           ملخص أكثر المرضى زيارة لك
         </h2>
 
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
-        >
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
+            class="border rounded-lg p-4 hover:bg-green-50 dark:hover:bg-green-700"
           >
-            <p><span class="font-bold">المريض:</span> عبدالله مقرب</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 21</p>
-            <p><span class="font-bold">آخر زيارة:</span> 22/07/2025</p>
+            <p><strong>المريض:</strong> عبدالله مقرب</p>
+            <p><strong>عدد الزيارات:</strong> 2</p>
+            <p><strong>آخر زيارة:</strong> 22/07/2025</p>
           </div>
-
           <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
+            class="border rounded-lg p-4 hover:bg-green-50 dark:hover:bg-green-700"
           >
-            <p><span class="font-bold">المريض:</span> سيد علي</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 15</p>
-            <p><span class="font-bold">آخر زيارة:</span> 20/07/2025</p>
+            <p><strong>المريض:</strong> سيد علي</p>
+            <p><strong>عدد الزيارات:</strong> 1</p>
+            <p><strong>آخر زيارة:</strong> 20/07/2025</p>
           </div>
-
           <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
+            class="border rounded-lg p-4 hover:bg-green-50 dark:hover:bg-green-700"
           >
-            <p><span class="font-bold">المريض:</span> أحمد حسن</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 18</p>
-            <p><span class="font-bold">آخر زيارة:</span> 19/07/2025</p>
-          </div>
-
-          <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
-          >
-            <p><span class="font-bold">المريض:</span> محمد عبدالمجيد</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 13</p>
-            <p><span class="font-bold">آخر زيارة:</span> 18/07/2025</p>
-          </div>
-
-          <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
-          >
-            <p><span class="font-bold">المريض:</span> كريم محمود</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 11</p>
-            <p><span class="font-bold">آخر زيارة:</span> 17/07/2025</p>
-          </div>
-
-          <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
-          >
-            <p><span class="font-bold">المريض:</span> مصطفى عادل</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 14</p>
-            <p><span class="font-bold">آخر زيارة:</span> 16/07/2025</p>
-          </div>
-
-          <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
-          >
-            <p><span class="font-bold">المريض:</span> ياسمين فوزي</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 9</p>
-            <p><span class="font-bold">آخر زيارة:</span> 15/07/2025</p>
-          </div>
-
-          <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
-          >
-            <p><span class="font-bold">المريض:</span> فاطمة الزهراء</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 10</p>
-            <p><span class="font-bold">آخر زيارة:</span> 14/07/2025</p>
-          </div>
-
-          <div
-            class="p-3 sm:p-4 border rounded-lg hover:bg-green-100 dark:hover:bg-green-700"
-          >
-            <p><span class="font-bold">المريض:</span> منى سيد</p>
-            <p><span class="font-bold">عدد الزيارات:</span> 12</p>
-            <p><span class="font-bold">آخر زيارة:</span> 13/07/2025</p>
+            <p><strong>المريض:</strong> عبدالله حسن</p>
+            <p><strong>عدد الزيارات:</strong> 1</p>
+            <p><strong>آخر زيارة:</strong> 19/07/2025</p>
           </div>
         </div>
       </div>

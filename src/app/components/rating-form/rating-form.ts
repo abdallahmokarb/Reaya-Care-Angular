@@ -39,7 +39,7 @@ export class RatingForm {
 
 
     const rating: Irating = {
-      ratingValue: this.ratingValue * 2,
+      ratingValue: this.ratingValue,
       comment: this.comment,
       doctorId: Number(this.route.snapshot.paramMap.get('id')),   // You should pass or set this in the component
     };

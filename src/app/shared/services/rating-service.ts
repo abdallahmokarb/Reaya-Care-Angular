@@ -23,7 +23,7 @@ export class RatingService {
       return Array(emptyStars).fill('fas fa-star emptystar');
     }
 
-    const fullStars = Math.floor(rating/2);
+    const fullStars = Math.floor(rating);
     const emptyStars = 5 - fullStars;
 
     return [
