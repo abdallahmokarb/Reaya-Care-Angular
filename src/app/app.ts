@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './components/layout/navbar/navbar';
 import { Footer } from './components/layout/footer/footer';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from './shared/services/theme.service';
-import { LoginComponent}  from './pages/auth/login/login';
+import { LoginComponent } from './pages/auth/login/login';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,19 @@ export class App {
   themeService = inject(ThemeService);
 
   isDarkMode = true;
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     // Theme listener
     this.themeService.darkMode$.subscribe((mode) => {
       this.isDarkMode = mode;
     });
+    // nav to top
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.scrollTo(0, 0);
+      });
   }
 
   toggleDarkMode(): void {
