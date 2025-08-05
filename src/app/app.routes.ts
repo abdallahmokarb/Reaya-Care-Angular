@@ -59,11 +59,15 @@ export const routes: Routes = [
               import('./components/doctor-onboarding/doctor-onboarding').then(
                 (m) => m.DoctorOnboarding
               ),
-          },{
-      path: 'doctor/timeslots',
-      loadComponent: () => 
-        import('./pages/dashboard/doctor-timeslots/doctor-timeslots').then(m => m.DoctorTimeslots)
-    }],
+          },
+          {
+            path: 'doctor/timeslots',
+            loadComponent: () =>
+              import(
+                './pages/dashboard/doctor-timeslots/doctor-timeslots'
+              ).then((m) => m.DoctorTimeslots),
+          },
+        ],
       },
 
       {
@@ -81,14 +85,14 @@ export const routes: Routes = [
       },
 
       {
-        path: 'dashboard/patient',
+        path: 'dashboard',
         children: [
           {
-            path: 'test',
+            path: 'admin',
             canActivate: [AuthGuard],
             loadComponent: () =>
-              import('./pages/dashboard-patient/test-page/test-page').then(
-                (m) => m.TestPage
+              import('./pages/dashboard-admin/admin-dashboard').then(
+                (m) => m.AdminDashboard
               ),
           },
         ],
@@ -178,5 +182,10 @@ export const routes: Routes = [
       { path: 'appointments', component: Appointment },
       { path: 'all-doctors', component: AllDoctors }, // for routing
     ],
+  },
+  {
+    path: 'recorder',
+    loadComponent: () =>
+      import('./components/recorder/recorder').then((m) => m.RecorderComponent),
   },
 ];

@@ -12,7 +12,7 @@
         [ngClass]="{
           'bg-blue-100 text-blue-800 border-blue-300': appointment.status === 'Confirmed',
           'bg-green-100 text-green-800 border-green-300': appointment.status === 'Finished',
-          'bg-red-100 text-red-800 border-red-300': appointment.status === 'Canceled'
+          'bg-red-100 text-red-800 border-red-300': appointment.status === 'Cancelled'
         }"
       >
         {{ getStatusLabel(appointment.status) }}
@@ -35,7 +35,36 @@
         <span><strong>الوقت:</strong> {{ getTimeRange() }}</span>
         <span>⏰</span>
       </div>
+      
+      <!-- ✅ رابط المكالمة إذا Confirmed -->
+<div
+  *ngIf="shouldShowVideoLink(appointment)"
+
+  class="mt-4 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg text-sm"
+>
+  <p class="text-blue-700 dark:text-blue-300 font-semibold">رابط مكالمة الفيديو:</p>
+  <a
+    [href]="appointment.videoCallUrl"
+    target="_blank"
+    class="text-blue-600 dark:text-blue-400 underline break-all"
+  >
+    {{ appointment.videoCallUrl }}
+  </a>
+</div>
+
+<!-- ✅ ملاحظات الموعد إذا Finished -->
+<div
+  *ngIf="appointment.notes && appointment.status === 'Finished'"
+  class="mt-4 bg-yellow-50 dark:bg-yellow-900 p-3 rounded-lg text-sm"
+>
+  <p class="text-yellow-700 dark:text-yellow-200 font-semibold">ملاحظات الطبيب:</p>
+  <p class="text-gray-800 dark:text-white">
+    {{ appointment.notes }}
+  </p>
+</div>
+
     </div>
+    
 
     <!-- الأزرار -->
     <div class="mt-4 flex gap-2 flex-row-reverse">
@@ -46,8 +75,8 @@
       >
         ❌ إلغاء الموعد
       </button>
-
-      <!-- <button
+<!-- 
+      <button
         *ngIf="appointment.status === 'Finished'"
         class="px-4 py-2 rounded-xl bg-yellow-100 text-yellow-800 border border-yellow-300 hover:bg-yellow-200 transition-all"
         (click)="rateDoctor(appointment.doctorId)"

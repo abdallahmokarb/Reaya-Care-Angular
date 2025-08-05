@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     console.log('%c[AuthService] token:', 'color: blue', token);
     return token;
   }

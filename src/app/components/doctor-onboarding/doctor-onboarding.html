@@ -257,76 +257,147 @@
     <form [formGroup]="editForm" (ngSubmit)="submitEdit()" class="space-y-3 text-sm">
 
       <div class="grid grid-cols-2 gap-3">
+        <!-- Full Name -->
         <div>
           <label class="block mb-1">الاسم الكامل</label>
           <input formControlName="fullName" class="w-full rounded border px-2 py-1" />
+          <div *ngIf="editForm.get('fullName')?.touched && editForm.get('fullName')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('fullName')?.hasError('required')">الاسم مطلوب</div>
+            <div *ngIf="editForm.get('fullName')?.hasError('minlength')">يجب أن يحتوي الاسم على الأقل على 3 أحرف</div>
+          </div>
         </div>
+
+        <!-- Phone Number -->
         <div>
           <label class="block mb-1">رقم الهاتف</label>
           <input formControlName="phoneNumber" class="w-full rounded border px-2 py-1" />
+          <div *ngIf="editForm.get('phoneNumber')?.touched && editForm.get('phoneNumber')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('phoneNumber')?.hasError('required')">رقم الهاتف مطلوب</div>
+            <div *ngIf="editForm.get('phoneNumber')?.hasError('pattern')">يجب إدخال رقم هاتف مصري صحيح (11 رقم)</div>
+          </div>
         </div>
+
+        <!-- Email -->
         <div>
           <label class="block mb-1">البريد الإلكتروني</label>
           <input formControlName="email" class="w-full rounded border px-2 py-1" />
+          <div *ngIf="editForm.get('email')?.touched && editForm.get('email')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('email')?.hasError('required')">البريد الإلكتروني مطلوب</div>
+            <div *ngIf="editForm.get('email')?.hasError('email')">صيغة البريد الإلكتروني غير صحيحة</div>
+          </div>
         </div>
+
+        <!-- Specialization -->
         <div>
           <label class="block mb-1">التخصص</label>
           <select formControlName="specializationId" class="w-full rounded border px-2 py-1">
-            <option value="">اختر التخصص</option>
+            <option [value]="0">اختر التخصص</option>
             <option *ngFor="let spec of specializations" [value]="spec.specializationId">{{ spec.name }}</option>
           </select>
+          <div *ngIf="editForm.get('specializationId')?.touched && editForm.get('specializationId')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('specializationId')?.hasError('required') || editForm.get('specializationId')?.hasError('min')">
+              التخصص مطلوب
+            </div>
+          </div>
         </div>
+
+        <!-- Government -->
         <div>
-        <label class="block mb-1">المحافظة</label>
-        <select (change)="onChangeGovernment($event)" formControlName="governmentId" class="w-full rounded border px-2 py-1">
-          <option value="">اختر المحافظة</option>
-          <option *ngFor="let gov of governments" [value]="gov.governmentId">{{ gov.name }}</option>
-        </select>
-      </div> 
-         <div>
-        <label class="block mb-1">المدينة</label>
-        <select formControlName="cityId" class="w-full rounded border px-2 py-1">
-          <option value="">اختر المدينة</option>
-          <option *ngFor="let city of cities" [value]="city.cityId">{{ city.name }}</option>
-        </select>
-      </div>    
+          <label class="block mb-1">المحافظة</label>
+          <select (change)="onChangeGovernment($event)" formControlName="governmentId" class="w-full rounded border px-2 py-1">
+            <option [value]="0">اختر المحافظة</option>
+            <option *ngFor="let gov of governments" [value]="gov.governmentId">{{ gov.name }}</option>
+          </select>
+          <div *ngIf="editForm.get('governmentId')?.touched && editForm.get('governmentId')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('governmentId')?.hasError('required') || editForm.get('governmentId')?.hasError('min')">
+              المحافظة مطلوبة
+            </div>
+          </div>
+      </div>
+
+        <!-- City -->
+        <div>
+          <label class="block mb-1">المدينة</label>
+          <select formControlName="cityId" class="w-full rounded border px-2 py-1">
+            <option [value]="0">اختر المدينة</option>
+            <option *ngFor="let city of cities" [value]="city.cityId">{{ city.name }}</option>
+          </select>
+          <div *ngIf="editForm.get('cityId')?.touched && editForm.get('cityId')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('cityId')?.hasError('required') || editForm.get('cityId')?.hasError('min')">
+              المدينة مطلوبة
+            </div>
+          </div>
+      </div>
+
+        <!-- Fees -->
         <div>
           <label class="block mb-1">الأجر</label>
           <input formControlName="fees" type="number" class="w-full rounded border px-2 py-1" />
+          <div *ngIf="editForm.get('fees')?.touched && editForm.get('fees')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('fees')?.hasError('required')">الأجر مطلوب</div>
+            <div *ngIf="editForm.get('fees')?.hasError('min')">يجب أن يكون الأجر رقمًا موجبًا</div>
+            <div *ngIf="editForm.get('fees')?.hasError('max')">يجب ألا يتجاوز الأجر 10000</div>
+          </div>
         </div>
+
+        <!-- Experience Years -->
         <div>
           <label class="block mb-1">سنوات الخبرة</label>
           <input formControlName="expYears" class="w-full rounded border px-2 py-1" />
+          <div *ngIf="editForm.get('expYears')?.touched && editForm.get('expYears')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('expYears')?.hasError('required')">عدد سنوات الخبرة مطلوب</div>
+            <div *ngIf="editForm.get('expYears')?.hasError('min')">يجب أن تكون صفر أو أكثر</div>
+            <div *ngIf="editForm.get('expYears')?.hasError('max')">يجب ألا تتجاوز 50 سنة</div>
+          </div>
         </div>
       </div>
 
-      <!-- Gender (full width) -->
+      <!-- Gender -->
       <div>
         <label class="block mb-1">الجنس</label>
         <div class="flex gap-4">
-          <label class="flex items-center gap-1"><input type="radio" formControlName="gender" [value]="'Male'" /> ذكر</label>
-          <label class="flex items-center gap-1"><input type="radio" formControlName="gender" [value]="'Female'" /> أنثى</label>
+          <label class="flex items-center gap-1">
+            <input type="radio" formControlName="gender" [value]="'Male'" /> ذكر
+          </label>
+          <label class="flex items-center gap-1">
+            <input type="radio" formControlName="gender" [value]="'Female'" /> أنثى
+          </label>
+        </div>
+        <div *ngIf="editForm.get('gender')?.touched && editForm.get('gender')?.invalid" class="text-red-500 text-xs mt-1">
+          <div *ngIf="editForm.get('gender')?.hasError('required')">اختيار الجنس مطلوب</div>
         </div>
       </div>
 
-      <!-- Service Type (full width) -->
+      <!-- Service Type -->
       <div>
-        <label class="block mb-1">نوع الخدمة</label>
-        <div class="flex gap-4">
-          <label class="flex items-center gap-1"><input type="radio" formControlName="service" [value]="1" /> عيادة</label>
-          <label class="flex items-center gap-1"><input type="radio" formControlName="service" [value]="2" /> أونلاين</label>
-        </div>
-      </div>
-      
-      
-   
+  <label class="block mb-1">نوع الخدمة</label>
+  <div class="flex gap-4">
+    <label class="flex items-center gap-1">
+      <input type="radio" formControlName="service" [value]="1" /> عيادة
+    </label>
+    <label class="flex items-center gap-1">
+      <input type="radio" formControlName="service" [value]="2" /> أونلاين
+    </label>
+  </div>
+  <div *ngIf="editForm.get('service')?.touched && editForm.get('service')?.invalid" class="text-red-500 text-xs mt-1">
+    <div *ngIf="editForm.get('service')?.hasError('required') || editForm.get('service')?.hasError('min')">
+      اختيار نوع الخدمة مطلوب
+    </div>
+  </div>
+</div>
 
-      <!-- Clinic details -->
+      <!-- Clinic details (only shown when service is clinic) -->
       <div *ngIf="editForm.get('service')?.value == 1" class="grid grid-cols-2 gap-3">
+        <!-- Detailed Address -->
         <div>
           <label class="block mb-1">العنوان</label>
           <input formControlName="detailedAddress" class="w-full rounded border px-2 py-1" />
+          <div *ngIf="editForm.get('detailedAddress')?.touched && editForm.get('detailedAddress')?.invalid" class="text-red-500 text-xs mt-1">
+            <div *ngIf="editForm.get('detailedAddress')?.hasError('required')">العنوان مطلوب</div>
+          </div>
         </div>
+
+        <!-- Location -->
         <div>
           <label class="block mb-1">الموقع على الخريطة</label>
           <div class="flex-column">
@@ -361,6 +432,10 @@
       <div>
         <label class="block mb-1">نبذة عني</label>
         <textarea formControlName="aboutMe" rows="2" class="w-full rounded border px-2 py-1"></textarea>
+        <div *ngIf="editForm.get('aboutMe')?.touched && editForm.get('aboutMe')?.invalid" class="text-red-500 text-xs mt-1">
+          <div *ngIf="editForm.get('aboutMe')?.hasError('required')">النبذة مطلوبة</div>
+          <div *ngIf="editForm.get('aboutMe')?.hasError('minlength')">يجب أن تحتوي النبذة على الأقل على 20 حرفًا</div>
+        </div>
       </div>
 
       <!-- Buttons -->
@@ -368,7 +443,6 @@
         <button type="button" (click)="closeEditModal()" class="px-3 py-1 rounded bg-gray-300 dark:bg-gray-700">إلغاء</button>
         <button type="submit" class="px-3 py-1 rounded bg-green-600 text-white">حفظ</button>
       </div>
-
     </form>
   </div>
 </div>

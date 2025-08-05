@@ -1,0 +1,35 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+  <h1 class="text-2xl font-bold mb-6">🎙️ Voice Recorder</h1>
+
+  <div class="flex gap-4">
+    <button
+      [disabled]="isRecording || isUploading"
+      (click)="startRecording()"
+      class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 transition"
+    >
+      🎤 Start Recording
+    </button>
+
+    <button
+      [disabled]="!isRecording"
+      (click)="stopRecording()"
+      class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 transition"
+    >
+      ⏹ Stop Recording
+    </button>
+  </div>
+
+  <div *ngIf="audioUrl" class="mt-6 text-center">
+    <p class="mb-2 font-medium">✅ Recording Complete:</p>
+    <audio [src]="audioUrl" controls class="w-full max-w-md mx-auto"></audio>
+
+    <a [href]="audioUrl" download="recording.wav" class="block mt-2 text-blue-600 hover:underline">
+      ⬇️ Download WAV
+    </a>
+  </div>
+
+  <div *ngIf="isUploading" class="mt-4 text-yellow-600">
+    ⏳ Uploading audio...
+  </div>
+
+</div>
