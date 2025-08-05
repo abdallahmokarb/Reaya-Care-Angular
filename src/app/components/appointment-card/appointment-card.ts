@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { IAppointment } from '.../../../src/app/models/iappointment';
 import { AppointmentService } from '../../shared/services/appointments-service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-appointment-card',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './appointment-card.html',
   styleUrl: './appointment-card.css'
 })

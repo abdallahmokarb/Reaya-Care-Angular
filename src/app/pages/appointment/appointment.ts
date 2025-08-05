@@ -12,38 +12,19 @@ import { CommonModule } from '@angular/common';
 })
 export class Appointment implements OnInit {
   Appointment: IAppointment[] = [];
-  previousAppointments: IAppointment[] = [];
-  upcomingAppointments: IAppointment[] = [];
   isLoading = true;
 
   constructor(private appointmentService: AppointmentService,
     private router: Router) {}
 
    ngOnInit(): void {
-    console.log('upcomingAppointments:', this.upcomingAppointments);
-   console.log('previousAppointments:', this.previousAppointments);
 
   this.isLoading = true;
 
   this.appointmentService.getMyAppointments().subscribe({
     next: (appointments) => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      this.upcomingAppointments = appointments.filter(a => {
-        const date = new Date(a.date);
-        date.setHours(0, 0, 0, 0);
-        return date >= today;
-      });
-
-      this.previousAppointments = appointments.filter(a => {
-        const date = new Date(a.date);
-        date.setHours(0, 0, 0, 0);
-        return date < today;
-      });
-
       this.isLoading = false;
-      this.Appointment = appointments; 
+      this.Appointment = appointments;
     },
     error: (err) => {
       console.error('Error fetching appointments:', err);
@@ -52,30 +33,6 @@ export class Appointment implements OnInit {
   });
 }
 
-
-
-
-  loadAppointments(): void {
-    this.isLoading = true;
-
-    // Get upcoming & past appointments together
-    this.appointmentService.getMyUpcomingAppointments().subscribe({
-      next: (upcoming) => {
-        this.upcomingAppointments = upcoming;
-
-        // nested inside to load both together
-        this.appointmentService.getMyPastAppointments().subscribe({
-          next: (past) => {
-            this.previousAppointments = past;
-            this.isLoading = false;
-          },
-          error: () => this.isLoading = false
-        });
-
-      },
-      error: () => this.isLoading = false
-    });
-  }
 
   navigateToPayment(): void {
     this.router.navigate(['/payment']);
@@ -86,6 +43,20 @@ export class Appointment implements OnInit {
   }
 
 
+  selectedTab: 'upcoming' | 'cancelled' | 'finished' = 'upcoming';
+
+  get filteredAppointments(): IAppointment[] {
+    switch (this.selectedTab) {
+      case 'upcoming':
+        return this.Appointment.filter(a => a.status === 'Confirmed');
+      case 'cancelled':
+        return this.Appointment.filter(a => a.status === 'Cancelled');
+      case 'finished':
+        return this.Appointment.filter(a => a.status === 'Finished');
+      default:
+        return [];
+    }
+  }
 
 
 

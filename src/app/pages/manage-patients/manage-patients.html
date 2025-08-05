@@ -1,0 +1,37 @@
+<div class="mb-6 text-center">
+  <h1 class="text-2xl font-bold text-gray-800 text-center">ادارة المستخدمين (المرضى)</h1>
+</div>
+
+
+<div class="px-10">
+    <table class="min-w-full bg-white rounded-lg shadow overflow-hidden">
+    <thead class="bg-[#0b7e3d] text-white">
+        <tr>
+        <th class="text-sm font-semibold text-right px-4 py-3">الاسم الكامل</th>
+        <th class="text-sm font-semibold text-right px-4 py-3">رقم الهاتف</th>
+        <th class="text-sm font-semibold text-right px-4 py-3">البريد الإلكتروني</th>
+        <th class="text-sm font-semibold text-right px-4 py-3">الحالة</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let patient of patients" class="border-b hover:bg-green-100 transition">
+        <td class="text-sm text-gray-700 px-4 py-3 text-right">{{ patient.fullName }}</td>
+        <td class="text-sm text-gray-700 px-4 py-3 text-right">{{ patient.phoneNumber }}</td>
+        <td class="text-sm text-gray-700 px-4 py-3 text-right">{{ patient.email }}</td>
+        <td class="text-sm text-gray-700 px-4 py-3 text-right">
+            <button (click)="toggleLock(patient)" class="transition text-xl">
+                <ng-container *ngIf="patient.isLocked; else unlocked">
+                    <!-- 🔒 Locked icon (red) -->
+                    <i class="fa fa-lock text-red-600"></i>
+                </ng-container>
+                <ng-template #unlocked>
+                    <!-- 🔓 Unlocked icon (green) -->
+                    <i class="fa fa-unlock text-green-600"></i>
+                </ng-template>
+                </button>
+
+        </td>
+        </tr>
+    </tbody>
+    </table>
+</div>

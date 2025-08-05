@@ -121,6 +121,13 @@ export const routes: Routes = [
             './pages/dashboard-patient/my-appointments/my-appointments'
           ).then((m) => m.MyAppointments),
       },
+      {
+        path: 'dashboard/admin/manage-patients',
+        loadComponent: () =>
+          import(
+            './pages/manage-patients/manage-patients'
+          ).then((m) => m.ManagePatients),
+      },
 
       {
         path: 'all-doctors',

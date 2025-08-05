@@ -1,63 +1,43 @@
-<section class="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-  <div class="max-w-4xl mx-auto px-4 py-10">
+<!-- 🟢 Tabs -->
+<div class="flex justify-center gap-4 mb-8 pt-25">
+  <button
+    (click)="selectedTab = 'upcoming'"
+    [class]="selectedTab === 'upcoming' ? 'bg-green-600 text-white' : 'bg-white text-green-700 dark:bg-gray-700 dark:text-white'"
+    class="px-4 py-2 rounded-full border border-green-600 transition"
+  >
+    حجوزات قادمة
+  </button>
 
-    <br><br><br><br>
-    <!-- 🟢 العنوان -->
-    <h1 class="text-3xl font-bold text-center mb-8 text-green-700 dark:text-green-300">
-      مواعيدي
-    </h1>
+  <button
+    (click)="selectedTab = 'cancelled'"
+    [class]="selectedTab === 'cancelled' ? 'bg-red-600 text-white' : 'bg-white text-red-700 dark:bg-gray-700 dark:text-white'"
+    class="px-4 py-2 rounded-full border border-red-600 transition"
+  >
+    حجوزات ملغاة
+  </button>
 
-    <!-- 🟢 تحميل -->
-    <div *ngIf="isLoading" class="flex flex-col items-center justify-center h-[40vh] text-gray-600 dark:text-gray-300 gap-4 animate-fade-in">
-      <svg class="animate-spin h-10 w-10 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-      </svg>
-      <span class="text-lg font-medium">جاري تحميل المواعيد...</span>
-    </div>
+  <button
+    (click)="selectedTab = 'finished'"
+    [class]="selectedTab === 'finished' ? 'bg-yellow-600 text-white' : 'bg-white text-yellow-700 dark:bg-gray-700 dark:text-white'"
+    class="px-4 py-2 rounded-full border border-yellow-600 transition"
+  >
+    حجوزات منتهية
+  </button>
+</div>
 
-    <!-- ✅ عند الانتهاء من التحميل -->
-    <div *ngIf="!isLoading" class="animate-fade-in">
-
-      <!-- 🟢 المواعيد القادمة -->
-      <div class="mb-12">
-        <h2 class="text-xl font-semibold mb-4 border-b pb-2 text-green-700 dark:text-green-300">المواعيد القادمة</h2>
-
-        <ng-container *ngIf="upcomingAppointments.length > 0; else noUpcoming">
-          <div class="grid gap-4">
-            <app-appointment-card *ngFor="let appointment of upcomingAppointments" [appointment]="appointment"></app-appointment-card>
-          </div>
-        </ng-container>
-
-        <ng-template #noUpcoming>
-          <p class="text-gray-600 dark:text-gray-300">لا يوجد مواعيد قادمة</p>
-        </ng-template>
-      </div>
-
-      <!-- 🔴 المواعيد السابقة -->
-      <div>
-        <h2 class="text-xl font-semibold mb-4 border-b pb-2 text-green-700 dark:text-green-300">المواعيد السابقة</h2>
-
-        <ng-container *ngIf="previousAppointments.length > 0; else noPrevious">
-          <div class="grid gap-4">
-            <app-appointment-card *ngFor="let appointment of previousAppointments" [appointment]="appointment"></app-appointment-card>
-          </div>
-        </ng-container>
-
-        <ng-template #noPrevious>
-          <p class="text-gray-600 dark:text-gray-300">لا يوجد مواعيد سابقة</p>
-        </ng-template>
-      </div>
-
-      <!-- 🟢 زر الحجز -->
-      <div class="text-center mt-10">
-        <button (click)="bookNewAppointment()"
-          class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow transition">
-          احجز موعد جديد
-        </button>
-      </div>
-
-    </div>
-
+<!-- 🟢 Appointments Based on Tab -->
+<ng-container *ngIf="filteredAppointments.length > 0; else noAppointments">
+  <div class="grid justify-around grid-cols-1 md:grid-cols-2 lg:px-20">
+    <app-appointment-card
+      *ngFor="let appointment of filteredAppointments"
+      [appointment]="appointment"
+    ></app-appointment-card>
   </div>
-</section>
+</ng-container>
+
+<!-- 🔴 No Data -->
+<ng-template #noAppointments>
+  <p class="text-center text-gray-600 dark:text-gray-300 mt-4">
+    لا توجد حجوزات في هذه القائمة.
+  </p>
+</ng-template>

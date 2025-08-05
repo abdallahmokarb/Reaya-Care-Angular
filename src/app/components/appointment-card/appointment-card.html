@@ -1,14 +1,10 @@
-<!-- حاوية لتوسيط الكارت في الصفحة -->
 <div class="flex justify-center px-4">
-  <!-- الكارت نفسه -->
-  <div dir="rtl" class="rounded-2xl p-5 shadow-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 text-right w-full max-w-2xl">
-    <!-- العنوان والحالة -->
-    <div class="flex flex-row-reverse justify-between items-center mb-4">
-      <div class="text-xl font-semibold text-gray-800 dark:text-white">
-        الدكتور / {{ appointment.doctorName }}
-      </div>
+  <div dir="rtl" class="rounded-2xl p-6 shadow-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 text-right w-full mb-5 ">
+
+    <!-- 🟢 Header: Doctor + Status -->
+    <div class="flex flex-row-reverse justify-between items-center mb-5">
       <span
-        class="text-sm font-medium px-3 py-1 rounded-full border"
+        class="text-sm font-semibold px-3 py-1 rounded-full border"
         [ngClass]="{
           'bg-blue-100 text-blue-800 border-blue-300': appointment.status === 'Confirmed',
           'bg-green-100 text-green-800 border-green-300': appointment.status === 'Finished',
@@ -17,72 +13,68 @@
       >
         {{ getStatusLabel(appointment.status) }}
       </span>
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+        الدكتور / {{ appointment.doctorName }}
+      </h2>
     </div>
 
-    <!-- تفاصيل الموعد -->
-    <div class="space-y-3 text-gray-700 dark:text-gray-200 text-sm">
-      <div class="flex flex-row items-center gap-2 justify-end">
-        <span><strong>التخصص:</strong> {{ appointment.specializationName }}</span>
-        <span>🩺</span>
+    <!-- 🩺 Details -->
+    <div class="space-y-4 text-gray-700 dark:text-gray-200 text-[15px] leading-relaxed">
+
+      <div class="flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          🩺 <strong>التخصص:</strong> {{ appointment.specializationName }}
+        </span>
       </div>
 
-      <div class="flex flex-row items-center gap-2 justify-end">
-        <span><strong>التاريخ:</strong> {{ appointment.date | date: 'fullDate':'ar-EG' }}</span>
-        <span>📅</span>
+      <div class="flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          📅 <strong>التاريخ:</strong> {{ appointment.date | date: 'fullDate':'ar-EG' }}
+        </span>
       </div>
 
-      <div class="flex flex-row items-center gap-2 justify-end">
-        <span><strong>الوقت:</strong> {{ getTimeRange() }}</span>
-        <span>⏰</span>
+      <div class="flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          ⏰ <strong>الوقت:</strong> {{ getTimeRange() }}
+        </span>
       </div>
+
+      <!-- 🔵 Video Call Link (if confirmed) -->
+       <div *ngIf="appointment.status === 'Confirmed'" class="flex justify-between">
+
+        <div *ngIf="appointment.videoCallUrl" class="mt-2 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg text-sm">
+          <p class="text-blue-700 dark:text-blue-300 font-semibold mb-1">رابط مكالمة الفيديو:</p>
+          <a
+            [routerLink]="['/patient-call', appointment.appointmentId]"
+            class="text-blue-600 dark:text-blue-400 underline break-words"
+          >
+            الانضام للمكالمة الان
+          </a>
+        </div>
+        
+        <!-- 🔴 Action Button -->
+        <div class="mt-5 flex flex-row-reverse gap-3">
+          <button
+            class="px-5 py-2 rounded-xl bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 hover:text-red-900 transition-all"
+            (click)="cancelAppointment(appointment.appointmentId)"
+          >
+            ❌ إلغاء الموعد
+          </button>
+        </div>
+
+       </div>
       
-      <!-- ✅ رابط المكالمة إذا Confirmed -->
-<div
-  *ngIf="shouldShowVideoLink(appointment)"
 
-  class="mt-4 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg text-sm"
->
-  <p class="text-blue-700 dark:text-blue-300 font-semibold">رابط مكالمة الفيديو:</p>
-  <a
-    [href]="appointment.videoCallUrl"
-    target="_blank"
-    class="text-blue-600 dark:text-blue-400 underline break-all"
-  >
-    {{ appointment.videoCallUrl }}
-  </a>
-</div>
-
-<!-- ✅ ملاحظات الموعد إذا Finished -->
-<div
-  *ngIf="appointment.notes && appointment.status === 'Finished'"
-  class="mt-4 bg-yellow-50 dark:bg-yellow-900 p-3 rounded-lg text-sm"
->
-  <p class="text-yellow-700 dark:text-yellow-200 font-semibold">ملاحظات الطبيب:</p>
-  <p class="text-gray-800 dark:text-white">
-    {{ appointment.notes }}
-  </p>
-</div>
+      <!-- 🟡 Notes (if finished) -->
+      <div *ngIf="appointment.notes && appointment.status === 'Finished'" class="bg-yellow-50 dark:bg-yellow-900 p-3 rounded-lg text-sm">
+        <p class="text-yellow-700 dark:text-yellow-200 font-semibold mb-1">ملاحظات الطبيب:</p>
+        <p class="text-gray-800 dark:text-white">
+          {{ appointment.notes }}
+        </p>
+      </div>
 
     </div>
+
     
-
-    <!-- الأزرار -->
-    <div class="mt-4 flex gap-2 flex-row-reverse">
-      <button
-        *ngIf="appointment.status === 'Confirmed'"
-        class="px-4 py-2 rounded-xl bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 hover:text-red-900 transition-all"
-        (click)="cancelAppointment(appointment.appointmentId)"
-      >
-        ❌ إلغاء الموعد
-      </button>
-<!-- 
-      <button
-        *ngIf="appointment.status === 'Finished'"
-        class="px-4 py-2 rounded-xl bg-yellow-100 text-yellow-800 border border-yellow-300 hover:bg-yellow-200 transition-all"
-        (click)="rateDoctor(appointment.doctorId)"
-      >
-        ⭐ تقييم الطبيب
-      </button> -->
-    </div>
   </div>
 </div>
