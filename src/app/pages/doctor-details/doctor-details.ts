@@ -14,7 +14,8 @@ import {
   YourBooking,
 } from '../../shared/interfaces/bookingdetails';
 import { PaymentService } from '../../shared/services/payment';
-import { RatingForm } from "../../components/rating-form/rating-form";
+import { RatingForm } from '../../components/rating-form/rating-form';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-doctor-details',
@@ -32,7 +33,7 @@ export class DoctorDetails implements OnInit {
   user: any = null;
   selectedSlot: Itimeslot | null = null;
   isSubmitting = false;
-
+  views!: number;
   minDate!: string;
   selectedDate!: string;
   selectSlot(slot: Itimeslot): void {
@@ -41,7 +42,10 @@ export class DoctorDetails implements OnInit {
 
   // selectedDate: string = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-  constructor(private paymentService: PaymentService) {
+  constructor(
+    private paymentService: PaymentService,
+    private http: HttpClient
+  ) {
     // Initialize today's date in YYYY-MM-DD format for the date input
     const todayDate = new Date();
     this.today = todayDate.toISOString().split('T')[0];
@@ -53,6 +57,10 @@ export class DoctorDetails implements OnInit {
   ratingService = inject(RatingService);
 
   ngOnInit(): void {
+    this.doctorId = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.trackDoctorView(this.doctorId);
+
     this.user = JSON.parse(
       localStorage.getItem('user') || sessionStorage.getItem('user') || 'null'
     );
@@ -147,7 +155,6 @@ export class DoctorDetails implements OnInit {
     return date.toISOString().split('T')[0]; // YYYY-MM-DD
   }
 
-
   async pay(): Promise<void> {
     if (!this.user) return;
     this.isSubmitting = true;
@@ -231,5 +238,19 @@ export class DoctorDetails implements OnInit {
         window.location.href = url;
       }
     }, 1000);
+  }
+
+  trackDoctorView(id: number) {
+    this.http
+      .get<{ doctorId: number; views: number }>(
+        `http://localhost:5216/api/doctor/${id}/view`
+      )
+      .subscribe({
+        next: (res) => {
+          this.views = res.views;
+          console.log('View Count:', this.views);
+        },
+        error: (err) => console.error('Failed to track view:', err),
+      });
   }
 }
