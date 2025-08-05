@@ -27,8 +27,8 @@ export class AppointmentService {
 
 
 
-  cancelAppointment(appointmentId: number): Observable<any> {
-  return this.http.patch(`/api/appointments/${appointmentId}/cancel`, {});
+  cancelAppointment(app: IAppointment): Observable<any> {
+  return this.http.patch(`/api/appointments/CancelAppointment`, app);
 }
 //   bookAppointment(appointment: IAppointment): Observable<IAppointment> {
 //     return this.http.post<IAppointment>(`${this.baseUrl}/book`, appointment);

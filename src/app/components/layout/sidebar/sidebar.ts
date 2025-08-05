@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -33,17 +33,21 @@ export class Sidebar {
     this.router.navigate(['/auth/login']);
   }
 
-  dashboardType = signal<'doctor' | 'patient' | null>(null);
+  // 👇 Now includes 'admin'
+  dashboardType = signal<'doctor' | 'patient' | 'admin' | null>(null);
 
   constructor() {
     const path = this.router.url;
+
     if (path.includes('/dashboard/doctor')) {
       this.dashboardType.set('doctor');
     } else if (path.includes('/dashboard/patient')) {
       this.dashboardType.set('patient');
+    } else if (path.includes('/dashboard/admin')) {
+      this.dashboardType.set('admin');
     }
 
-    // watch dark mode
+    // Watch dark mode toggle
     effect(() => {
       const isDark = this.darkMode();
       localStorage.setItem('darkMode', JSON.stringify(isDark));
