@@ -125,17 +125,17 @@ export class PaymentCallbackComponent implements OnInit {
           console.log('Appointment booked successfully:', res);
           this.isSuccess = true;
 
-          // save appointment confirmation to show in irmation page
-          sessionStorage.setItem(
-            'confirmation',
-            JSON.stringify({
-              booking: parsedBooking,
-              payment: this.paymentData,
-              appointmentId: res.appointmentId || res.id,
-            })
-          );
+          const confirmation = {
+            booking: parsedBooking,
+            payment: this.paymentData,
+            appointmentId: res.appointmentId || res.id,
+            doctorId: parsedBooking.doctorId,
+            amount: this.paymentData.AmountCents / 100, // convert to dollars
+          };
 
-          // navigate to a confirmation page
+          sessionStorage.setItem('confirmation', JSON.stringify(confirmation));
+
+          // redirect to confirmation
           window.location.href = '/booking-confirmation';
         },
         error: (err) => {
@@ -150,33 +150,54 @@ export class PaymentCallbackComponent implements OnInit {
 
   // bookAppointment() {
   //   const bookingData = localStorage.getItem('yourBooking');
-  //   if (!bookingData) {
-  //     console.error('No booking data found in localStorage');
+  //   const userData = sessionStorage.getItem('user');
+
+  //   if (!bookingData || !userData) {
+  //     console.error('Missing booking data or user data');
   //     return;
   //   }
 
   //   try {
   //     const parsedBooking = JSON.parse(bookingData);
+  //     const parsedUser = JSON.parse(userData);
 
   //     const payload = {
   //       doctorId: parsedBooking.doctorId,
   //       timeSlotId: parsedBooking.slot.timeSlotId,
-  //       patientId: 1, // Replace with actual patientId
-  //       notes: 'BEDO', // Replace with actual patientId
+  //       patientId: parsedUser.patientId,
+  //       notes: 'Booking notes here',
+  //       paymentId: this.paymentIdFromBackend,
   //     };
+
+  //     console.log('Payload to send:', payload);
 
   //     const bookUrl = 'http://localhost:5216/api/Appointment_/book-appointment';
 
   //     this.http.post(bookUrl, payload).subscribe({
-  //       next: (res) => {
+  //       next: (res: any) => {
   //         console.log('Appointment booked successfully:', res);
+  //         this.isSuccess = true;
+
+  //         // save appointment confirmation to show in irmation page
+  //         sessionStorage.setItem(
+  //           'confirmation',
+  //           JSON.stringify({
+  //             booking: parsedBooking,
+  //             payment: this.paymentData,
+  //             appointmentId: res.appointmentId || res.id,
+  //           })
+  //         );
+
+  //         // navigate to a confirmation page
+  //         window.location.href = '/booking-confirmation';
   //       },
   //       error: (err) => {
-  //         console.error('Failed to book appointment:', err);
+  //         console.error('failed to book appointment:', err);
+  //         this.isSuccess = false;
   //       },
   //     });
   //   } catch (err) {
-  //     console.error('Error parsing booking data:', err);
+  //     console.error('error parsing booking data:', err);
   //   }
   // }
 }
