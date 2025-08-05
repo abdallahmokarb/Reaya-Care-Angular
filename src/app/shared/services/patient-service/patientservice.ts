@@ -33,4 +33,24 @@ export class Patientservice {
     { headers }
   );
   }
+
+  getAllPatients(): Observable<Ipatient[]>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    });
+
+    return this.http.get<Ipatient[]>
+      (`${this.apiUrl}patient/GetAll`,{ headers });
+  }
+
+  toggleLock(patientId: number | undefined) : Observable<boolean>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    });
+
+    return this.http.put<boolean>
+      (`${this.apiUrl}patient/ToggleAccount/${patientId}`,{},{ headers });
+  }
 }
