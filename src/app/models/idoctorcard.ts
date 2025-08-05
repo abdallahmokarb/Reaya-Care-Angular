@@ -18,4 +18,5 @@ export interface Idoctorcard {
   hasAvailableTimeSlots: boolean;
   hasAvailableTimeSlotsToday: boolean;
   hasAvailableTimeSlotsTomorrow: boolean;
+  createdAt: Date;
 }

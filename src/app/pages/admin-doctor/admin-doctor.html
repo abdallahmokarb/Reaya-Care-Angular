@@ -1,0 +1,133 @@
+<!-- Page layout in Arabic (RTL), doctor list on the RIGHT side -->
+<div class="flex flex-row-reverse h-screen" dir="ltr">
+  <!-- Doctor List (Right side - 20%) -->
+  <div class="w-1/5 border-l border-gray-200 overflow-y-auto">
+    <div
+      *ngFor="let doctor of doctors"
+      class="flex items-center gap-4 p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-100"
+      [class.bg-blue-100]="selectedDoctor?.doctorId === doctor.doctorId"
+      (click)="selectDoctor(doctor)" dir="rtl"
+    >
+      <img
+        [src]="doctor.profilePictureUrl"
+        class="w-12 h-12 rounded-full object-cover"
+        alt="صورة الطبيب"
+      />
+      <div class="text-right">
+        <h3 class="text-base font-medium text-gray-800">{{ doctor.fullName }}</h3>
+        <p class="text-xs text-gray-500">{{ doctor.specialization }}</p>
+      </div>
+    </div>
+  </div>
+
+ <!-- Doctor Details (Left side - 80%) -->
+<div class="w-4/5 p-6 bg-gray-50 overflow-y-auto text-right" dir="rtl">
+  <div *ngIf="selectedDoctor" class="space-y-6">
+
+    <!-- 👤 صورة الطبيب + التخصص والخدمة -->
+    <div class="flex items-center gap-6 bg-white shadow rounded-lg p-4">
+      <img
+        [src]="selectedDoctor.profileImageUrl || selectedDoctor.profilePictureUrl"
+        class="w-28 h-28 rounded-full object-cover border"
+        alt="صورة الطبيب"
+      />
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">{{ selectedDoctor.fullName }}</h2>
+        <p class="text-sm text-gray-500 mt-1">
+          <strong>التخصص:</strong> {{ selectedDoctor.specialization || 'غير محدد' }}
+        </p>
+        <p class="text-sm text-gray-500">
+          <strong>الخدمة:</strong> {{ selectedDoctor.service }}
+        </p>
+      </div>
+    </div>
+
+    <!-- 👤 البيانات الأساسية -->
+    <div class="bg-white shadow rounded-lg p-4 space-y-2">
+      <h3 class="text-lg font-bold text-gray-700 border-b pb-1">👤 البيانات الأساسية</h3>
+      <p><strong>الاسم:</strong> {{ selectedDoctor.fullName }}</p>
+      <p><strong>البريد الإلكتروني:</strong> {{ selectedDoctor.email }}</p>
+      <p><strong>رقم الهاتف:</strong> {{ selectedDoctor.phoneNumber }}</p>
+      <p><strong>الجنس:</strong> {{ selectedDoctor.gender }}</p>
+      <p><strong>الحالة:</strong>
+        <span [ngClass]="selectedDoctor.status === 1 ? 'text-green-600' : 'text-red-600'">
+          {{ selectedDoctor.status === 1 ? 'نشط' : 'غير نشط' }}
+        </span>
+      </p>
+    </div>
+
+    
+    <div class="bg-white shadow rounded-lg p-4 space-y-2">
+      <h3 class="text-lg font-bold text-gray-700 border-b pb-1">🏥 تفاصيل العمل</h3>
+      <p><strong>سنوات الخبرة:</strong> {{ selectedDoctor.expYears }} سنة</p>
+      <p><strong>مدة الانتظار:</strong> {{ selectedDoctor.waitingTime }} دقيقة</p>
+      <p><strong>الرسوم:</strong> {{ selectedDoctor.fees | currency:'EGP' }}</p>
+      <p><strong>التقييم:</strong> {{ selectedDoctor.ratingValue }} / 5</p>
+    </div>
+
+   
+    <div class="bg-white shadow rounded-lg p-4 space-y-2">
+      <h3 class="text-lg font-bold text-gray-700 border-b pb-1">📍 الموقع والعناوين</h3>
+      <p><strong>الموقع:</strong> {{ selectedDoctor.location }}</p>
+      <p><strong>العنوان التفصيلي:</strong> {{ selectedDoctor.detailedAddress || 'غير متوفر' }}</p>
+      <p><strong>المدينة:</strong> {{ selectedDoctor.cityName }}</p>
+      <p><strong>المحافظة:</strong> {{ selectedDoctor.governmentName }}</p>
+      <div>
+        <strong>عناوين إضافية:</strong>
+        <ul class="list-disc pr-5 text-sm text-gray-600">
+          <li *ngFor="let address of selectedDoctor.addresses">{{ address }}</li>
+        </ul>
+      </div>
+    </div>
+
+    
+    <div class="bg-white shadow rounded-lg p-4 space-y-2">
+      <h3 class="text-lg font-bold text-gray-700 border-b pb-1">📄 المستندات</h3>
+      <p><strong>رخصة مزاولة المهنة:</strong>
+        <a *ngIf="selectedDoctor.medicalLicenseUrl" [href]="selectedDoctor.medicalLicenseUrl" target="_blank" class="text-blue-600 underline">عرض</a>
+        <span *ngIf="!selectedDoctor.medicalLicenseUrl" class="text-gray-400">غير متوفر</span>
+      </p>
+      <p><strong>الرقم القومي:</strong>
+        <a *ngIf="selectedDoctor.nationalIdUrl" [href]="selectedDoctor.nationalIdUrl" target="_blank" class="text-blue-600 underline">عرض</a>
+        <span *ngIf="!selectedDoctor.nationalIdUrl" class="text-gray-400">غير متوفر</span>
+      </p>
+      <p><strong>شهادة التخرج:</strong>
+        <a *ngIf="selectedDoctor.graduationCertificateUrl" [href]="selectedDoctor.graduationCertificateUrl" target="_blank" class="text-blue-600 underline">عرض</a>
+        <span *ngIf="!selectedDoctor.graduationCertificateUrl" class="text-gray-400">غير متوفر</span>
+      </p>
+      <p><strong>شهادة الخبرة:</strong>
+        <a *ngIf="selectedDoctor.experienceCertificateUrl" [href]="selectedDoctor.experienceCertificateUrl" target="_blank" class="text-blue-600 underline">عرض</a>
+        <span *ngIf="!selectedDoctor.experienceCertificateUrl" class="text-gray-400">غير متوفر</span>
+      </p>
+    </div>
+
+  
+    <div class="bg-white shadow rounded-lg p-4 space-y-2">
+      <h3 class="text-lg font-bold text-gray-700 border-b pb-1">💰 الرصيد</h3>
+      <p><strong>الرصيد الحالي:</strong> {{ selectedDoctor.balance | currency:'EGP' }}</p>
+    </div>
+
+    <!--  Actions -->
+    <div class="flex justify-end gap-4 pt-4">
+      <button
+        class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md"
+        (click)="approveDoctor(selectedDoctor.doctorId)"
+      >
+        قبول
+      </button>
+      <button
+        class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md"
+        (click)="rejectDoctor(selectedDoctor.doctorId)"
+      >
+         رفض
+      </button>
+    </div>
+
+  </div>
+
+  <div *ngIf="!selectedDoctor" class="text-gray-400 italic text-right">
+    اختر طبيبًا لعرض التفاصيل.
+  </div>
+</div>
+
+</div>

@@ -188,4 +188,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/recorder/recorder').then((m) => m.RecorderComponent),
   },
+  {
+    path:'admin-doctor',
+    loadComponent: () =>
+      import('./pages/admin-doctor/admin-doctor').then((m) => m.AdminDoctorComponent),
+  }
 ];

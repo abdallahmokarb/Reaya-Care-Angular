@@ -21,4 +21,10 @@ export class DoctorService {
   getDoctorById(id: number): Observable<Idoctordetails> {
     return this.http.get<Idoctordetails>(`${this.baseUrl}/details/${id}`);
   }
+  approveDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/activate`, {});
+  }
+  rejectDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/deactivate`, {});
+  }
 }
