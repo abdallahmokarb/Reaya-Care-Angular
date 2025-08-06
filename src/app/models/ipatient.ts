@@ -1,5 +1,6 @@
 export interface Ipatient {
     userId?: string; // Optional, if not always present
+    patientId?: number;
     fullName: string;
     phoneNumber: string;
     email: string;
@@ -7,4 +8,5 @@ export interface Ipatient {
     gender: string; // Adjust enum as needed
    
     createdAt: string; // Same here for DateOnly
+    isLocked?: boolean;
 }

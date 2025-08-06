@@ -6,11 +6,10 @@ import { Idoctordetails } from '../../models/idoctordetails';
 import { Idoctorcard } from '../../models/idoctorcard';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DoctorService {
-
-  private baseUrl = 'http://localhost:5216/api/Doctor'; // 👈 Update this to your real API URL
+  private baseUrl = 'http://localhost:5216/api/Doctor'; //   Update this to your real API URL
 
   constructor(private http: HttpClient) {}
 
@@ -30,4 +29,9 @@ export class DoctorService {
   rejectDoctor(id: number): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${id}/deactivate`, {});
   }
+   updateDoctorBalance(doctorId: number, amount: number) {
+    return this.http.put(
+      `${this.baseUrl}/${doctorId}/balance?amount=${amount}`,
+      null
+    );}
 }

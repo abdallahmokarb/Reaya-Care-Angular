@@ -17,7 +17,7 @@ export class Patientservice {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
     });
     return this.http.get<Ipatient>(`${this.apiUrl}patient/${patientId}`, { headers });
   }
@@ -32,5 +32,25 @@ export class Patientservice {
     patientData,
     { headers }
   );
+  }
+
+  getAllPatients(): Observable<Ipatient[]>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    });
+
+    return this.http.get<Ipatient[]>
+      (`${this.apiUrl}patient/GetAll`,{ headers });
+  }
+
+  toggleLock(patientId: number | undefined) : Observable<boolean>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    });
+
+    return this.http.put<boolean>
+      (`${this.apiUrl}patient/ToggleAccount/${patientId}`,{},{ headers });
   }
 }
