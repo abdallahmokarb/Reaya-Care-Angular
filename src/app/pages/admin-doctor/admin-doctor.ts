@@ -16,26 +16,41 @@ import { Idoctor } from '../../models/idoctor';
 export class AdminDoctorComponent implements OnInit {
   doctors: Idoctorcard[] = [];
   selectedDoctor: Idoctor | null = null;
+  selectedStatus: number = 1; // Default to active
+  filteredDoctors: Idoctorcard[] = [];
 
+   documentLinks = [
+    { key: 'medicalLicenseUrl', label: 'رخصة مزاولة المهنة' },
+    { key: 'nationalIdUrl', label: 'الرقم القومي' },
+    { key: 'graduationCertificateUrl', label: 'شهادة التخرج' },
+    { key: 'experienceCertificateUrl', label: 'شهادة الخبرة' }
+  ];
   constructor(private doctorService: DoctorService ,private doctorInfoService: DoctorInfoService) {}
 
   ngOnInit(): void {
     this.loadDoctors();
+    this.filterDoctors(this.selectedStatus);
   }
 
   loadDoctors() {
-    this.doctorService.getAllDoctors().subscribe({
+     this.doctorService.getAlldDoctorsByStatus().subscribe({
       next: (data: Idoctorcard[]) => {
         this.doctors = data;
-        if (this.doctors.length > 0) {
-          this.loadDoctorDetails(this.doctors[0].doctorId);
+        this.filterDoctors(this.selectedStatus);
+        if (this.filteredDoctors.length > 0) {
+          this.loadDoctorDetails(this.filteredDoctors[0].doctorId);
         }
       },
-      error: (error) => {
-        console.error('Error loading doctors:', error);
-      }
+      error: (error) => console.error('Error loading doctors:', error)
     });
   }
+
+
+  filterDoctors(status: number) {
+  this.selectedStatus = status;
+  this.filteredDoctors = this.doctors.filter(doc => doc.status === status);
+}
+
 
   loadDoctorDetails(id: number) {
     this.doctorInfoService.getDoctorInfo(id.toString()).subscribe({
@@ -57,12 +72,24 @@ export class AdminDoctorComponent implements OnInit {
   approveDoctor(id: number) {
     this.doctorService.approveDoctor(id).subscribe(() => {
       this.loadDoctorDetails(id);
+      this.loadDoctors(); // Refresh the list after approval
     });
   }
 
   rejectDoctor(id: number) {
     this.doctorService.rejectDoctor(id).subscribe(() => {
       this.loadDoctorDetails(id);
+      this.loadDoctors(); // Refresh the list after rejection
     });
   }
+
+   getStatusLabel(status: number): string {
+    switch (status) {
+      case 0: return 'معلق';
+      case 1: return 'مقبول';
+      case 2: return 'مرفوض';
+      case 3: return 'معلق مؤقتًا';
+      case 4: return 'غير مفعل';
+      default: return 'غير معروف';
+    }}
 }

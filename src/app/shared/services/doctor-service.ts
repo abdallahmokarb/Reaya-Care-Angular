@@ -18,6 +18,9 @@ export class DoctorService {
     return this.http.get<Idoctorcard[]>(this.baseUrl);
   }
 
+  getAlldDoctorsByStatus(): Observable<Idoctorcard[]> {
+    return this.http.get<Idoctorcard[]>(`${this.baseUrl}/allDoctors`);
+  }
   getDoctorById(id: number): Observable<Idoctordetails> {
     return this.http.get<Idoctordetails>(`${this.baseUrl}/details/${id}`);
   }
