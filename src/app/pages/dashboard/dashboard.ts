@@ -20,7 +20,16 @@ export class Dashboard implements OnInit, AfterViewInit {
   averageRating: number = 0;
   balance: number = 0;
   views: number = 0;
-
+  appointments: any[] = [];
+  mostVisitedPatients: {
+    patientId: number;
+    name: string;
+    visitCount: number;
+  }[] = [];
+  finishedCount = 0;
+  confirmedCount = 0;
+  cancelledCount = 0;
+  nonAttendanceCount = 0;
   constructor(private http: HttpClient) {}
 
   closeModal() {
@@ -45,13 +54,14 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.renderBarChart();
     this.renderPieChart();
     this.loadViews(this.doctorId);
+    this.getAppointments(this.doctorId);
   }
 
   private renderBarChart(): void {
     new Chart(document.getElementById('specialtyChart') as HTMLCanvasElement, {
       type: 'bar',
       data: {
-        labels: ['طب القلب'],
+        labels: [''],
         datasets: [
           {
             label: 'الذكور',
@@ -107,7 +117,7 @@ export class Dashboard implements OnInit, AfterViewInit {
           this.ratings = res;
           this.ratingCount = res.length;
 
-          // ratingValue avg
+          // rating value avg
           if (this.ratingCount > 0) {
             const total = res.reduce(
               (sum, rating) => sum + rating.ratingValue,
@@ -119,7 +129,7 @@ export class Dashboard implements OnInit, AfterViewInit {
           }
         },
         error: (err) => {
-          console.error('failed to fetch ratings:', err);
+          console.error('failed to fetch rating', err);
         },
       });
   }
@@ -146,6 +156,41 @@ export class Dashboard implements OnInit, AfterViewInit {
         },
         error: (err) => {
           console.error('Error fetching views:', err);
+        },
+      });
+  }
+
+  getAppointments(doctorId: number) {
+    this.http
+      .get<any[]>(
+        `http://localhost:5216/api/Doctor/doctor/${doctorId}/appointments`
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Appointments:', res);
+          this.appointments = res;
+
+          // Count appointments
+          const finishedCount = res.filter(
+            (app) => app.status === 'Finished'
+          ).length;
+          console.log('Finished Appointments Count:', finishedCount);
+
+          this.finishedCount = res.filter(
+            (a: any) => a.status === 'Finished'
+          ).length;
+          this.confirmedCount = res.filter(
+            (a: any) => a.status === 'Confirmed'
+          ).length;
+          this.cancelledCount = res.filter(
+            (a: any) => a.status === 'Cancelled'
+          ).length;
+          this.nonAttendanceCount = res.filter(
+            (a: any) => a.status === 'NonAttendence'
+          ).length;
+        },
+        error: (err) => {
+          console.error('err loading appointments', err);
         },
       });
   }

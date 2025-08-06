@@ -1,6 +1,5 @@
 <div class="flex flex-col md:flex-row min-h-screen">
-  <!-- Overlay -->
-  <!-- Modal Overlay -->
+  <!-- modal  -->
   <div
     *ngIf="isOpen"
     class="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-md bg-opacity-50 z-50"
@@ -60,7 +59,7 @@
 
   <main class="flex-grow p-2 sm:p-4">
     <div class="container mx-auto p-2 sm:p-4" dir="rtl">
-      <!-- Doctor Details -->
+      <!-- doctor details -->
       <div
         class="bg-gradient-to-br from-[#0f2c1b] to-[#186429] dark:from-[#08210e]/80 dark:to-[#104b2d]/80 border border-[#2b945a] rounded-2xl p-4 shadow-2xl text-white"
       >
@@ -98,7 +97,7 @@
         </div>
       </div>
 
-      <!-- Appointment Summary -->
+      <!-- appointment summary -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
         <div
           class="rounded-2xl p-6 transform transition duration-300 hover:scale-105 text-white bg-gradient-to-br from-purple-500 to-purple-700 shadow-lg dark:from-purple-600 dark:to-purple-800"
@@ -174,7 +173,7 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">3</p>
+          <p class="text-3xl font-semibold text-right">{{confirmedCount }}</p>
         </div>
 
         <div
@@ -197,7 +196,7 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">1</p>
+          <p class="text-3xl font-semibold text-right">{{finishedCount }}</p>
         </div>
 
         <div
@@ -220,7 +219,7 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">0</p>
+          <p class="text-3xl font-semibold text-right">{{cancelledCount }}</p>
         </div>
 
         <div
@@ -243,7 +242,9 @@
               />
             </svg>
           </div>
-          <p class="text-3xl font-semibold text-right">0</p>
+          <p class="text-3xl font-semibold text-right">
+            {{nonAttendanceCount }}
+          </p>
         </div>
         <div
           class="rounded-2xl p-6 text-white bg-gradient-to-br from-indigo-500 to-indigo-700 shadow-lg dark:from-indigo-600 dark:to-indigo-800 transform transition duration-300 hover:scale-105"
@@ -291,7 +292,7 @@
         </div>
       </div>
 
-      <!-- Charts -->
+      <!-- charts -->
       <div
         class="bg-white/95 dark:bg-black/25 rounded-lg shadow-lg p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 md:mb-8 backdrop-blur-md"
       >
@@ -315,9 +316,9 @@
           </div>
         </div>
       </div>
-      <!-- Appointment Card -->
+      <!-- appointment -->
       <div
-        class="bg-white/80 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl p-6 shadow-lg space-y-6"
+        class="bg-white/90 dark:bg-zinc-900/60 backdrop-blur-md rounded-2xl p-6 shadow-xl space-y-6"
       >
         <h2
           class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2"
@@ -328,38 +329,56 @@
               d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 20V9h14v11H5z"
             />
           </svg>
-          حجوزات العيادة / الاونلاين
+          حجوزات المرضي
         </h2>
 
-        <div class="overflow-x-auto border dark:border-zinc-700 rounded-lg">
+        <div
+          class="overflow-x-auto rounded-xl border border-green-200 dark:border-green-700 shadow-sm"
+        >
           <table
-            class="w-full text-center text-sm text-zinc-700 dark:text-zinc-200"
+            class="w-full divide-y divide-green-200 dark:divide-green-700 text-sm text-center"
           >
             <thead
-              class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100"
+              class="bg-green-600 text-white dark:bg-green-700 dark:text-green-100"
             >
               <tr>
-                <th class="px-4 py-2">رقم الحجز</th>
-                <th class="px-4 py-2">التاريخ</th>
-                <th class="px-4 py-2">الوقت</th>
-                <th class="px-4 py-2">المريض</th>
-                <th class="px-4 py-2">الحالة</th>
+                <th class="px-4 py-3 font-semibold">رقم الحجز</th>
+                <th class="px-4 py-3 font-semibold">التاريخ</th>
+                <th class="px-4 py-3 font-semibold">الوقت</th>
+                <th class="px-4 py-3 font-semibold">اسم المريض</th>
+                <th class="px-4 py-3 font-semibold">حالة الحجز</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
-                <td class="px-4 py-2">80</td>
-                <td class="px-4 py-2">01/08/2025</td>
-                <td class="px-4 py-2">10:00 ص</td>
-                <td class="px-4 py-2">عبدالله مقرب</td>
-                <td class="px-4 py-2">مؤكد</td>
+            <tbody
+              class="bg-white dark:bg-zinc-800 divide-y divide-green-100 dark:divide-zinc-700"
+            >
+              <tr
+                *ngFor="let appt of appointments"
+                class="hover:bg-green-50 dark:hover:bg-green-700 transition-colors"
+              >
+                <td class="px-4 py-2">{{ appt.appointmentId }}</td>
+                <td class="px-4 py-2">{{ appt.date | date: 'dd/MM/yyyy' }}</td>
+                <td class="px-4 py-2">
+                  {{ appt.startTime | date: 'hh:mm a' }} - {{ appt.endTime |
+                  date: 'hh:mm a' }}
+                </td>
+                <td class="px-4 py-2">{{ appt.patientName }}</td>
+                <td class="px-4 py-2">
+                  <span
+                    [ngClass]="{
+                'text-green-700 font-semibold': appt.status === 'Confirmed',
+                'text-red-600 font-semibold': appt.status === 'Cancelled',
+                'text-yellow-600 font-semibold': appt.status === 'Pending'
+              }"
+                  >
+                    {{ appt.status }}
+                  </span>
+                </td>
               </tr>
-              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
-                <td class="px-4 py-2">81</td>
-                <td class="px-4 py-2">20/07/2025</td>
-                <td class="px-4 py-2">02:00 م</td>
-                <td class="px-4 py-2">سيد علي</td>
-                <td class="px-4 py-2">مؤكد</td>
+              <tr *ngIf="appointments.length === 0">
+                <td colspan="5" class="py-4 text-zinc-500 dark:text-zinc-400">
+                  لا توجد حجوزات حالياً.
+                </td>
               </tr>
             </tbody>
           </table>
@@ -375,50 +394,58 @@
         </div>
       </div>
 
-      <!-- Payment Card -->
+      <!-- payment -->
       <div
-        class="bg-white/80 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl p-6 shadow-lg space-y-6 mt-8"
+        class="bg-white/90 dark:bg-zinc-900/60 backdrop-blur-md rounded-2xl p-6 shadow-xl space-y-6"
       >
         <h2
           class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2"
         >
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7 11h10v2H7z" />
             <path
-              d="M2 7a2 2 0 012-2h16a2 2 0 012 2v2H2V7zm0 4h20v6a2 2 0 01-2 2H4a2 2 0 01-2-2v-6z"
+              d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 20V9h14v11H5z"
             />
           </svg>
-          آخر عمليات الدفع الإلكتروني
+          عمليات الدفع الالكتروني
         </h2>
 
-        <div class="overflow-x-auto border dark:border-zinc-700 rounded-lg">
+        <div
+          class="overflow-x-auto rounded-xl border border-green-200 dark:border-green-700 shadow-sm"
+        >
           <table
-            class="w-full text-center text-sm text-zinc-700 dark:text-zinc-200"
+            class="w-full divide-y divide-green-200 dark:divide-green-700 text-sm text-center"
           >
             <thead
-              class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100"
+              class="bg-green-600 text-white dark:bg-green-700 dark:text-green-100"
             >
               <tr>
-                <th class="px-4 py-2">رقم المرجع</th>
-                <th class="px-4 py-2">التاريخ</th>
-                <th class="px-4 py-2">المبلغ</th>
-                <th class="px-4 py-2">طريقة الدفع</th>
-                <th class="px-4 py-2">المريض</th>
+                <th class="px-4 py-3 font-semibold">رقم الدفع</th>
+                <th class="px-4 py-3 font-semibold">رقم مرجع عملية الدفع</th>
+
+                <th class="px-4 py-3 font-semibold">التاريخ</th>
+                <th class="px-4 py-3 font-semibold">اسم المريض</th>
+                <th class="px-4 py-3 font-semibold">حالة الدفع</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
-                <td class="px-4 py-2">180096303193346100</td>
-                <td class="px-4 py-2">20/07/2025</td>
-                <td class="px-4 py-2">169جنيه</td>
-                <td class="px-4 py-2">Visa</td>
-                <td class="px-4 py-2">عبدالله مقرب</td>
+            <tbody
+              class="bg-white dark:bg-zinc-800 divide-y divide-green-100 dark:divide-zinc-700"
+            >
+              <tr
+                *ngFor="let appt of appointments"
+                class="hover:bg-green-50 dark:hover:bg-green-700 transition-colors"
+              >
+                <td class="px-4 py-2">{{ appt.paymentId}}</td>
+                <td class="px-4 py-2">{{ appt.transactionId}}</td>
+
+                <td class="px-4 py-2">{{ appt.date | date: 'dd/MM/yyyy' }}</td>
+                <td class="px-4 py-2">{{ appt.patientName }}</td>
+                <td class="px-4 py-2">ناجحة</td>
               </tr>
-              <tr class="hover:bg-green-50 dark:hover:bg-green-700">
-                <td class="px-4 py-2">180096303193346101</td>
-                <td class="px-4 py-2">19/07/2025</td>
-                <td class="px-4 py-2">100 جنيه</td>
-                <td class="px-4 py-2">Mastercard</td>
-                <td class="px-4 py-2">سيد علي</td>
+              <tr *ngIf="appointments.length === 0">
+                <td colspan="5" class="py-4 text-zinc-500 dark:text-zinc-400">
+                  لا توجد مدفوعات حالياً.
+                </td>
               </tr>
             </tbody>
           </table>
@@ -429,13 +456,13 @@
             href="#"
             class="text-green-600 dark:text-green-400 text-sm hover:underline inline-flex items-center gap-1"
           >
-            عرض كل عمليات الدفع
+            عرض كل المدفوعات
           </a>
         </div>
       </div>
 
       <!-- Patient Summary -->
-      <div
+      <!-- <div
         class="bg-white/80 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl p-6 shadow-lg mt-8"
       >
         <h2
@@ -472,7 +499,7 @@
             <p><strong>آخر زيارة:</strong> 19/07/2025</p>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </main>
 </div>
