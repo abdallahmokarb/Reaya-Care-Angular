@@ -1,7 +1,7 @@
-<div class="flex flex-row-reverse h-screen">
+<div class="flex flex-row-reverse h-screen" dir= "ltr">
 
   <!-- Doctor List & Status Filters -->
-  <div class="w-1/5 bg-white border-l border-gray-200 flex flex-col text-right">
+  <div class="w-1/5 bg-white border-l border-gray-200 flex flex-col text-right" dir="ltr">
 
     <!-- حالة الطبيب -->
      
@@ -20,7 +20,7 @@
       <button
         class="px-4 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-blue-50 transition duration-150"
         [class.bg-blue-500]="selectedStatus === 1"
-        [class.text-white]="selectedStatus === 1"
+        [class.text-green--600]="selectedStatus === 1"
         (click)="filterDoctors(1)">
          مقبول
       </button>

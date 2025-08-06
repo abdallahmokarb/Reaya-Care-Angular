@@ -112,17 +112,24 @@ export const routes: Routes = [
           import('./pages/dashboard-patient/my-payments/my-payments').then(
             (m) => m.MyPayments
           ),
-      },
-      {
-        path: 'dashboard/patient/my-appointments',
-        canActivate: [AuthGuard],
-        loadComponent: () =>
-          import(
-            './pages/dashboard-patient/my-appointments/my-appointments'
-          ).then((m) => m.MyAppointments),
-      },
+        },
+        {
+          path: 'dashboard/patient/my-appointments',
+          canActivate: [AuthGuard],
+          loadComponent: () =>
+            import(
+              './pages/dashboard-patient/my-appointments/my-appointments'
+            ).then((m) => m.MyAppointments),
+          },
+          {
+            
+            path:'dashboard/admin/admin-doctor',
+            canActivate: [AuthGuard],
+            loadComponent: () =>
+              import('./pages/admin-doctor/admin-doctor').then((m) => m.AdminDoctorComponent),
+          },
 
-      {
+          {
         path: 'all-doctors',
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),
@@ -143,8 +150,8 @@ export const routes: Routes = [
           import('./pages/patient-call/patient-call').then(
             (m) => m.PatientCall
           ),
-      },
-
+        },
+        
       {
         path: 'appointment',
         loadComponent: () =>
@@ -188,9 +195,4 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/recorder/recorder').then((m) => m.RecorderComponent),
   },
-  {
-    path:'admin-doctor',
-    loadComponent: () =>
-      import('./pages/admin-doctor/admin-doctor').then((m) => m.AdminDoctorComponent),
-  }
 ];
