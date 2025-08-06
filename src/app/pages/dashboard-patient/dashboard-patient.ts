@@ -149,6 +149,7 @@ export class DashboardPatient implements OnInit, AfterViewInit {
   private loadPaymentsByPatientId(patientId: number): void {
     this.paymentService.getPaymentsByUserId(patientId).subscribe({
       next: (res) => {
+        console.log(res);
         this.payments = res;
       },
       error: (err) => {
