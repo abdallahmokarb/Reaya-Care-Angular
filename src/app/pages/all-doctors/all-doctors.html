@@ -30,7 +30,10 @@
 
       <!-- Available Times -->
       <div>
-        <h5 class="text-lg font-semibold mb-2">المواعيد المتاحة</h5>
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+          <i class="fas fa-clock"></i>
+          المواعيد المتاحة
+        </h5>
         <div class="space-y-2">
           <label class="flex items-center gap-2 cursor-pointer">
             <input
@@ -63,7 +66,10 @@
 
       <!-- Gender -->
       <div>
-        <h5 class="text-lg font-semibold mb-2">الجنس</h5>
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+          <i class="fas fa-venus-mars"></i>
+          الجنس
+        </h5>
         <div class="space-y-2">
           <label class="flex items-center gap-2 cursor-pointer">
             <input
@@ -87,7 +93,10 @@
 
       <!-- Price Filter -->
       <div class="w-full max-w-md mx-auto my-6">
-        <h5 class="text-lg font-semibold mb-2">ثمن الحجز</h5>
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+          <i class="fas fa-money-bill-wave"></i>
+          ثمن الحجز
+        </h5>
 
         <ngx-slider
           [(value)]="priceSliderValue"
@@ -106,7 +115,10 @@
 
       <!-- Service Type -->
       <div>
-        <h5 class="text-lg font-semibold mb-2">نوع الخدمة</h5>
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+          <i class="fas fa-concierge-bell"></i>
+          نوع الخدمة
+        </h5>
         <div class="space-y-2">
           <label class="flex items-center gap-2 cursor-pointer">
             <input
@@ -131,7 +143,10 @@
 
       <!-- Specialization Select -->
       <div>
-        <label for="specializationSelect" class="block mb-2 font-semibold">التخصصات</label>
+        <label for="specializationSelect" class="block mb-2 font-semibold flex items-center gap-2 text-gray-800">
+          <i class="fas fa-stethoscope"></i>
+          التخصصات
+        </label>
         <select
           id="specializationSelect"
           class="w-full border rounded p-2"
@@ -149,7 +164,10 @@
 
       <!-- Government Select -->
       <div>
-        <label for="governmentSelect" class="block mb-2 font-semibold">المحافظة</label>
+        <label for="governmentSelect" class="block mb-2 font-semibold flex items-center gap-2 text-gray-800">
+          <i class="fas fa-map-marker-alt"></i>
+          المحافظة
+        </label>
         <select 
             id="governmentSelect"
             class="w-full border rounded p-2"
@@ -198,46 +216,78 @@
         <!-- Doctor cards will appear here -->
         <div id="doctorCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  p-4">
           @for (doctor of filteredDoctors; track $index) {
-            <div class="doctor-card ">
+            <div class="doctor-card font-[Cairo] flex flex-col justify-between h-full relative bg-white rounded-lg shadow card-shine">
               <a [routerLink]="['/doctor-details', doctor.doctorId]">
                 <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.profilePictureUrl + ')'">
                   <div class="doctor-rating">
                     <span class="stars">
-                      <i class="fas fa-star"></i> {{doctor.ratingValue}}
+                      <i class="fas fa-star"></i> {{ doctor.ratingValue }}
                     </span>
                   </div>
-                  <!-- <img src="assets/images/Doc1.jpg" alt="Doctor" /> -->
                 </div>
               </a>
+
               <!-- Doctor Info -->
-              <div class="doctor-info flex-1 space-y-1 text-right">
+              <div class="doctor-info flex-1 space-y-1 text-right flex flex-col justify-between">
                 <!-- Name & Availability -->
-                <div class="flex justify-between items-center text-right">
-                  <h3 class="text-lg font-bold text-gray-800">{{ doctor.fullName }}</h3>
-                  <span class="text-sm text-green-600 font-medium">الانتظار لمدة {{ doctor.watingTime }} دقيقة</span>
+                <div>
+                  <div class="flex flex-col md:flex-row lg:flex-col xl:flex-row justify-between text-right gap-1 text-sm text-gray-500 mb-2">
+                      <div class="flex items-center gap-1 text-lg font-bold text-gray-800 ">
+                        <i class="fas fa-user-md text-gray-600"></i>
+                        {{ doctor.fullName }}
+                      </div>
+                      <div class="flex items-center gap-1 text-sm bg-[#15803d] p-1 rounded-lg  text-white font-medium w-fit">
+                        {{ doctor.watingTime }} دقيقة انتظار
+                      </div>
+                  </div>
+
+                  <!-- Specialization -->
+                  <p class="text-md text-gray-700 mb-2 font-bold">
+                    <i class="fas fa-stethoscope ml-1 text-emerald-600"></i>
+                    {{ doctor.specialization }}
+                  </p>
+
+                  <!-- Service Type & Location -->
+                  <div class="flex flex-col md:flex-row lg:flex-col xl:flex-row justify-between text-right gap-1 text-md font-bold text-gray-700 mb-2">
+                    <span>
+                      <i class="fas fa-clinic-medical ml-1 text-emerald-600"></i>
+                      {{ doctor.doctorService == "InClinic" ? "في العيادة" : "استشارة اونلاين" }}
+                    </span>
+                    <span *ngIf="doctor?.addresses?.[0]">
+                      <i class="fas fa-map-marker-alt ml-1 text-red-500"></i>
+                      {{ doctor?.addresses?.length ? doctor.addresses[0] : '' }}
+                    </span>
+                  </div>
+
+
+                  
                 </div>
-
-                <!-- Specialization -->
-                <p class="text-sm text-gray-600">{{ doctor.specialization }}</p>
-
-                <!-- Service Type & Location -->
-                <div class="flex justify-between text-sm text-gray-500">
-                  <span>{{ doctor.doctorService }}</span>
-                  <span>{{ doctor?.addresses?.length ? doctor.addresses[0] : '' }}</span>
-                </div>
-
-                <!-- Price -->
-                <div class="doctor-price">سعر الكشف : {{ doctor.fees }} جنيه</div>
 
                 <!-- Button -->
-                <div class="pt-2">
-                  <button [routerLink]="['/doctor-details', doctor.doctorId]"
-                   class="w-full text-white py-1.5 px-4 rounded-lg book-btn">
-                    احجز الآن
+                <div class="pt-2 mt-auto">
+                  <button
+                    [routerLink]="['/doctor-details', doctor.doctorId]"
+                    class="row-stack w-full flex justify-between items-center text-white py-3 px-4 rounded-lg book-btn transition bg-blue-600 hover:bg-blue-700"
+                  >
+                    <!-- Icon + Text -->
+                    <div class="flex items-center gap-2 mb-1">
+                      <i class="fas fa-calendar-check text-white text-base"></i>
+                      <span class="text-base font-medium">احجز الآن</span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="text-sm mt-1" >
+                      <span class="px-3 py-1 rounded-lg border-1 text-white font-semibold">
+                        {{ doctor.fees }} جنيه
+                      </span>
+                    </div>
                   </button>
                 </div>
+
               </div>
             </div>
+
+
           }
           
         </div>

@@ -228,7 +228,7 @@ select:focus {
 .doctor-price {
   font-size: 16px;
   font-weight: bold;
-  color: #e65100;
+  color: #3f3d3d;
   margin-bottom: 12px;
 }
 
@@ -244,16 +244,13 @@ select:focus {
   transition: background-color 0.2s ease;
 }
 
-.book-button:hover {
-  background-color: #1976d2;
-}
-
 .book-btn {
     background-color: #0b7e3d;
 }
 
 .book-btn:hover {
-    background-color: #02451f;
+    background-color: #a19e9e;
+    cursor: pointer;
 }
 
 
@@ -299,3 +296,43 @@ select:focus {
   display: none !important;
 }
 
+@media (min-width: 120px) and (max-width: 1237px) {
+  .row-stack {
+    flex-direction: column !important;
+  }
+}
+
+
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+}
+
+.card-shine:hover::before {
+  animation: shine 0.8s ease-in-out;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
