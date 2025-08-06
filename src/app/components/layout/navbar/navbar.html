@@ -32,7 +32,7 @@
           >التخصصات الطبية</a
         >
       </li>
-      <li>
+      <li *ngIf="user().roles.includes('Patient')">
         <a
           [routerLink]="['/appointment']"
           class="hover:text-green-600"
