@@ -58,6 +58,7 @@ export class DashboardPatient implements OnInit, AfterViewInit {
     }
     this.appointmentService.getMyAppointments().subscribe({
       next: (data) => {
+        console.log(data);
         this.appointments = data;
 
         // Count statuses
@@ -107,14 +108,15 @@ export class DashboardPatient implements OnInit, AfterViewInit {
       new Chart(specialtyChart, {
         type: 'bar',
         data: {
-          labels: ['طب القلب'],
+          labels: ['طب القلب', 'طب العيون'],
           datasets: [
             {
               label: 'عدد الزيارات',
-              data: [1],
+              data: [3, 2],
               backgroundColor: '#16a34a',
               borderColor: '#15803d',
               borderWidth: 1,
+              barThickness: 40,
             },
           ],
         },
@@ -134,7 +136,7 @@ export class DashboardPatient implements OnInit, AfterViewInit {
           labels: ['مؤكد', 'عدم حضور', 'ملغي'],
           datasets: [
             {
-              data: [1, 0, 0],
+              data: [4, 0, 0],
               backgroundColor: ['#00c950', '#fc6b00', '#f21872'],
             },
           ],
