@@ -39,7 +39,7 @@ export class DoctorOnboarding {
   showMap = false;
 
   private docInfoResponse!: IDocumentResponse[]
-  constructor(private router: Router, private fb: FormBuilder, private doctorInfoService: DoctorInfoService, private addressService: AddressService) {
+  constructor(private fb: FormBuilder, private doctorInfoService: DoctorInfoService, private addressService: AddressService) {
     
     let user = sessionStorage.getItem('user');
     if(user != null)
