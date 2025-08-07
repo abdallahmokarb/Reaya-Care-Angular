@@ -127,8 +127,13 @@ export const routes: Routes = [
           import(
             './pages/manage-patients/manage-patients'
           ).then((m) => m.ManagePatients),
+      },{
+        path: 'dashboard/admin/manage-doctors',
+        loadComponent: () =>
+          import(
+            './pages/admin-doctor/admin-doctor'
+          ).then((m) => m.AdminDoctorComponent),
       },
-
           {
         path: 'all-doctors',
         loadComponent: () =>

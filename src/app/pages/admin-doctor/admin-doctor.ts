@@ -82,6 +82,24 @@ export class AdminDoctorComponent implements OnInit {
       this.loadDoctors(); // Refresh the list after rejection
     });
   }
+  pendingDoctor(id: number) {
+    this.doctorService.pendingDoctor(id).subscribe(() => {
+      this.loadDoctorDetails(id);
+      this.loadDoctors(); // Refresh the list after setting to pending
+    });
+  }
+  suspendDoctor(id: number) {
+    this.doctorService.suspendDoctor(id).subscribe(() => {
+      this.loadDoctorDetails(id);
+      this.loadDoctors(); // Refresh the list after suspension
+    });
+  }
+  deactivateDoctor(id: number) {
+    this.doctorService.deactivateDoctor(id).subscribe(() => {
+      this.loadDoctorDetails(id);
+      this.loadDoctors(); // Refresh the list after deactivation
+    });
+  }
 
    getStatusLabel(status: number): string {
     switch (status) {

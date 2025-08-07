@@ -24,11 +24,21 @@ export class DoctorService {
     return this.http.get<Idoctordetails>(`${this.baseUrl}/details/${id}`);
   }
   approveDoctor(id: number): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/${id}/activate`, {});
+    return this.http.put<void>(`${this.baseUrl}/${id}/approve`, {});
   }
   rejectDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/reject`, {});
+  }
+  pendingDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/pending`, {});
+  }
+  suspendDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/suspend`, {});
+  }
+  deactivateDoctor(id: number): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${id}/deactivate`, {});
   }
+  
    updateDoctorBalance(doctorId: number, amount: number) {
     return this.http.put(
       `${this.baseUrl}/${doctorId}/balance?amount=${amount}`,
