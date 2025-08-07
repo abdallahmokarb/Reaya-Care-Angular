@@ -43,11 +43,10 @@ export class MyPayments implements OnInit {
     const url = `http://localhost:5216/api/Appointment_/patient/${this.patientId}/appointments`;
     this.http.get<any[]>(url).subscribe({
       next: (res) => {
+        console.log(res);
         this.appointments = res;
-        // filter only Cancelled and NonAttendance
-        this.filteredAppointments = res.filter(
-          (a) => a.status === 'Cancelled' || a.status === 'NonAttendence'
-        );
+        // filter only Cancelled
+        this.filteredAppointments = res.filter((a) => a.status === 'Cancelled');
       },
       error: (err) => {
         console.error('Error loading appointments:', err);
@@ -76,18 +75,43 @@ export class MyPayments implements OnInit {
 
     this.paymentService.refundPayment(refundData).subscribe({
       next: (res) => {
-        this.errorMessage = null; // clear error if success
+        this.errorMessage = null;
 
-        alert('تم إرسال طلب الاسترداد بنجاح');
-        this.closeRefundModal();
-        this.getAppointments();
+        const doctorId = this.selectedAppointment.doctorId;
+        const originalAmount = this.selectedAppointment.amount;
 
-        this.router.navigateByUrl(
-          '/dashboard/patient/my-payments/refund-details',
-          {
-            state: { refund: res },
-          }
-        );
+        this.http
+          .post(
+            `http://localhost:5216/api/doctor/${doctorId}/deduct-balance`,
+            originalAmount
+          )
+          .subscribe({
+            next: (deductRes: any) => {
+              console.log('تم الخصم من رصيد الدكتور', deductRes);
+
+              // alert('تم إرسال طلب الاسترداد وتم الخصم من الدكتور بنجاح');
+              this.closeRefundModal();
+              this.getAppointments();
+
+              // race condition
+              setTimeout(() => {
+                this.router.navigateByUrl(
+                  '/dashboard/patient/my-payments/refund-details',
+                  {
+                    state: { refund: res },
+                  }
+                );
+              }, 100);
+            },
+
+            error: (err) => {
+              console.error('فشل في خصم المبلغ من الدكتور', err);
+              this.errorMessage =
+                'تم الاسترداد، لكن فشل في خصم المبلغ من الدكتور';
+              alert(this.errorMessage);
+              this.closeRefundModal();
+            },
+          });
       },
       error: (err) => {
         console.error('فشل في إرسال طلب الاسترداد', err);

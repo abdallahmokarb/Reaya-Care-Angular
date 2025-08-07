@@ -19,6 +19,9 @@ import { Component } from '@angular/core';
           <app-sidebar class="md:w-64 md:shrink-0  " />
           <main class="flex-grow p-4">
             <router-outlet></router-outlet>
+            <br />
+            <br />
+            <br />
           </main>
         </div>
       </ng-container>
@@ -31,7 +34,9 @@ import { Component } from '@angular/core';
       </ng-template>
 
       <ng-container *ngIf="isDashboardRoute(); else mainFooter">
-        <app-mini-footer />
+        <div class="relative z-[100] ">
+          <app-mini-footer />
+        </div>
       </ng-container>
       <ng-template #mainFooter>
         <app-footer />
