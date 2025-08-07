@@ -114,6 +114,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'dashboard/patient/my-payments/refund-details',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import(
+            './pages/dashboard-patient/my-payments/refund-details/refund-details'
+          ).then((m) => m.RefundDetails),
+      },
+      {
         path: 'dashboard/patient/my-appointments',
         canActivate: [AuthGuard],
         loadComponent: () =>
@@ -124,9 +132,9 @@ export const routes: Routes = [
       {
         path: 'dashboard/admin/manage-patients',
         loadComponent: () =>
-          import(
-            './pages/manage-patients/manage-patients'
-          ).then((m) => m.ManagePatients),
+          import('./pages/manage-patients/manage-patients').then(
+            (m) => m.ManagePatients
+          ),
       },
 
       {

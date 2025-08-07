@@ -20,7 +20,8 @@
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">
           {{ activeTab === 'find' ? 'احجز دكتور' : activeTab === 'voice' ? 'ابدأ
-          بالتحدث مع AI ' : 'احجز زيارة منزلية مع ممرض / ممرضة' }}
+          بالتحدث مع AI' : activeTab === 'hospital' ? 'احجز موعد في المستشفى' :
+          'احجز زيارة منزلية مع ممرض / ممرضة' }}
         </h1>
       </div>
 
