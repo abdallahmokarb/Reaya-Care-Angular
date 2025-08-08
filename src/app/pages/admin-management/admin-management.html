@@ -1,0 +1,229 @@
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900 py-8 transition-colors duration-300" dir="rtl">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">إدارة المسؤولين</h1>
+          <p class="text-gray-600 dark:text-gray-400 mt-1">إدارة حسابات المسؤولين بسهولة وكفاءة</p>
+        </div>
+        <button 
+          (click)="openModal()"
+          class="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium flex items-center space-x-2 space-x-reverse transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          <span>إضافة مسؤول</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading && admins.length === 0" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center">
+      <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-blue-600 dark:border-blue-400 mx-auto"></div>
+      <p class="text-gray-600 dark:text-gray-400 mt-3">جاري تحميل المسؤولين...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && admins.length === 0" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center">
+      <svg class="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">لا توجد مسؤولين</h3>
+      <p class="text-gray-600 dark:text-gray-400 mt-1">ابدأ بإنشاء مسؤول جديد.</p>
+      <button 
+        (click)="openModal()"
+        class="mt-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium">
+        إنشاء مسؤول
+      </button>
+    </div>
+
+    <!-- Admins Table -->
+    <div *ngIf="admins.length > 0" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead class="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">الاسم</th>
+              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">البريد</th>
+              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">الهاتف</th>
+              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">تاريخ الميلاد</th>
+              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">الجنس</th>
+              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            <tr *ngFor="let admin of admins" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-4 py-3 text-right text-gray-900 dark:text-gray-100">{{ admin.fullName }}</td>
+              <td class="px-4 py-3 text-right text-gray-900 dark:text-gray-100">{{ admin.email }}</td>
+              <td class="px-4 py-3 text-right text-gray-900 dark:text-gray-100">{{ admin.phoneNumber }}</td>
+              <td class="px-4 py-3 text-right text-gray-900 dark:text-gray-100">{{ admin.dateOfBirth | date:'yyyy-MM-dd' }}</td>
+              <td class="px-4 py-3 text-right text-gray-900 dark:text-gray-100">{{ genderLabels[admin.gender] }}</td>
+              <td class="px-4 py-3 text-right flex space-x-2 space-x-reverse">
+                <button 
+                  (click)="openModal(admin)"
+                  class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                </button>
+                <button 
+                  (click)="deleteAdmin(admin.adminId)"
+                  class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 4v12m4-12v12"></path>
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div *ngIf="showModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-70 flex items-center justify-center z-50 transition-opacity duration-300">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
+        <button 
+          (click)="closeModal()"
+          class="absolute top-4 left-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
+          {{ isEditing ? 'تعديل المسؤول' : 'إضافة مسؤول' }}
+        </h3>
+        
+        <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded-lg text-sm">
+          {{ errorMessage }}
+        </div>
+
+        <form (ngSubmit)="saveAdmin()" class="space-y-4">
+          <!-- Username -->
+          <div *ngIf="!isEditing" class="text-right">
+            <label for="userName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">اسم المستخدم</label>
+            <input 
+              id="userName"
+              type="text" 
+              [(ngModel)]="formData.userName" 
+              name="userName"
+              class="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              required
+              placeholder="أدخل اسم المستخدم"
+              [ngClass]="{'border-red-500 dark:border-red-400': formErrors['userName']}">
+            <div *ngIf="formErrors['userName']" class="text-red-600 dark:text-red-400 text-xs mt-1">{{ formErrors['userName'] }}</div>
+          </div>
+
+          <!-- Full Name -->
+          <div class="text-right">
+            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">الاسم الكامل</label>
+            <input 
+              id="fullName"
+              type="text" 
+              [(ngModel)]="formData.fullName" 
+              name="fullName"
+              class="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              required
+              placeholder="أدخل الاسم الكامل"
+              [ngClass]="{'border-red-500 dark:border-red-400': formErrors['fullName']}">
+            <div *ngIf="formErrors['fullName']" class="text-red-600 dark:text-red-400 text-xs mt-1">{{ formErrors['fullName'] }}</div>
+          </div>
+
+          <!-- Email -->
+          <div class="text-right">
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">البريد الإلكتروني</label>
+            <input 
+              id="email"
+              type="email" 
+              [(ngModel)]="formData.email" 
+              name="email"
+              class="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              required
+              placeholder="أدخل البريد الإلكتروني"
+              [ngClass]="{'border-red-500 dark:border-red-400': formErrors['email']}">
+            <div *ngIf="formErrors['email']" class="text-red-600 dark:text-red-400 text-xs mt-1">{{ formErrors['email'] }}</div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="text-right">
+            <label for="phoneNumber" class="block text-sm font-medium text-gray-700 dark:text-gray-300">رقم الهاتف</label>
+            <input 
+              id="phoneNumber"
+              type="tel" 
+              [(ngModel)]="formData.phoneNumber" 
+              name="phoneNumber"
+              class="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              required
+              placeholder="أدخل رقم الهاتف"
+              [ngClass]="{'border-red-500 dark:border-red-400': formErrors['phoneNumber']}">
+            <div *ngIf="formErrors['phoneNumber']" class="text-red-600 dark:text-red-400 text-xs mt-1">{{ formErrors['phoneNumber'] }}</div>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="text-right">
+            <label for="dateOfBirth" class="block text-sm font-medium text-gray-700 dark:text-gray-300">تاريخ الميلاد</label>
+            <input 
+              id="dateOfBirth"
+              type="date" 
+              [(ngModel)]="formData.dateOfBirth" 
+              name="dateOfBirth"
+              class="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              required
+              [ngClass]="{'border-red-500 dark:border-red-400': formErrors['dateOfBirth']}">
+            <div *ngIf="formErrors['dateOfBirth']" class="text-red-600 dark:text-red-400 text-xs mt-1">{{ formErrors['dateOfBirth'] }}</div>
+          </div>
+
+          <!-- Gender -->
+          <div class="text-right">
+            <label for="gender" class="block text-sm font-medium text-gray-700 dark:text-gray-300">الجنس</label>
+            <select 
+              id="gender"
+              [(ngModel)]="formData.gender" 
+              name="gender"
+              class="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              required
+              [ngClass]="{'border-red-500 dark:border-red-400': formErrors['gender']}">
+              <option *ngFor="let gender of genders" [value]="gender">{{ genderLabels[gender] }}</option>
+            </select>
+            <div *ngIf="formErrors['gender']" class="text-red-600 dark:text-red-400 text-xs mt-1">{{ formErrors['gender'] }}</div>
+          </div>
+
+          <!-- Password -->
+          <div *ngIf="!isEditing" class="text-right">
+            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">كلمة المرور</label>
+            <input 
+              id="password"
+              type="password" 
+              [(ngModel)]="formData.password" 
+              name="password"
+              class="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              required
+              placeholder="أدخل كلمة المرور"
+              [ngClass]="{'border-red-500 dark:border-red-400': formErrors['password']}">
+            <div *ngIf="formErrors['password']" class="text-red-600 dark:text-red-400 text-xs mt-1">{{ formErrors['password'] }}</div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex space-x-3 space-x-reverse mt-6">
+            <button 
+              type="button"
+              (click)="closeModal()"
+              class="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-100 py-2 rounded-lg">
+              إلغاء
+            </button>
+            <button 
+              type="submit"
+              [disabled]="loading"
+              class="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:bg-blue-400 dark:disabled:bg-blue-300 text-white py-2 rounded-lg flex items-center justify-center">
+              <svg *ngIf="loading" class="animate-spin w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12a8 8 0 1116 0A8 8 0 014 12z"></path>
+              </svg>
+              {{ loading ? 'جاري الحفظ...' : (isEditing ? 'تحديث' : 'إنشاء') }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
