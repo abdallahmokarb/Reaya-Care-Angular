@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
 import { HttpClient } from '@angular/common/http';
+import { Doctor } from '../../shared/interfaces/doctor';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +27,13 @@ export class Dashboard implements OnInit, AfterViewInit {
     name: string;
     visitCount: number;
   }[] = [];
+  statusCode: number | null = null;
+  statusText: string | null = null;
+  fullName: string | null = null;
+  service: string | null = null;
+  specialization: string | null = null;
+  profilePictureUrl: string | null = null;
+
   finishedCount = 0;
   confirmedCount = 0;
   cancelledCount = 0;
@@ -46,6 +54,7 @@ export class Dashboard implements OnInit, AfterViewInit {
       if (this.doctorId) {
         this.getDoctorRatings(this.doctorId);
         this.getDoctorInfo();
+        this.updateDoctorStatus();
       }
     }
   }
@@ -155,7 +164,7 @@ export class Dashboard implements OnInit, AfterViewInit {
           this.views = res.views;
         },
         error: (err) => {
-          console.error('Error fetching views:', err);
+          console.error('err views', err);
         },
       });
   }
@@ -193,5 +202,45 @@ export class Dashboard implements OnInit, AfterViewInit {
           console.error('err loading appointments', err);
         },
       });
+  }
+
+  updateDoctorStatus() {
+    this.http
+      .get<Doctor>(`http://localhost:5216/api/Doctor/${this.doctorId}`, {})
+      .subscribe({
+        next: (res) => {
+          this.statusCode = res.status ?? null;
+          this.fullName = res.fullName ?? null;
+          this.service = res.service ?? null;
+          this.specialization = res.specialization ?? null;
+          this.profilePictureUrl = res.profilePictureUrl ?? null;
+          if (this.statusCode !== null) {
+            this.statusText = this.getStatusText(this.statusCode);
+          }
+        },
+        error: (err) => {
+          console.error('err ', err);
+        },
+      });
+  }
+
+  getStatusText(status: number | null): string {
+    if (status === null) {
+      return 'Nىo status available';
+    }
+    switch (status) {
+      case 0:
+        return 'قيد المراجعة (حسابك في انتظار الموافقة)';
+      case 1:
+        return 'مفعل (حسابك نشط)';
+      case 2:
+        return 'مرفوض (تم رفض طلب انضمامك)';
+      case 3:
+        return 'موقوف مؤقتاً (حسابك موقوف بشكل مؤقت)';
+      case 4:
+        return 'معطل (عفواً .. حسابك معطل بشكل دائم)';
+      default:
+        return '';
+    }
   }
 }
