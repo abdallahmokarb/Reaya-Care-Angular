@@ -21,6 +21,10 @@ body {
   --color-text-secondary: #666666;
   --font-care: care, sans-serif;
   --animate-marquee: marquee 50s linear infinite;
+  --animate-show1: fadeSlide 3s ease-in-out 0s forwards;
+  --animate-show2: fadeSlide 3s ease-in-out 3s forwards;
+  --animate-show3: fadeSlide 3s ease-in-out 6s forwards;
+  --animate-show4: fadeLast 3s ease-in-out 9s forwards;
 
   @keyframes marquee {
     from {
@@ -29,6 +33,47 @@ body {
 
     to {
       transform: translateX(calc(-100% - 2.5rem));
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - 2.5rem));
+    }
+  }
+
+  @keyframes fadeSlide {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      height: 0px;
+    }
+    10%,
+    90% {
+      opacity: 1;
+      transform: translateY(20px);
+      height: auto;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+      height: 0px;
+    }
+  }
+  @keyframes fadeLast {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      height: 0px;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      height: auto;
     }
   }
 }
@@ -44,9 +89,12 @@ body {
   [dir="rtl"] select {
     background-position: left 0.5rem center;
   }
+  @apply placeholder-gray-100 dark:placeholder-gray-50;
 
   .form-control {
-    @apply mt-2 h-12 w-full rounded-lg p-2 text-black dark:bg-black/20 dark:text-white;
+    @apply mt-2 h-12 w-full rounded-lg p-2 text-gray-100 dark:bg-black/20 bg-white/20 dark:text-white 
+         placeholder-gray-600 dark:placeholder-gray-50 
+         focus:border-green-500 focus:ring-2 focus:ring-green-500 active:border-green-500 active:ring-green-500;
   }
 
   .form-btn {

@@ -8,6 +8,10 @@ import { Specialization } from '../../../shared/services/specialization';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AidoctorService } from '../../../shared/services/Ai/aidoctor-service';
+import { HttpParams } from '@angular/common/http';
+import * as RecordRTC from 'recordrtc';
+import { DoctorResult } from '../../../models/iairesponse';
 
 @Component({
   selector: 'app-hero-search',
@@ -17,11 +21,10 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./hero-search.css'],
 })
 export class HeroSearch {
-  activeTab: 'find' | 'voice' | 'homeVisit' = 'find';
+  activeTab: 'find' | 'voice' | 'homeVisit' | 'hospital' = 'find';
   private doctorService = inject(DoctorService);
   private addressService = inject(AddressService);
   private specializationService = inject(Specialization);
-  private router = inject(Router);
 
   isLoading = true;
   specializations: ISpecialization[] = [];
@@ -36,6 +39,19 @@ export class HeroSearch {
 
   searchTermBtn: string = '';
   selectedDoctorId: string = '';
+
+  recorder: RecordRTC.StereoAudioRecorder | null = null;
+  stream!: MediaStream;
+  isRecording = false;
+  isUploading = false;
+  audioUrl: string | null = null;
+  transcription: number = 0;
+  parms = new HttpParams();
+
+  constructor(
+    private aidoctorService: AidoctorService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.specializationService.getAllSpecializations().subscribe({
@@ -61,7 +77,7 @@ export class HeroSearch {
     });
   }
 
-  setActiveTab(tab: 'find' | 'voice' | 'homeVisit') {
+  setActiveTab(tab: 'find' | 'voice' | 'homeVisit' | 'hospital') {
     this.activeTab = tab;
   }
 
@@ -96,5 +112,63 @@ export class HeroSearch {
     if (doctorId) {
       this.router.navigate(['/doctor-details', doctorId]);
     }
+  }
+
+  async startRecording() {
+    this.audioUrl = null;
+    this.transcription = 0;
+
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
+        type: 'audio',
+        mimeType: 'audio/wav', // or fallback to 'audio/webm' if needed
+      });
+
+      this.recorder.record();
+      this.isRecording = true;
+    } catch (err) {
+      console.error('🎤 Microphone access denied:', err);
+    }
+  }
+
+  stopRecording() {
+    if (!this.recorder || !this.isRecording) return;
+
+    this.recorder.stop((blob: Blob) => {
+      this.audioUrl = URL.createObjectURL(blob);
+      this.isRecording = false;
+
+      // Stop microphone stream
+      this.stream.getTracks().forEach((track) => track.stop());
+
+      this.uploadAudio(blob);
+    });
+  }
+
+  uploadAudio(blob: Blob) {
+    const formData = new FormData();
+    formData.append('file', blob, 'recording.wav');
+    console.log('Uploading WAV audio...');
+
+    this.isUploading = true;
+
+    this.aidoctorService.getDoctorDatasuggest(formData).subscribe({
+      next: (response: DoctorResult[]) => {
+        console.log(' Upload successful:', response);
+        const doctorIds = response.map((id) => id.doctorId);
+        console.log('Doctor IDs:', doctorIds);
+        this.router.navigate(['/all-doctors'], {
+          queryParams: { doctorId: doctorIds },
+        });
+
+        this.isUploading = false;
+      },
+      error: (error) => {
+        console.error(' Upload error:', error);
+        this.isUploading = false;
+      },
+    });
   }
 }

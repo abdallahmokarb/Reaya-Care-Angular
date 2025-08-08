@@ -154,8 +154,9 @@
             <thead class="bg-green-600 dark:bg-green-800 text-white text-sm">
               <tr>
                 <th class="py-3 px-6">رقم الحجز</th>
-                <th class="py-3 px-6">التاريخ</th>
-                <th class="py-3 px-6">الوقت</th>
+                <th class="py-3 px-6">تاريخ الانشاء</th>
+                <th class="py-3 px-6">موعد الحجز</th>
+                <th class="py-3 px-6">وقت الحجز</th>
                 <th class="py-3 px-6">دكتور</th>
                 <th class="py-3 px-6">التخصص</th>
                 <th class="py-3 px-6">حالة الحجز</th>
@@ -169,17 +170,22 @@
                 <td class="py-3 px-6">{{ appt.appointmentId }}</td>
                 <td class="py-3 px-6">{{ appt.date | date: 'dd/MM/yyyy' }}</td>
                 <td class="py-3 px-6">
-                  {{ appt.startTime }} - {{ appt.endTime }}
+                  {{ appt.startTime | date: 'yyyy-MM-dd' }}
+                </td>
+                <td class="py-3 px-6">
+                  {{ appt.startTime | date: 'HH:mm' }} - {{ appt.endTime | date:
+                  'HH:mm' }}
                 </td>
                 <td class="py-3 px-6">{{ appt.doctorName }}</td>
                 <td class="py-3 px-6">{{ appt.specializationName }}</td>
                 <td class="py-3 px-6">
                   <span
                     [ngClass]="{
-              'bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200': appt.status === 'Confirmed',
-              'bg-yellow-100 text-yellow-700 dark:bg-yellow-700 dark:text-yellow-100': appt.status === 'Finished',
-              'bg-red-100 text-red-700 dark:bg-red-800 dark:text-red-200': appt.status === 'Cancelled'
-            }"
+      'bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200': appt.status === 'Confirmed',
+      'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200': appt.status === 'Finished',
+      'bg-orange-100 text-orange-700 dark:bg-orange-800 dark:text-orange-200': appt.status === 'NonAttendence',
+      'bg-pink-100 text-pink-700 dark:bg-pink-800 dark:text-pink-200': appt.status === 'Cancelled'
+    }"
                     class="inline-flex items-center gap-1 py-1 px-3 rounded-full text-xs font-medium"
                   >
                     <svg
@@ -191,26 +197,44 @@
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5l5-5-1.4-1.4L9 10.2 7.4 8.6 6 10l3 3z"
                       />
                     </svg>
+
                     <svg
                       *ngIf="appt.status === 'Finished'"
-                      class="w-4 h-4 fill-yellow-600 dark:fill-yellow-200"
+                      class="w-4 h-4 fill-gray-600 dark:fill-gray-300"
                       viewBox="0 0 20 20"
                     >
                       <path
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-12h1.5v5h-1.5V6zm0 6h1.5v1.5h-1.5V12z"
                       />
                     </svg>
+
                     <svg
                       *ngIf="appt.status === 'NonAttendence'"
-                      class="w-4 h-4 fill-red-600 dark:fill-red-300"
+                      class="w-4 h-4 fill-orange-600 dark:fill-orange-300"
                       viewBox="0 0 20 20"
                     >
                       <path
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3-11.4L11.4 7 10 8.4 8.6 7 7 8.6 8.4 10 7 11.4 8.6 13 10 11.6 11.4 13 13 11.4 11.6 10 13 8.6z"
                       />
                     </svg>
-                    {{ appt.status === 'Confirmed' ? 'مؤكد' : appt.status ===
-                    'Finished' ? 'منتهي' : 'عدم حضور' }}
+
+                    <svg
+                      *ngIf="appt.status === 'Cancelled'"
+                      class="w-4 h-4 fill-pink-600 dark:fill-pink-300"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3-11.4L11.4 7 10 8.4 8.6 7 7 8.6 8.4 10 7 11.4 8.6 13 10 11.6 11.4 13 13 11.4 11.6 10 13 8.6z"
+                      />
+                    </svg>
+
+                    <ng-container [ngSwitch]="appt.status">
+                      <span *ngSwitchCase="'Confirmed'">مؤكد</span>
+                      <span *ngSwitchCase="'Finished'">منتهي</span>
+                      <span *ngSwitchCase="'NonAttendence'">عدم حضور</span>
+                      <span *ngSwitchCase="'Cancelled'">ملغي</span>
+                      <span *ngSwitchDefault> - </span>
+                    </ng-container>
                   </span>
                 </td>
               </tr>
@@ -287,12 +311,13 @@
                   <th class="px-6 py-3 text-right">تاريخ ووقت انشاء العملية</th>
                 </tr>
               </thead>
+
               <tbody
-                class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+                class="text-gray-600 dark:text-gray-300 text-sm font-light"
               >
                 <tr
                   *ngFor="let payment of payments"
-                  class="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                  class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <td class="px-6 py-4">{{ payment.paymentId }}</td>
                   <td class="px-6 py-4">{{ payment.amount }} جنيه</td>
@@ -301,7 +326,7 @@
                       class="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm w-fit"
                       [ngClass]="{
     'bg-green-100/50 text-green-700 dark:bg-green-200/20 dark:text-green-300 font-semibold': payment.status == 1,
-    'bg-red-100/50 text-red-700 dark:bg-red-200/20 dark:text-red-300 font-semibold': payment.status == 0
+    'bg-red-100/50 text-red-700 dark:bg-red-200/20 dark:text-red-300 font-semibold': payment.status == 2
   }"
                     >
                       <svg
@@ -315,7 +340,7 @@
                       </svg>
 
                       <svg
-                        *ngIf="payment.status == 0"
+                        *ngIf="payment.status == 2"
                         class="w-4 h-4 fill-red-600 dark:fill-red-300"
                         viewBox="0 0 20 20"
                       >
