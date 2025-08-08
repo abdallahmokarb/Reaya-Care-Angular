@@ -1,5 +1,5 @@
 <aside
-  class="fixed top-0 z-50 h-screen w-64 bg-white/25 dark:bg-black/25 border border-gray-400/50 dark:border-gray-700/50 shadow-lg backdrop-blur-md transition-transform duration-300 ease-in-out"
+  class="fixed top-0 z-50 h-screen w-64 bg-white/25 dark:bg-black/25 border border-gray-400/50 dark:border-gray-700/50 shadow-lg backdrop-blur-md transition-transform duration-300 ease-in-out print:hidden"
   [ngClass]="{'translate-x-full': !isSidebarOpen()}"
   dir="rtl"
 >
@@ -62,27 +62,19 @@
 
           <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-            [routerLink]="['/dashboard/admin/statistics']"
-            routerLinkActive="text-green-600 font-bold"
-          >
-            تقارير رعاية
-          </a>
-
-          <a
-            class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/admin/payments']"
             routerLinkActive="text-green-600 font-bold"
           >
             المدفوعات
           </a>
 
-          <a
+          <!-- <a
             class="block px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition"
             [routerLink]="['/dashboard/admin/profile']"
             routerLinkActive="text-green-600 font-bold"
           >
             الملف الشخصي
-          </a>
+          </a> -->
         </ng-container>
 
         <!-- doctor -->
