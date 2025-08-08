@@ -15,4 +15,10 @@ export class PaymentService {
   getPaymentsByUserId(userId: string | number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/user/${userId}`);
   }
+  refundPayment(refundData: {
+    transactionId: number;
+    amountCents: number;
+  }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/refund`, refundData);
+  }
 }

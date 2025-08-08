@@ -45,29 +45,6 @@ export class PaymentCallbackComponent implements OnInit {
     });
   }
 
-  // sendToBackend(params: HttpParams) {
-  //   const paymobCallbackUrl =
-  //     'http://localhost:5216/api/payment/paymob-callback';
-
-  //   this.http.get(paymobCallbackUrl, { params }).subscribe({
-  //     next: (res) => {
-  //       console.log('Payment sent to backend:', res);
-  //       this.isLoading = false;
-  //       this.isSuccess = this.paymentData.Success;
-
-  //
-  //       if (this.paymentData.Success) {
-  //         this.bookAppointment();
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to send payment to backend:', err);
-  //       this.isLoading = false;
-  //       this.isSuccess = false;
-  //     },
-  //   });
-  // }
-
   sendToBackend(params: HttpParams) {
     const paymobCallbackUrl =
       'http://localhost:5216/api/payment/paymob-callback';
@@ -100,7 +77,7 @@ export class PaymentCallbackComponent implements OnInit {
     const userData = sessionStorage.getItem('user');
 
     if (!bookingData || !userData) {
-      console.error('Missing booking data or user data');
+      console.error('missing booking data or user data');
       return;
     }
 
@@ -112,17 +89,17 @@ export class PaymentCallbackComponent implements OnInit {
         doctorId: parsedBooking.doctorId,
         timeSlotId: parsedBooking.slot.timeSlotId,
         patientId: parsedUser.patientId,
-        notes: 'Booking notes here',
+        notes: 'booking notes',
         paymentId: this.paymentIdFromBackend,
       };
 
-      console.log('Payload to send:', payload);
+      console.log(payload);
 
       const bookUrl = 'http://localhost:5216/api/Appointment_/book-appointment';
 
       this.http.post(bookUrl, payload).subscribe({
         next: (res: any) => {
-          console.log('Appointment booked successfully:', res);
+          console.log('appointment booked successfully', res);
           this.isSuccess = true;
 
           const confirmation = {
@@ -130,7 +107,7 @@ export class PaymentCallbackComponent implements OnInit {
             payment: this.paymentData,
             appointmentId: res.appointmentId || res.id,
             doctorId: parsedBooking.doctorId,
-            amount: this.paymentData.AmountCents / 100, // convert to dollars
+            amount: this.paymentData.AmountCents / 100, // convert to cents
           };
 
           sessionStorage.setItem('confirmation', JSON.stringify(confirmation));
@@ -147,57 +124,4 @@ export class PaymentCallbackComponent implements OnInit {
       console.error('error parsing booking data:', err);
     }
   }
-
-  // bookAppointment() {
-  //   const bookingData = localStorage.getItem('yourBooking');
-  //   const userData = sessionStorage.getItem('user');
-
-  //   if (!bookingData || !userData) {
-  //     console.error('Missing booking data or user data');
-  //     return;
-  //   }
-
-  //   try {
-  //     const parsedBooking = JSON.parse(bookingData);
-  //     const parsedUser = JSON.parse(userData);
-
-  //     const payload = {
-  //       doctorId: parsedBooking.doctorId,
-  //       timeSlotId: parsedBooking.slot.timeSlotId,
-  //       patientId: parsedUser.patientId,
-  //       notes: 'Booking notes here',
-  //       paymentId: this.paymentIdFromBackend,
-  //     };
-
-  //     console.log('Payload to send:', payload);
-
-  //     const bookUrl = 'http://localhost:5216/api/Appointment_/book-appointment';
-
-  //     this.http.post(bookUrl, payload).subscribe({
-  //       next: (res: any) => {
-  //         console.log('Appointment booked successfully:', res);
-  //         this.isSuccess = true;
-
-  //         // save appointment confirmation to show in irmation page
-  //         sessionStorage.setItem(
-  //           'confirmation',
-  //           JSON.stringify({
-  //             booking: parsedBooking,
-  //             payment: this.paymentData,
-  //             appointmentId: res.appointmentId || res.id,
-  //           })
-  //         );
-
-  //         // navigate to a confirmation page
-  //         window.location.href = '/booking-confirmation';
-  //       },
-  //       error: (err) => {
-  //         console.error('failed to book appointment:', err);
-  //         this.isSuccess = false;
-  //       },
-  //     });
-  //   } catch (err) {
-  //     console.error('error parsing booking data:', err);
-  //   }
-  // }
 }

@@ -1,96 +1,190 @@
 <div class="flex flex-col md:flex-row min-h-screen">
-  <!-- modal  -->
-  <div
-    *ngIf="isOpen"
-    class="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-md bg-opacity-50 z-50"
-  >
-    <div
-      *ngIf="isOpen"
-      class="mb-4 w-3/4 mx-auto rounded-lg border border-[#831f42] bg-[#2c0a16] p-4 text-sm font-bold text-[#cb85a8] flex flex-col items-center gap-4"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="size-20 text-[#cb85a8]"
+  <div *ngIf="statusCode !== null" class=" ">
+    <ng-container *ngIf="statusCode === 0; else normalStatus">
+      <!-- modal  -->
+      <div
+        *ngIf="isOpen"
+        class="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-md bg-opacity-50 z-50"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z"
-        />
-      </svg>
-      <div class="rounded-xl shadow-lg p-6 w-full text-right">
-        <h2 class="text-3xl font-bold text-white mb-4">
-          مرحبًا {{ user.userName }}!
-        </h2>
-
-        <p class="text-gray-300 mb-6 text-xl">
-          حسابك غير نشط وغير مكتمل يرجي استكمال بياناتك الشخصية ورفع الملفات
-          والمستندات المطلوبة وبيانات العيادة
-          <br />
-          سيتم اظهار هذة الرساله لك بشكل اجباري الي حين استكمال بياناتك
-          <br />
-          خالص تحياتنا فريق خدمة عملاء رعاية . كوم
-        </p>
-
-        <div class="flex justify-end gap-3">
-          <button
-            (click)="closeModal()"
-            class="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-2 rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+        <div
+          *ngIf="isOpen"
+          class="mb-4 w-3/4 mx-auto rounded-lg border border-[#831f42] bg-[#2c0a16] p-4 text-sm font-bold text-[#cb85a8] flex flex-col items-center gap-4"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-20 text-[#cb85a8]"
           >
-            تجاهل
-          </button>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z"
+            />
+          </svg>
+          <div class="rounded-xl shadow-lg p-6 w-full text-right">
+            <h2 class="text-3xl font-bold text-white mb-4">
+              مرحبًا {{ fullName }}!
+            </h2>
 
-          <a
-            href="/dashboard/doctor/onboarding"
-            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
-            متابعة إلى Onboarding
-          </a>
+            <p class="text-gray-300 mb-6 text-xl">
+              حسابك غير نشط وغير مكتمل يرجي استكمال بياناتك الشخصية ورفع الملفات
+              والمستندات المطلوبة وبيانات العيادة
+              <br />
+              سيتم اظهار هذة الرساله لك بشكل اجباري الي حين استكمال بياناتك
+              <br />
+              خالص تحياتنا فريق خدمة عملاء رعاية . كوم
+            </p>
+
+            <div class="flex justify-end gap-3">
+              <button
+                (click)="closeModal()"
+                class="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-2 rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+              >
+                تجاهل
+              </button>
+
+              <a
+                href="/dashboard/doctor/onboarding"
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              >
+                متابعة إلى Onboarding
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Modal Content -->
+        <!-- Modal Content -->
+      </div>
+    </ng-container>
+
+    <ng-template #normalStatus>
+      <!-- Doctor Status: <strong>{{ statusText }}</strong> -->
+    </ng-template>
   </div>
 
-  <main class="flex-grow p-2 sm:p-4">
+  <main class="flex-grow p-2 sm:p-1">
     <div class="container mx-auto p-2 sm:p-4" dir="rtl">
       <!-- doctor details -->
       <div
         class="bg-gradient-to-br from-[#0f2c1b] to-[#186429] dark:from-[#08210e]/80 dark:to-[#104b2d]/80 border border-[#2b945a] rounded-2xl p-4 shadow-2xl text-white"
       >
-        <div class="flex flex-col gap-3 mb-4">
-          <h3 class="text-2xl font-bold text-green-300">
-            مرحباً بعودتك دكتور / {{ user.userName }}
-          </h3>
-          <h3 class="text-lg font-semibold text-green-400">
-            سعدنا لرؤيتك مرة تانية
-          </h3>
-        </div>
-
-        <div class="flex items-center gap-4" *ngIf="user">
-          <img
-            [src]="user.photoUrl || 'https://ui-avatars.com/api/?name=' + user.userName"
-            alt="User photo"
-            class="w-16 h-16 rounded-full shadow-lg"
-          />
+        <div class="flex flex-col gap-2 mb-0">
           <div>
-            <h2 class="text-base font-semibold text-white">{{ user.email }}</h2>
-            <p class="text-sm mt-1 text-green-300">
-              {{ user.roles.join(', ') }}
+            <h3 class="text-2xl font-bold mb-0 text-green-400">
+              مرحباً بعودتك دكتور / {{ fullName }}
+            </h3>
+            <p class="mt-4 text-lg font-medium text-white/90 pb-3">
+              سعدنا لرؤيتك مرة تانية
             </p>
           </div>
         </div>
 
-        <div class="mt-6 border-t border-green-700 pt-4">
+        <div
+          class="flex flex-col md:flex-row items-center gap-6 px-6 rounded-xl text-white"
+        >
+          <!-- صورة البروفايل -->
+          <div class="flex-shrink-0 text-center">
+            <img
+              [src]="profilePictureUrl || 'https://ui-avatars.com/api/?name=' + user.userName"
+              alt="User photo"
+              class="w-20 h-20 rounded-full shadow-lg border-4 border-white/50 object-cover"
+            />
+            <h2 class="text-sm font-semibold mt-2">{{ user.email }}</h2>
+            <p class="text-xs text-green-200">{{ user.roles.join(', ') }}</p>
+          </div>
+
+          <!-- البيانات -->
+          <div class="flex flex-wrap gap-4 flex-1">
+            <!-- الخدمة -->
+            <div
+              class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 text-green-200"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"
+                />
+              </svg>
+              <div>
+                <span class="block text-xs text-white/70">الخدمة</span>
+                <span class="font-semibold">{{ service }}</span>
+              </div>
+            </div>
+
+            <!-- التخصص -->
+            <div
+              class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 text-green-200"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
+                />
+              </svg>
+              <div>
+                <span class="block text-xs text-white/70">التخصص</span>
+                <span class="font-semibold">{{ specialization }}</span>
+              </div>
+            </div>
+
+            <!-- الحالة -->
+            <div
+              class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 text-green-200"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
+                />
+              </svg>
+              <div>
+                <span class="block text-xs text-white/70">حالة الحساب</span>
+                <span
+                  class="px-2 py-0.5 rounded-full text-sm font-medium"
+                  [ngClass]="{
+                'bg-green-500 text-white': statusCode === 1,
+                'bg-yellow-400 text-black': statusCode === 0,
+                'bg-red-500 text-white': statusCode === 2,
+                'bg-orange-500 text-white': statusCode === 3,
+                'bg-gray-500 text-white': statusCode === 4
+              }"
+                >
+                  {{ getStatusText(statusCode) }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2 border-t border-green-700 pt-4">
           <p class="text-gray-300 leading-relaxed text-sm">
-            لقد قرأت رسالة التنبيه المهمة هذه بنجاح. سيتم وضع هذا التنبيه لفترة
-            أطول قليلاً حتى تتمكن من رؤية تفاصيل تسجيل الدخول بشكل أكثر تفصيلاً.
-            <br />
             <span class="font-medium text-green-300">آخر تسجيل دخول:</span>
             الساعة 3:44 مساءً بالتوقيت العالمي (UTC)
           </p>
@@ -343,10 +437,11 @@
             >
               <tr>
                 <th class="px-4 py-3 font-semibold">رقم الحجز</th>
-                <th class="px-4 py-3 font-semibold">التاريخ</th>
-                <th class="px-4 py-3 font-semibold">الوقت</th>
+                <th class="px-4 py-3 font-semibold">موعد الحجز</th>
+                <th class="px-4 py-3 font-semibold">وقت الحجز</th>
                 <th class="px-4 py-3 font-semibold">اسم المريض</th>
                 <th class="px-4 py-3 font-semibold">حالة الحجز</th>
+                <th class="px-4 py-3 font-semibold">تاريخ الانشاء</th>
               </tr>
             </thead>
             <tbody
@@ -363,17 +458,67 @@
                   date: 'hh:mm a' }}
                 </td>
                 <td class="px-4 py-2">{{ appt.patientName }}</td>
-                <td class="px-4 py-2">
+                <td class="py-3 px-6">
                   <span
                     [ngClass]="{
-                'text-green-700 font-semibold': appt.status === 'Confirmed',
-                'text-red-600 font-semibold': appt.status === 'Cancelled',
-                'text-yellow-600 font-semibold': appt.status === 'Pending'
-              }"
+      'bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200': appt.status === 'Confirmed',
+      'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200': appt.status === 'Finished',
+      'bg-orange-100 text-orange-700 dark:bg-orange-800 dark:text-orange-200': appt.status === 'NonAttendence',
+      'bg-pink-100 text-pink-700 dark:bg-pink-800 dark:text-pink-200': appt.status === 'Cancelled'
+    }"
+                    class="inline-flex items-center gap-1 py-1 px-3 rounded-full text-xs font-medium"
                   >
-                    {{ appt.status }}
+                    <svg
+                      *ngIf="appt.status === 'Confirmed'"
+                      class="w-4 h-4 fill-green-600 dark:fill-green-200"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5l5-5-1.4-1.4L9 10.2 7.4 8.6 6 10l3 3z"
+                      />
+                    </svg>
+
+                    <svg
+                      *ngIf="appt.status === 'Finished'"
+                      class="w-4 h-4 fill-gray-600 dark:fill-gray-300"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-12h1.5v5h-1.5V6zm0 6h1.5v1.5h-1.5V12z"
+                      />
+                    </svg>
+
+                    <svg
+                      *ngIf="appt.status === 'NonAttendence'"
+                      class="w-4 h-4 fill-orange-600 dark:fill-orange-300"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3-11.4L11.4 7 10 8.4 8.6 7 7 8.6 8.4 10 7 11.4 8.6 13 10 11.6 11.4 13 13 11.4 11.6 10 13 8.6z"
+                      />
+                    </svg>
+
+                    <svg
+                      *ngIf="appt.status === 'Cancelled'"
+                      class="w-4 h-4 fill-pink-600 dark:fill-pink-300"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3-11.4L11.4 7 10 8.4 8.6 7 7 8.6 8.4 10 7 11.4 8.6 13 10 11.6 11.4 13 13 11.4 11.6 10 13 8.6z"
+                      />
+                    </svg>
+
+                    <ng-container [ngSwitch]="appt.status">
+                      <span *ngSwitchCase="'Confirmed'">مؤكد</span>
+                      <span *ngSwitchCase="'Finished'">منتهي</span>
+                      <span *ngSwitchCase="'NonAttendence'">عدم حضور</span>
+                      <span *ngSwitchCase="'Cancelled'">ملغي</span>
+                      <span *ngSwitchDefault> - </span>
+                    </ng-container>
                   </span>
                 </td>
+
+                <td class="px-4 py-2">{{ appt.date}}</td>
               </tr>
               <tr *ngIf="appointments.length === 0">
                 <td colspan="5" class="py-4 text-zinc-500 dark:text-zinc-400">
@@ -393,6 +538,8 @@
           </a>
         </div>
       </div>
+      <br />
+      <br />
 
       <!-- payment -->
       <div
@@ -440,7 +587,21 @@
 
                 <td class="px-4 py-2">{{ appt.date | date: 'dd/MM/yyyy' }}</td>
                 <td class="px-4 py-2">{{ appt.patientName }}</td>
-                <td class="px-4 py-2">ناجحة</td>
+                <td class="px-4 py-2 text-center align-middle">
+                  <div
+                    class="inline-flex items-center justify-center gap-1 bg-green-100/50 text-green-700 dark:bg-green-200/20 dark:text-green-300 font-semibold rounded-3xl px-2 py-1"
+                  >
+                    <svg
+                      class="w-4 h-4 fill-green-600 dark:fill-green-300"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5l5-5-1.4-1.4L9 10.2 7.4 8.6 6 10l3 3z"
+                      />
+                    </svg>
+                    <span>ناجحة</span>
+                  </div>
+                </td>
               </tr>
               <tr *ngIf="appointments.length === 0">
                 <td colspan="5" class="py-4 text-zinc-500 dark:text-zinc-400">
@@ -460,7 +621,6 @@
           </a>
         </div>
       </div>
-
       <!-- Patient Summary -->
       <!-- <div
         class="bg-white/80 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl p-6 shadow-lg mt-8"

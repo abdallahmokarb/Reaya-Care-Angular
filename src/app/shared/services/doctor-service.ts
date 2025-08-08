@@ -17,13 +17,31 @@ export class DoctorService {
     return this.http.get<Idoctorcard[]>(this.baseUrl);
   }
 
+  getAlldDoctorsByStatus(): Observable<Idoctorcard[]> {
+    return this.http.get<Idoctorcard[]>(`${this.baseUrl}/allDoctors`);
+  }
   getDoctorById(id: number): Observable<Idoctordetails> {
     return this.http.get<Idoctordetails>(`${this.baseUrl}/details/${id}`);
   }
-  updateDoctorBalance(doctorId: number, amount: number) {
+  approveDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/approve`, {});
+  }
+  rejectDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/reject`, {});
+  }
+  pendingDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/pending`, {});
+  }
+  suspendDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/suspend`, {});
+  }
+  deactivateDoctor(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}/deactivate`, {});
+  }
+  
+   updateDoctorBalance(doctorId: number, amount: number) {
     return this.http.put(
       `${this.baseUrl}/${doctorId}/balance?amount=${amount}`,
       null
-    );
-  }
+    );}
 }
