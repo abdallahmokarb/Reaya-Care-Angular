@@ -29,13 +29,13 @@
 
       <div class="flex items-center justify-between">
         <span class="flex items-center gap-2">
-          📅 <strong>التاريخ:</strong> {{ appointment.date | date: 'fullDate':'ar-EG' }}
+          📅 <strong>التاريخ:</strong> {{ appointment.startTime | date: 'fullDate':'ar-EG' }}
         </span>
       </div>
 
       <div class="flex items-center justify-between">
         <span class="flex items-center gap-2">
-          ⏰ <strong>الوقت:</strong> {{ getTimeRange() }}
+          ⏰ <strong>الوقت:</strong> {{ appointment.startTime | date:'shortTime':'ar-EG' }}
         </span>
       </div>
 
