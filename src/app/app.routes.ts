@@ -128,7 +128,13 @@ export const routes: Routes = [
             './pages/manage-patients/manage-patients'
           ).then((m) => m.ManagePatients),
       },
-
+      {
+        path: 'dashboard/admin/admin-management',
+        loadComponent: () =>
+          import(
+            './pages/admin-management/admin-management'
+          ).then((m) => m.AdminManagement)
+      },
       {
         path: 'all-doctors',
         loadComponent: () =>
