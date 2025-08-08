@@ -252,7 +252,7 @@
         class="p-6 bg-gradient-to-r from-green-800 to-green-600 text-white rounded-2xl shadow-xl"
       >
         <h2 class="text-2xl font-bold mb-4">
-          الرصيد الدائن - تقرير الرصيد السنوي
+          تقرير الرصيد السنوي - الرصيد الدائن حتي {{ todayDate }}
         </h2>
         <canvas id="salesChart" class="w-full h-96"></canvas>
       </div>
@@ -294,7 +294,7 @@
               <p
                 class="text-2xl font-semibold text-green-600 dark:text-green-400"
               >
-                2 جنية
+                {{ balance | currency:'EGP':'symbol':'1.2-2' }}
               </p>
               <p>إجمالي الإيرادات من الحجوزات .</p>
             </div>
@@ -335,7 +335,7 @@
               <p
                 class="text-2xl font-semibold text-blue-600 dark:text-blue-400"
               >
-                16
+                {{ patientsCount }}
               </p>
               <p>المستخدمين المسجلين بنجاح والذين يمكنهم حجز مواعيد.</p>
             </div>
@@ -376,7 +376,7 @@
               <p
                 class="text-2xl font-semibold text-purple-600 dark:text-purple-400"
               >
-                6
+                {{ doctorCount }}
               </p>
               <p>الأطباء المعتمدين والمتاحين على المنصة لحجز المواعيد.</p>
             </div>
@@ -417,7 +417,7 @@
               <p
                 class="text-2xl font-semibold text-orange-600 dark:text-orange-400"
               >
-                5
+                {{adminsCount }}
               </p>
               <p>موظفون الادارة العامة.</p>
             </div>
@@ -456,7 +456,7 @@
                 الحسابات الموقوفة مؤقتاً
               </h3>
               <p class="text-2xl font-semibold text-red-600 dark:text-red-400">
-                0
+                {{suspendedDoctorsCount }}
               </p>
               <p>لا توجد حسابات موقوفة حالياً. جميع الحسابات نشطة.</p>
             </div>
@@ -497,7 +497,7 @@
               <p
                 class="text-2xl font-semibold text-yellow-600 dark:text-yellow-400"
               >
-                11
+                {{pendingDoctorsCount }}
               </p>
               <p>عدد الدكاترة الذين بانتظار مراجعة واعتماد بياناتهم.</p>
             </div>

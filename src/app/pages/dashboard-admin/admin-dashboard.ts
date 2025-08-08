@@ -2,6 +2,12 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
 import { RouterModule } from '@angular/router';
+import { SystemInfoService } from '../../shared/services/system-info';
+import { Ipatient } from '../../models/ipatient';
+import { Patientservice } from '../../shared/services/patient-service/patientservice';
+import { DoctorService } from '../../shared/services/doctor-service';
+import { AdminDTO } from '../../models/Admin/AdminDTOs';
+import { AdminService } from '../../shared/services/admin-service';
 
 @Component({
   selector: 'app-test-page',
@@ -14,23 +20,92 @@ export class AdminDashboard implements OnInit, AfterViewInit {
   user: any;
   loading = true;
   userId = '';
+  balance: number | null = null;
+  patients: Ipatient[] = [];
+  patientsCount: number = 0;
+  doctorCount = 0;
+  adminsCount: number = 0;
+  admins: AdminDTO[] = [];
+  pendingDoctorsCount = 0;
+  suspendedDoctorsCount = 0;
+  todayDate: string = '';
 
-  constructor() {}
+  constructor(
+    private systemInfoService: SystemInfoService,
+    private patientService: Patientservice,
+    private doctorService: DoctorService,
+    private adminService: AdminService
+  ) {}
 
   ngOnInit(): void {
+    this.doctorService.getAllDoctors().subscribe({
+      next: (doctors) => {
+        this.suspendedDoctorsCount = doctors.filter(
+          (d) => d.status === 3
+        ).length;
+      },
+      error: (err) => console.error('err', err),
+    });
+    this.doctorService.getAlldDoctorsByStatus().subscribe({
+      next: (doctors) => {
+        this.pendingDoctorsCount = doctors.filter((d) => d.status === 0).length;
+      },
+      error: (err) => console.error('err', err),
+    });
+
+    this.adminService.getAllAdmins().subscribe({
+      next: (data) => {
+        this.admins = data;
+        this.adminsCount = this.admins.length;
+      },
+      error: (err) => {},
+    });
+
+    this.doctorService.getDoctorCount().subscribe({
+      next: (count) => (this.doctorCount = count),
+      error: (err) => console.error('err', err),
+    });
+    this.patientService.getAllPatients().subscribe({
+      next: (data) => {
+        this.patients = data;
+        this.patientsCount = data.length;
+      },
+      error: (error) => {
+        console.error('err loading patients:', error);
+        this.patientsCount = 0;
+      },
+    });
+
+    this.systemInfoService.getSystemInfo().subscribe({
+      next: (data) => {
+        const num = Number(data);
+        this.balance = isNaN(num) ? 0 : +num.toFixed(2);
+        this.drawChart();
+
+        console.log('Balance:', this.balance);
+      },
+      error: (err) => console.error('err fetching balance', err),
+    });
     const storedUser =
       localStorage.getItem('user') || sessionStorage.getItem('user');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
       this.userId = this.user?.id || '';
     }
-  }
 
-  ngAfterViewInit(): void {
+    const today = new Date();
+    this.todayDate = today.toLocaleDateString('ar-EG', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
+  ngAfterViewInit(): void {}
+  drawChart() {
     const canvas = document.getElementById('salesChart') as HTMLCanvasElement;
     if (!canvas) return;
 
-    const chart = new Chart(canvas, {
+    new Chart(canvas, {
       type: 'line',
       data: {
         labels: [
@@ -50,7 +125,7 @@ export class AdminDashboard implements OnInit, AfterViewInit {
         datasets: [
           {
             label: 'الرصيد (بالجنية)',
-            data: [0, 0, 0, 0, 0, 0, 0, 2250, 0, 0, 0, 12],
+            data: [0, 0, 0, 0, 0, 0, 0, this.balance, 0, 0, 0, 0],
             fill: true,
             backgroundColor: (ctx) => {
               const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 400);
@@ -60,8 +135,16 @@ export class AdminDashboard implements OnInit, AfterViewInit {
             },
             borderColor: 'rgba(22,163,74,1)',
             tension: 0.4,
-            pointBackgroundColor: '#fff',
-            pointBorderColor: '#3B82F6',
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            pointBackgroundColor: (ctx) => {
+              const index = ctx.dataIndex;
+              return index === 7 ? 'rgba(22,163,74,1)' : '#fff';
+            },
+            pointBorderColor: (ctx) => {
+              const index = ctx.dataIndex;
+              return index === 7 ? '#146c43' : '#3B82F6';
+            },
           },
         ],
       },
@@ -71,9 +154,7 @@ export class AdminDashboard implements OnInit, AfterViewInit {
           legend: {
             labels: {
               color: '#ffffff',
-              font: {
-                size: 14,
-              },
+              font: { size: 14 },
             },
           },
           tooltip: {
@@ -83,12 +164,13 @@ export class AdminDashboard implements OnInit, AfterViewInit {
           },
         },
         scales: {
-          x: {
+          y: {
+            beginAtZero: true,
             ticks: {
               color: '#E0F2FE',
             },
           },
-          y: {
+          x: {
             ticks: {
               color: '#E0F2FE',
             },
