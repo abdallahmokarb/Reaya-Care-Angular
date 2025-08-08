@@ -75,4 +75,18 @@ export class Navbar {
       }
     }
   }
+
+  getEditProfileLink(user: any): string {
+    const roles = user?.roles ?? [];
+
+    if (roles.includes('Doctor')) {
+      return '/dashboard/doctor/onboarding';
+    } else if (roles.includes('Patient')) {
+      return '/dashboard/patient/profile';
+    } else if (roles.includes('Admin')) {
+      return '/dashboard/admin';
+    }
+
+    return '/unauthorized';
+  }
 }

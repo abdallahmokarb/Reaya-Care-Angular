@@ -9,7 +9,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class Sidebar {
   private router = inject(Router);
-  isSidebarOpen = signal(false);
+  isSidebarOpen = signal(true);
   user = signal<any>(null);
 
   darkMode = signal<boolean>(

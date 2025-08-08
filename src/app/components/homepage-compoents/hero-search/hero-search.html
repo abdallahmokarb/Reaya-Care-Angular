@@ -187,6 +187,7 @@
                 class="bg-green-600 text-white px-6 py-3 w-full rounded-lg hover:bg-green-700 cursor-pointer disabled:opacity-50 transition flex items-center justify-center gap-2"
               >
                 <svg
+                  [class.animate-bounce]="isRecording"
                   class="w-5 h-5 text-white"
                   fill="currentColor"
                   viewBox="0 0 24 24"
