@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
 import { PaymentService } from '../../shared/services/payment';
@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   templateUrl: './dashboard-patient.html',
 })
-export class DashboardPatient implements OnInit, AfterViewInit {
+export class DashboardPatient implements OnInit {
   user: any;
   appointments: IAppointment[] = [];
   loading = true;
@@ -32,12 +32,6 @@ export class DashboardPatient implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.finishedCount = this.appointments.filter(
-      (a) => a.status === 'Confirmed'
-    ).length;
-
-    console.log(this.finishedCount);
-
     const storedUser =
       localStorage.getItem('user') || sessionStorage.getItem('user');
     if (storedUser) {
@@ -52,16 +46,15 @@ export class DashboardPatient implements OnInit, AfterViewInit {
       if (this.userId) {
         this.paymentService.getPaymentsByUserId(this.userId).subscribe({
           next: (res) => (this.payments = res),
-          error: (err) => console.error('Error loading payments', err),
+          error: (err) => console.error('err', err),
         });
       }
     }
+
     this.appointmentService.getMyAppointments().subscribe({
       next: (data) => {
-        console.log(data);
         this.appointments = data;
 
-        // Count statuses
         this.confirmedCount = data.filter(
           (a) => a.status === 'Confirmed'
         ).length;
@@ -73,12 +66,7 @@ export class DashboardPatient implements OnInit, AfterViewInit {
           (a) => a.status === 'NonAttendence'
         ).length;
 
-        console.log({
-          Confirmed: this.confirmedCount,
-          Cancelled: this.cancelledCount,
-          Finished: this.finishedCount,
-          NonAttendence: this.nonAttendenceCount,
-        });
+        this.renderStatusChart();
 
         this.loading = false;
       },
@@ -96,25 +84,64 @@ export class DashboardPatient implements OnInit, AfterViewInit {
     return roles.length ? roles.join(', ') : 'مستخدم جديد';
   }
 
-  ngAfterViewInit() {
-    const specialtyChart = document.getElementById(
-      'specialtyChart'
-    ) as HTMLCanvasElement;
+  private loadPaymentsByPatientId(patientId: number): void {
+    this.paymentService.getPaymentsByUserId(patientId).subscribe({
+      next: (res) => {
+        this.payments = res;
+      },
+      error: (err) => {
+        console.error('err', err);
+      },
+    });
+  }
+
+  private renderStatusChart(): void {
     const statusChart = document.getElementById(
       'statusChart'
     ) as HTMLCanvasElement;
+    const statusBarChart = document.getElementById(
+      'statusBarChart'
+    ) as HTMLCanvasElement;
 
-    if (specialtyChart) {
-      new Chart(specialtyChart, {
-        type: 'bar',
+    const labels = ['مؤكد', 'منتهي', 'عدم حضور', 'ملغي'];
+    const dataValues = [
+      this.confirmedCount,
+      this.finishedCount,
+      this.nonAttendenceCount,
+      this.cancelledCount,
+    ];
+    const colors = ['#00c950', '#007bff', '#fc6b00', '#f21872'];
+
+    // Pie chart
+    if (statusChart) {
+      new Chart(statusChart, {
+        type: 'pie',
         data: {
-          labels: ['طب القلب', 'طب العيون'],
+          labels,
           datasets: [
             {
-              label: 'عدد الزيارات',
-              data: [3, 2],
-              backgroundColor: '#16a34a',
-              borderColor: '#15803d',
+              data: dataValues,
+              backgroundColor: colors,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+        },
+      });
+    }
+
+    // Bar chart
+    if (statusBarChart) {
+      new Chart(statusBarChart, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'عدد الحالات',
+              data: dataValues,
+              backgroundColor: colors,
               borderWidth: 1,
               barThickness: 40,
             },
@@ -128,35 +155,5 @@ export class DashboardPatient implements OnInit, AfterViewInit {
         },
       });
     }
-
-    if (statusChart) {
-      new Chart(statusChart, {
-        type: 'pie',
-        data: {
-          labels: ['مؤكد', 'عدم حضور', 'ملغي'],
-          datasets: [
-            {
-              data: [4, 0, 0],
-              backgroundColor: ['#00c950', '#fc6b00', '#f21872'],
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-        },
-      });
-    }
-  }
-
-  private loadPaymentsByPatientId(patientId: number): void {
-    this.paymentService.getPaymentsByUserId(patientId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.payments = res;
-      },
-      error: (err) => {
-        console.error('خطأ أثناء تحميل المدفوعات:', err);
-      },
-    });
   }
 }
