@@ -16,17 +16,19 @@ export class Dashboard implements OnInit, AfterViewInit {
   isOpen: boolean = true;
   user: any = {};
   doctorId: number = 0;
+
   ratings: any[] = [];
   ratingCount: number = 0;
   averageRating: number = 0;
   balance: number = 0;
   views: number = 0;
+
   appointments: any[] = [];
-  mostVisitedPatients: {
-    patientId: number;
-    name: string;
-    visitCount: number;
-  }[] = [];
+  finishedCount = 0;
+  confirmedCount = 0;
+  cancelledCount = 0;
+  nonAttendanceCount = 0;
+
   statusCode: number | null = null;
   statusText: string | null = null;
   fullName: string | null = null;
@@ -34,15 +36,14 @@ export class Dashboard implements OnInit, AfterViewInit {
   specialization: string | null = null;
   profilePictureUrl: string | null = null;
 
-  finishedCount = 0;
-  confirmedCount = 0;
-  cancelledCount = 0;
-  nonAttendanceCount = 0;
-  constructor(private http: HttpClient) {}
+  chartsReady = {
+    balance: false,
+    views: false,
+    ratings: false,
+    appointments: false,
+  };
 
-  closeModal() {
-    this.isOpen = false;
-  }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     const userJson =
@@ -54,37 +55,44 @@ export class Dashboard implements OnInit, AfterViewInit {
       if (this.doctorId) {
         this.getDoctorRatings(this.doctorId);
         this.getDoctorInfo();
+        this.loadViews(this.doctorId);
+        this.getAppointments(this.doctorId);
         this.updateDoctorStatus();
       }
     }
   }
 
   ngAfterViewInit(): void {
-    this.renderBarChart();
-    this.renderPieChart();
-    this.loadViews(this.doctorId);
-    this.getAppointments(this.doctorId);
+    // الرسم سيتم عند وصول كل البيانات
   }
 
   private renderBarChart(): void {
-    new Chart(document.getElementById('specialtyChart') as HTMLCanvasElement, {
+    new Chart(document.getElementById('barChart') as HTMLCanvasElement, {
       type: 'bar',
       data: {
         labels: [''],
         datasets: [
           {
-            label: 'الذكور',
-            data: [2],
-            backgroundColor: '#194ad6',
-            borderColor: '#24ace4',
+            label: 'عدد المشاهدات',
+            data: [this.views],
+            backgroundColor: '#0093b4',
+            borderColor: '#00b1d3',
             borderWidth: 1,
             barThickness: 50,
           },
           {
-            label: 'الإناث',
-            data: [1],
-            backgroundColor: '#f514a0',
-            borderColor: '#ff7cad',
+            label: 'عدد التقييمات',
+            data: [this.ratingCount],
+            backgroundColor: '#4938e0',
+            borderColor: '#605dff',
+            borderWidth: 1,
+            barThickness: 50,
+          },
+          {
+            label: 'متوسط التقييم',
+            data: [this.averageRating],
+            backgroundColor: '#cc0062',
+            borderColor: '#f43198',
             borderWidth: 1,
             barThickness: 50,
           },
@@ -94,21 +102,25 @@ export class Dashboard implements OnInit, AfterViewInit {
         responsive: true,
         scales: {
           y: { beginAtZero: true },
-          x: { stacked: false },
         },
       },
     });
   }
 
   private renderPieChart(): void {
-    new Chart(document.getElementById('statusChart') as HTMLCanvasElement, {
+    new Chart(document.getElementById('pieChart') as HTMLCanvasElement, {
       type: 'pie',
       data: {
-        labels: ['مؤكد', 'عدم حضور', 'ملغي'],
+        labels: ['مؤكد', 'عدم حضور', 'ملغي', 'منتهي'],
         datasets: [
           {
-            data: [3, 0, 0],
-            backgroundColor: ['#00a543', '#e4a300', '#d50a1c'],
+            data: [
+              this.confirmedCount,
+              this.nonAttendanceCount,
+              this.cancelledCount,
+              this.finishedCount,
+            ],
+            backgroundColor: ['#00a543', '#e4a300', '#d50a1c', '#194ad6'],
           },
         ],
       },
@@ -116,6 +128,17 @@ export class Dashboard implements OnInit, AfterViewInit {
         responsive: true,
       },
     });
+  }
+
+  private updateChartsIfReady() {
+    if (
+      this.chartsReady.views &&
+      this.chartsReady.ratings &&
+      this.chartsReady.appointments
+    ) {
+      this.renderBarChart();
+      this.renderPieChart();
+    }
   }
 
   getDoctorRatings(doctorId: number): void {
@@ -126,7 +149,6 @@ export class Dashboard implements OnInit, AfterViewInit {
           this.ratings = res;
           this.ratingCount = res.length;
 
-          // rating value avg
           if (this.ratingCount > 0) {
             const total = res.reduce(
               (sum, rating) => sum + rating.ratingValue,
@@ -136,24 +158,31 @@ export class Dashboard implements OnInit, AfterViewInit {
           } else {
             this.averageRating = 0;
           }
+
+          console.log('Ratings:', this.ratingCount, 'Avg:', this.averageRating);
+          this.chartsReady.ratings = true;
+          this.updateChartsIfReady();
         },
         error: (err) => {
           console.error('failed to fetch rating', err);
         },
       });
   }
+
   getDoctorInfo(): void {
     this.http
       .get<any>(`http://localhost:5216/api/Doctor/${this.doctorId}`)
       .subscribe({
         next: (res) => {
           this.balance = res.balance;
+          console.log('Balance:', this.balance);
         },
         error: (err) => {
           console.error('failed to fetch doctor info', err);
         },
       });
   }
+
   loadViews(doctorId: number) {
     this.http
       .get<{ views: number }>(
@@ -162,6 +191,9 @@ export class Dashboard implements OnInit, AfterViewInit {
       .subscribe({
         next: (res) => {
           this.views = res.views;
+          console.log('Views:', this.views);
+          this.chartsReady.views = true;
+          this.updateChartsIfReady();
         },
         error: (err) => {
           console.error('err views', err);
@@ -176,15 +208,7 @@ export class Dashboard implements OnInit, AfterViewInit {
       )
       .subscribe({
         next: (res) => {
-          console.log('Appointments:', res);
           this.appointments = res;
-
-          // Count appointments
-          const finishedCount = res.filter(
-            (app) => app.status === 'Finished'
-          ).length;
-          console.log('Finished Appointments Count:', finishedCount);
-
           this.finishedCount = res.filter(
             (a: any) => a.status === 'Finished'
           ).length;
@@ -197,6 +221,16 @@ export class Dashboard implements OnInit, AfterViewInit {
           this.nonAttendanceCount = res.filter(
             (a: any) => a.status === 'NonAttendence'
           ).length;
+
+          console.log('Appointments counts:', {
+            finished: this.finishedCount,
+            confirmed: this.confirmedCount,
+            cancelled: this.cancelledCount,
+            nonAttendance: this.nonAttendanceCount,
+          });
+
+          this.chartsReady.appointments = true;
+          this.updateChartsIfReady();
         },
         error: (err) => {
           console.error('err loading appointments', err);
@@ -206,7 +240,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   updateDoctorStatus() {
     this.http
-      .get<Doctor>(`http://localhost:5216/api/Doctor/${this.doctorId}`, {})
+      .get<Doctor>(`http://localhost:5216/api/Doctor/${this.doctorId}`)
       .subscribe({
         next: (res) => {
           this.statusCode = res.status ?? null;
@@ -226,7 +260,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   getStatusText(status: number | null): string {
     if (status === null) {
-      return 'Nىo status available';
+      return 'لا توجد حالة متاحة';
     }
     switch (status) {
       case 0:
@@ -242,5 +276,8 @@ export class Dashboard implements OnInit, AfterViewInit {
       default:
         return '';
     }
+  }
+  closeModal() {
+    this.isOpen = false;
   }
 }
