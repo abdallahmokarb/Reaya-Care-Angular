@@ -92,7 +92,7 @@ body {
   @apply placeholder-gray-100 dark:placeholder-gray-50;
 
   .form-control {
-    @apply mt-2 h-12 w-full rounded-lg p-2 text-gray-100 dark:bg-black/20 bg-white/20 dark:text-white 
+    @apply mt-2 h-12 w-full rounded-lg p-2 text-gray-900 dark:bg-black/20 bg-white/20 dark:text-white 
          placeholder-gray-600 dark:placeholder-gray-50 
          focus:border-green-500 focus:ring-2 focus:ring-green-500 active:border-green-500 active:ring-green-500;
   }

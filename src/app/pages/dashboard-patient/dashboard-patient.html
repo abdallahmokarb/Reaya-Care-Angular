@@ -27,21 +27,18 @@
 
         <div class="mt-6 border-t border-green-700 pt-4">
           <p class="text-gray-300 leading-relaxed text-sm">
-            لقد قرأت رسالة التنبيه المهمة هذه بنجاح. سيتم وضع هذا التنبيه لفترة
-            أطول قليلاً حتى تتمكن من رؤية تفاصيل تسجيل الدخول بشكل أكثر تفصيلاً.
-            <br />
             <span class="font-medium text-green-300">آخر تسجيل دخول:</span>
             الساعة 3:44 مساءً بالتوقيت العالمي (UTC)
           </p>
         </div>
       </div>
-
+      <br />
       <!-- book summary -->
       <div
         class="bg-white/90 dark:bg-black/40 rounded-xl p-6 md:p-8 shadow-xl backdrop-blur-md mb-8"
       >
         <h2
-          class="text-2xl font-bold text-gray-800 dark:text-white flex items-center mb-8"
+          class="text-2xl font-bold text-green-600 dark:text-white flex items-center mb-8"
         >
           <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -130,10 +127,35 @@
         </div>
       </div>
 
+      <div class="p-3 sm:p-4">
+        <h2
+          class="text-2xl font-bold mb-6 text-green-600 dark:text-white text-right flex items-center justify-start gap-2"
+        >
+          <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h12v2H4v-2zm0 4h8v2H4v-2z"
+            />
+          </svg>
+          رسوم بيانية عن حالة الحجوزات
+        </h2>
+
+        <div class="flex flex-col md:flex-row gap-4 w-full">
+          <!-- pie chart -->
+          <div class="flex-1 rounded-lg shadow p-2">
+            <canvas id="statusChart" class="w-full h-96"></canvas>
+          </div>
+
+          <!-- bar chart -->
+          <div class="flex-1 rounded-lg shadow p-2">
+            <canvas id="statusBarChart" class="w-full h-96"></canvas>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div class="flex items-center justify-between">
           <h2
-            class="text-2xl font-bold mb-6 text-gray-800 dark:text-white text-right flex items-center justify-end gap-2"
+            class="text-2xl font-bold mb-6 text-green-600 dark:text-white text-right flex items-center justify-end gap-2"
           >
             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -281,7 +303,7 @@
       <div class="p-6">
         <div class="flex items-center justify-between">
           <h2
-            class="text-2xl font-bold mb-6 text-gray-800 dark:text-white text-right flex items-center justify-end gap-2"
+            class="text-2xl font-bold mb-6 text-green-600 dark:text-white text-right flex items-center justify-end gap-2"
           >
             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -300,7 +322,7 @@
             class="rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-900"
           >
             <table
-              class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+              class="min-w-full border border-gray-300 dark:border-gray-700 divide-y divide-gray-300 dark:divide-gray-700 rounded-lg overflow-hidden"
             >
               <thead class="bg-green-600 dark:bg-green-800 text-white text-sm">
                 <tr>
@@ -317,7 +339,7 @@
               >
                 <tr
                   *ngFor="let payment of payments"
-                  class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  class="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <td class="px-6 py-4">{{ payment.paymentId }}</td>
                   <td class="px-6 py-4">{{ payment.amount }} جنيه</td>
@@ -325,9 +347,9 @@
                     <span
                       class="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm w-fit"
                       [ngClass]="{
-    'bg-green-100/50 text-green-700 dark:bg-green-200/20 dark:text-green-300 font-semibold': payment.status == 1,
-    'bg-red-100/50 text-red-700 dark:bg-red-200/20 dark:text-red-300 font-semibold': payment.status == 2
-  }"
+            'bg-green-100/50 text-green-700 dark:bg-green-200/20 dark:text-green-300 font-semibold': payment.status == 1,
+            'bg-red-100/50 text-red-700 dark:bg-red-200/20 dark:text-red-300 font-semibold': payment.status == 2
+          }"
                     >
                       <svg
                         *ngIf="payment.status == 1"
@@ -383,40 +405,48 @@
           </div>
         </ng-template>
       </div>
-
       <div
-        class="flex items-start gap-3 p-4 mb-6 rounded-lg border border-red-400 bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200 dark:border-red-600"
+        class="flex items-start gap-3 p-5 mb-6 rounded-xl border border-red-300 dark:border-red-600 bg-gradient-to-r from-red-50 via-red-100 to-red-50 dark:from-red-950 dark:via-red-900 dark:to-red-950 shadow-sm text-right"
       >
-        <svg
-          class="w-6 h-6 mt-1 flex-shrink-0 text-red-600 dark:text-red-400"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+        <div class="flex-shrink-0">
+          <svg
+            class="w-7 h-7 text-red-600 dark:text-red-400"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
 
-        <div class="text-sm text-right leading-relaxed">
-          <p class="font-semibold">تنبيه هام:</p>
-          <p>
-            في حال رغبتك في تقديم طلب الاسترداد للمبالغ المدفوعه في رعاية يمكنك
-            ذلك عبر صفحة تفاصيل مدفوعاتي - ولا يمكنك تنفيذ عملية
-            <span class="font-bold underline">الاسترداد</span> إلا بعد
-            <span class="font-bold text-red-600 dark:text-red-600"
-              >إلغاء حجزك او تعيين حجزك عدم حضور</span
+        <div class="flex-1">
+          <p class="text-red-800 dark:text-red-200 font-bold text-lg mb-1">
+            تنبيه هام
+          </p>
+          <p class="text-sm text-red-700 dark:text-red-300 leading-relaxed">
+            في حال رغبتك في تقديم طلب الاسترداد للمبالغ المدفوعه في
+            <span class="font-semibold">رعاية</span> يمكنك ذلك عبر صفحة
+            <span class="font-semibold underline">تفاصيل مدفوعاتي</span>.
+            <br />
+            ولا يمكنك تنفيذ عملية
+            <span class="font-bold underline">الاسترداد</span>
+            إلا بعد
+            <span class="font-bold text-red-600 dark:text-red-400"
+              >إلغاء حجزك</span
             >
             <br />
-            وطبقا للسياسات وشروط الاستخدام في موقعنا
+            وطبقا لسياسات الشركة وشروط الاستخدام في رعاية . كوم
           </p>
+
           <a
             routerLink="/dashboard/patient/my-payments"
-            class="inline-block mt-2 text-sm font-semibold text-red-700 hover:underline dark:text-red-300"
+            class="inline-block mt-3 px-5 py-2 text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:from-red-600 hover:to-red-800 dark:from-red-600 dark:via-red-700 dark:to-red-800 transition-all"
           >
             تقديم طلب الاسترداد
           </a>
@@ -432,30 +462,6 @@
       <br />
       <br />
 
-      <!-- chart test -->
-      <div
-        class="bg-white/95 dark:bg-black/25 rounded-lg shadow-lg p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 md:mb-8 backdrop-blur-md"
-      >
-        <h2 class="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4">
-          الإحصائيات
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          <!-- Bar Chart -->
-          <div class="p-3 sm:p-4">
-            <h3 class="text-base sm:text-lg font-medium mb-2 text-green-600">
-              توزيع التخصصات
-            </h3>
-            <canvas id="specialtyChart" class="w-full h-48 sm:h-64"></canvas>
-          </div>
-          <!-- Pie Chart -->
-          <div class="p-3 sm:p-4">
-            <h3 class="text-base sm:text-lg font-medium mb-2 text-green-600">
-              حالة الحجوزات
-            </h3>
-            <canvas id="statusChart" class="w-full h-48 sm:h-64"></canvas>
-          </div>
-        </div>
-      </div>
       <br />
     </div>
   </main>

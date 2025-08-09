@@ -54,7 +54,8 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
     console.log('%c[AuthService] token:', 'color: blue', token);
     return token;
   }
@@ -77,7 +78,7 @@ export class AuthService {
         this.router.navigate(['/dashboard/doctor']);
         break;
       case 'patient':
-        this.router.navigate(['/dashboard/patient']);
+        this.router.navigate(['/']);
         break;
       default:
         this.router.navigate(['/auth/login']);

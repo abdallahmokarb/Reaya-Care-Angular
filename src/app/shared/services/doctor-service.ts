@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Idoctor } from '../../models/idoctor';
@@ -38,10 +38,18 @@ export class DoctorService {
   deactivateDoctor(id: number): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${id}/deactivate`, {});
   }
-  
-   updateDoctorBalance(doctorId: number, amount: number) {
+
+  updateDoctorBalance(doctorId: number, amount: number) {
     return this.http.put(
       `${this.baseUrl}/${doctorId}/balance?amount=${amount}`,
       null
-    );}
+    );
+  }
+  getDoctorCount(): Observable<number> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${sessionStorage.getItem('token') || ''}`,
+    });
+
+    return this.http.get<number>(`${this.baseUrl}/count`, { headers });
+  }
 }
