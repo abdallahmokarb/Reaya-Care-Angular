@@ -25,7 +25,7 @@
         <div class="flex-1">
           <div class="flex gap-4">
             <h2 class="text-xl font-bold text-gray-800 dark:text-white">
-              د. {{doctor?.fullName}} - طبيب {{doctor?.specialization}}
+              د. {{doctor?.fullName}} - {{doctor?.specialization}}
             </h2>
 
             <h3 class="flex items-center gap-2 group relative cursor-pointer">
@@ -76,28 +76,6 @@
           </p>
         </div>
       </div>
-
-      <!-- Specializations -->
-      <div class="basic-info">
-        <h3 class="font-semibold text-lg mb-2 text-gray-800 dark:text-white">
-          متخصص في
-        </h3>
-        <div class="flex flex-wrap gap-2">
-          <span
-            class="specialization bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >عملية مفصل الركبة</span
-          >
-          <span
-            class="specialization bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >عملية الفخذ</span
-          >
-          <span
-            class="specialization bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >خدمات عظام أخرى</span
-          >
-        </div>
-      </div>
-
       <!-- Insurance Companies -->
       <div>
         <h3 class="font-semibold text-lg mb-2 text-gray-800 dark:text-white">

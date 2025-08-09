@@ -59,8 +59,8 @@ cancelAppointment(appointmentId: number): void {
     if (!confirm('هل أنت متأكد من إلغاء هذا الموعد؟')) return;
 
     this.AppointmentService.cancelAppointment(this.appointment).subscribe({
-      next: () => {
-        this.appointment.status = 'Canceled';
+      next: (message) => {
+        this.appointment.status = 'Cancelled';
         alert('تم إلغاء الموعد بنجاح');
       },
       error: (err) => {
