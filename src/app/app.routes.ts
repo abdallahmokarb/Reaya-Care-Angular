@@ -142,7 +142,6 @@ export const routes: Routes = [
             './pages/admin-doctor/admin-doctor'
           ).then((m) => m.AdminDoctorComponent),
       },
-<<<<<<< HEAD
       {
         path: 'dashboard/admin/admin-management',
         loadComponent: () =>
@@ -150,10 +149,7 @@ export const routes: Routes = [
             './pages/admin-management/admin-management'
           ).then((m) => m.AdminManagement)
       },
-      {
-=======
           {
->>>>>>> main
         path: 'all-doctors',
         loadComponent: () =>
           import('./pages/all-doctors/all-doctors').then((m) => m.AllDoctors),

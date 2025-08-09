@@ -138,6 +138,8 @@ export class HeroSearch {
 
     this.recorder.stop((blob: Blob) => {
       this.audioUrl = URL.createObjectURL(blob);
+      console.log('🎤 Recording stopped:', this.audioUrl);
+      
       this.isRecording = false;
 
       // Stop microphone stream
