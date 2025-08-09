@@ -46,7 +46,7 @@
         <!-- Status Indicator -->
         <div class="p-4 border-b border-gray-100">
           <div class="flex items-center justify-between">
-            <span class="text-lg font-semibold text-gray-900">{{getArabicDay(slot.dayOfWeek)}}</span>
+            <span class="text-lg font-semibold text-gray-900">{{slot.startTime.toLocaleDateString('ar-EG', { weekday: 'long' })}}</span>
             <div class="flex items-center space-x-2 space-x-reverse">
               <span 
                 [class]="slot.isAvailable ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
