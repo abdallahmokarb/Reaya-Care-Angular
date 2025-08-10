@@ -13,10 +13,14 @@
         />
       </svg>
     </div>
-    <p class="text-gray-600 dark:text-gray-300">شكر لك</p>
+    <p class="text-gray-600 text-4xl dark:text-gray-300">
+      شكرا {{ userName }} لثقتك في رعاية
+    </p>
 
-    <h1 class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
-      تم حجز الموعد بنجاح!
+    <h1
+      class="text-4xl text-green-600 pt-3 font-black dark:text-green-400 mb-2"
+    >
+      تم حجز موعدك بنجاح
     </h1>
   </div>
 
@@ -57,7 +61,7 @@
           >
         </p>
         <p class="flex justify-between">
-          <span class="text-gray-600 dark:text-gray-300">الدوك:</span>
+          <span class="text-gray-600 dark:text-gray-300">الدكتور:</span>
           <span class="font-medium text-gray-800 dark:text-white"
             >{{ bookingData?.doctorName || 'N/A' }}</span
           >
@@ -125,17 +129,19 @@
     </div>
   </div>
 
-  <div class="mt-8 text-center">
+  <div class="mt-8 flex justify-center gap-4">
     <a
-      href="/appointment"
+      routerLink="/appointment"
       class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition duration-200"
     >
-      عرض جميع المواعيد
+      عرض جميع المواعيد بالتفصيل
     </a>
+
     <button
-      class="px-6 py-2 ml-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg transition duration-200"
+      (click)="printDetails()"
+      class="px-6 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg transition duration-200"
     >
-      طباعة التفاصيل
+      طباعة تفاصيل حجزك
     </button>
   </div>
 </div>
