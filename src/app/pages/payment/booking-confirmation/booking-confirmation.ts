@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-booking-confirmation',
   templateUrl: './booking-confirmation.html',
   standalone: true,
+  imports: [RouterModule],
 })
 export class BookingConfirmation implements OnInit {
   bookingData: any;
@@ -12,6 +14,7 @@ export class BookingConfirmation implements OnInit {
   appointmentId: number = 0;
   doctorId: number = 0;
   amount: number = 0;
+  userName: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -27,6 +30,11 @@ export class BookingConfirmation implements OnInit {
 
       this.updateDoctorBalance();
     }
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      const userObj = JSON.parse(storedUser);
+      this.userName = userObj.userName;
+    }
   }
 
   updateDoctorBalance() {
@@ -40,5 +48,8 @@ export class BookingConfirmation implements OnInit {
         console.error('Error updating balance:', err);
       },
     });
+  }
+  printDetails(): void {
+    window.print();
   }
 }
