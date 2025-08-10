@@ -25,7 +25,7 @@
         <div class="flex-1">
           <div class="flex gap-4">
             <h2 class="text-xl font-bold text-gray-800 dark:text-white">
-              د. {{doctor?.fullName}} - طبيب {{doctor?.specialization}}
+              د. {{doctor?.fullName}} - {{doctor?.specialization}}
             </h2>
 
             <h3 class="flex items-center gap-2 group relative cursor-pointer">
@@ -76,28 +76,6 @@
           </p>
         </div>
       </div>
-
-      <!-- Specializations -->
-      <div class="basic-info">
-        <h3 class="font-semibold text-lg mb-2 text-gray-800 dark:text-white">
-          متخصص في
-        </h3>
-        <div class="flex flex-wrap gap-2">
-          <span
-            class="specialization bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >عملية مفصل الركبة</span
-          >
-          <span
-            class="specialization bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >عملية الفخذ</span
-          >
-          <span
-            class="specialization bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >خدمات عظام أخرى</span
-          >
-        </div>
-      </div>
-
       <!-- Insurance Companies -->
       <div>
         <h3 class="font-semibold text-lg mb-2 text-gray-800 dark:text-white">
@@ -200,7 +178,7 @@
           </div>
           <div class="flex justify-between">
             <span>اتصال مباشر:</span>
-            <span>الرقم مخفي (سيظهر الرقم بعد اتمام الحجز)</span>
+            <span> سيظهر رقم الدكتور بعد اتمام الحجز في صفحة الحجوزات </span>
           </div>
         </div>
         <ng-container *ngIf="user; else notLoggedIn">
@@ -297,9 +275,15 @@
                   عند الضغط على
                   <span class="font-semibold text-green-600 dark:text-green-400"
                     >"احجز الآن"</span
-                  >، سيتم تحويلك إلى بوابة الدفع لإتمام الدفع ثم بعدها استكمال
-                  الحجز. في رعاية نستخدم تقنيات حديثة لضمان حماية بياناتك. كما
-                  أننا نتعامل مع شركات خارجية موثوقة لضمان تجربة آمنة وسلسة.
+                  >، سيتم تحويلك إلى بوابة الدفع لإتمام الدفع ثم بعدها يؤكد
+                  الحجز بعد نجاح عملية الدفع. في رعاية نستخدم تقنيات حديثة لضمان
+                  حماية بياناتك. كما أننا نتعامل مع شركات خارجية موثوقة لضمان
+                  تجربة آمنة وسلسة. جميع المعاملات تمر عبر قنوات مشفرة ولا يتم
+                  تخزين أي معلومات حساسة مثل بيانات البطاقة أو رمز التحقق في
+                  قواعد بيانات رعاية. هدفنا في رعاية هو تقديم تجربة سلسة وآمنة
+                  يمكنك الوثوق بها دائمًا.
+                  <br />
+                  تحياتنا فريق تطوير المدفوعات الالكترونية لـ رعاية . كوم
                 </p>
               </div>
             </div>

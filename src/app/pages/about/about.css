@@ -27,7 +27,6 @@
 
 #statistics{
     margin-top: 50px;
-    background-color: white;
     padding: 50px 0;
     text-align: center;
     border: 1px solid #15803d; /* Tailwind's border-gray-200 */
@@ -35,5 +34,4 @@
 
 #statistics h2 {
     font-size: 2rem;
-    color: #101828;
 }
