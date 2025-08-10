@@ -39,6 +39,12 @@
         </span>
       </div>
 
+      <div class="flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          📞 <strong>رقم الهاتف:</strong> {{ appointment.doctorPhoneNumber}}
+        </span>
+      </div>
+
       <!-- 🔵 Video Call Link (if confirmed) -->
        <div *ngIf="appointment.status === 'Confirmed'" class="flex justify-between">
 
@@ -49,6 +55,17 @@
             class="text-blue-600 dark:text-blue-400 underline break-words"
           >
             الانضام للمكالمة الان
+          </a>
+        </div>
+
+        <div *ngIf="appointment.doctorLocation" class="mt-2 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg text-sm">
+          <p class="text-blue-700 dark:text-blue-300 font-semibold mb-1">موقع الطبيب :</p>
+          <a
+            [href]="appointment.doctorLocation"
+            class="text-blue-600 dark:text-blue-400 underline break-words"
+          >
+            <i class="fas fa-map-marker-alt ml-1 text-red-500"></i>
+            {{ appointment.doctorDetailedAddress || 'عرض الموقع' }}
           </a>
         </div>
         
