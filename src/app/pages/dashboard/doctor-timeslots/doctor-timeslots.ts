@@ -202,13 +202,6 @@ export class DoctorTimeslots implements OnInit {
     // const dayOfWeek = this.getDayOfWeekEnum(startDateTime.getDay());
     const dayOfWeek = this.getDayOfWeekEnum(new Date(year, month, day).getDay());
 
-    // console.log('Sending times:', {
-    //   startTime: startDateTime.toISOString(),
-    //   endTime: endDateTime.toISOString(),
-    //   localStart: startDateTime.toString(),
-    //   localEnd: endDateTime.toString()
-    // });
-
     return {
       doctorId: this.currentDoctorId,
       startTime: startTime,
@@ -273,10 +266,9 @@ export class DoctorTimeslots implements OnInit {
 
     // Check if date is not in the past
     const selectedDate = new Date(this.formData.selectedDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
     
-    if (selectedDate < today) {
+    if (selectedDate < now) {
       alert('لا يمكن إنشاء موعد في تاريخ سابق');
       return false;
     }
@@ -288,6 +280,24 @@ export class DoctorTimeslots implements OnInit {
       alert('وقت الانتهاء يجب أن يكون بعد وقت البداية');
       return false;
     }
+
+    // ✅ Overlap check
+    const newSlotDay = new Date(this.formData.selectedDate).getDay(); // 0 = Sunday, etc.
+    const overlap = this.timeSlots.some(slot => {
+      const slotDay = new Date(slot.startTime).getDay();
+      if (slotDay !== newSlotDay) return false;
+
+      const slotStart = this.timeToMinutes(this.formatTimeForInput(new Date(slot.startTime)));
+      const slotEnd = this.timeToMinutes(this.formatTimeForInput(new Date(slot.endTime)));
+
+      return startTime < slotEnd && endTime > slotStart;
+    });
+
+    if (overlap) {
+      alert('هذا التوقيت يتعارض مع توقيت موجود بالفعل');
+      return false;
+    }
+
     
     if (endTime - startTime < 15) {
       alert('يجب أن يكون الموعد 15 دقيقة على الأقل');

@@ -6,4 +6,5 @@ export interface DoctorTimeSlotDTO {
   endTime: Date;
   dayOfWeek: string;
   isAvailable: boolean;
+  isBooked: boolean; // Indicates if the time slot is reserved
 }

@@ -80,7 +80,7 @@
         </div>
 
         <!-- Actions -->
-        <div class="p-4 bg-gray-50 rounded-b-lg">
+        <div *ngIf="!slot.isBooked" class="p-4 bg-gray-50 rounded-b-lg">
           <div class="flex space-x-2 space-x-reverse">
             <button 
               (click)="openEditModal(slot)"
