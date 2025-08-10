@@ -18,7 +18,7 @@
   <div class="main-content grid grid-cols-1 lg:grid-cols-12 gap-4 mt-8">
 
     <!-- Sidebar Filters -->
-    <div id="filterSidebar" class="col-span-12 lg:col-span-3 bg-white rounded-xl shadow p-4 space-y-6 
+    <div id="filterSidebar" class="col-span-12 lg:col-span-3 bg-white dark:bg-gray-800 rounded-xl shadow p-4 space-y-6 
             fixed top-0 right-0 h-full overflow-y-auto z-50 w-64 lg:static lg:w-auto 
             transform lg:transform-none transition-transform duration-300 ease-in-out 
             translate-x-full lg:translate-x-0">
@@ -30,7 +30,7 @@
 
       <!-- Available Times -->
       <div>
-        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-100">
           <i class="fas fa-clock"></i>
           المواعيد المتاحة
         </h5>
@@ -66,7 +66,7 @@
 
       <!-- Gender -->
       <div>
-        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-100">
           <i class="fas fa-venus-mars"></i>
           الجنس
         </h5>
@@ -93,7 +93,7 @@
 
       <!-- Price Filter -->
       <div class="w-full max-w-md mx-auto my-6">
-        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-100">
           <i class="fas fa-money-bill-wave"></i>
           ثمن الحجز
         </h5>
@@ -105,7 +105,7 @@
           (userChangeEnd)="onSliderChange()">
         </ngx-slider>
 
-        <div class="flex justify-between mt-3 text-sm text-gray-700 text-right">
+        <div class="flex justify-between mt-3 text-sm text-gray-700 dark:text-gray-300 text-right">
           <div class="border border-gray-300 px-3 py-1 rounded">500 أعلى سعر</div>
           <div class="border border-gray-300 px-3 py-1 rounded">0 أقل سعر</div>
         </div>
@@ -115,7 +115,7 @@
 
       <!-- Service Type -->
       <div>
-        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800">
+        <h5 class="text-lg font-semibold mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-100">
           <i class="fas fa-concierge-bell"></i>
           نوع الخدمة
         </h5>
@@ -143,7 +143,7 @@
 
       <!-- Specialization Select -->
       <div>
-        <label for="specializationSelect" class="block mb-2 font-semibold flex items-center gap-2 text-gray-800">
+        <label for="specializationSelect" class="block mb-2 font-semibold flex items-center gap-2 text-gray-800 dark:text-gray-100">
           <i class="fas fa-stethoscope"></i>
           التخصصات
         </label>
@@ -184,9 +184,9 @@
     </div>
 
     <!-- Doctors Section -->
-    <div class="col-span-12 lg:col-span-9 bg-light p-4 rounded-xl">
+    <div class="col-span-12 lg:col-span-9 bg-light dark:bg-gray-800 p-4 rounded-xl">
 
-      <div class="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded mb-4">
+      <div class="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-gray-800 p-4 rounded mb-4">
         <p class="mb-2 sm:mb-0">تم العثور على {{filteredDoctors.length}} طبيب</p>
         <div class="flex items-center gap-2">
           <label for="orderBy" class="mb-0">الترتيب حسب:</label>
@@ -212,11 +212,11 @@
         </svg>
       </div>
 
-      <div class="cards-section bg-white rounded-xl p-4">
+      <div class="cards-section bg-white dark:bg-gray-800 rounded-xl p-4">
         <!-- Doctor cards will appear here -->
         <div id="doctorCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  p-4">
           @for (doctor of filteredDoctors; track $index) {
-            <div class="doctor-card font-[Cairo] flex flex-col justify-between h-full relative bg-white rounded-lg shadow card-shine">
+            <div class="doctor-card font-[Cairo] flex flex-col justify-between h-full relative bg-white dark:bg-gray-950 rounded-lg shadow card-shine">
               <a [routerLink]="['/doctor-details', doctor.doctorId]">
                 <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.profilePictureUrl + ')'">
                   <div class="doctor-rating">
@@ -228,12 +228,12 @@
               </a>
 
               <!-- Doctor Info -->
-              <div class="doctor-info flex-1 space-y-1 text-right flex flex-col justify-between">
+              <div class="doctor-info flex-1 space-y-1 text-right dark:bg-gray-900 flex flex-col justify-between">
                 <!-- Name & Availability -->
                 <div>
-                  <div class="flex flex-col md:flex-row lg:flex-col xl:flex-row justify-between text-right gap-1 text-sm text-gray-500 mb-2">
-                      <div class="flex items-center gap-1 text-lg font-bold text-gray-800 ">
-                        <i class="fas fa-user-md text-gray-600"></i>
+                  <div class="flex flex-col md:flex-row lg:flex-col xl:flex-row justify-between text-right gap-1 text-sm text-gray-500 dark:text-gray-100 mb-2">
+                      <div class="flex items-center gap-1 text-lg font-bold text-gray-800 dark:text-gray-50">
+                        <i class="fas fa-user-md text-gray-600 dark:text-gray-50"></i>
                         {{ doctor.fullName }}
                       </div>
                       <div class="flex items-center gap-1 text-sm bg-[#15803d] p-1 rounded-lg  text-white font-medium w-fit">
@@ -242,13 +242,13 @@
                   </div>
 
                   <!-- Specialization -->
-                  <p class="text-md text-gray-700 mb-2 font-bold">
+                  <p class="text-md text-gray-700 dark:text-gray-50 mb-2 font-bold">
                     <i class="fas fa-stethoscope ml-1 text-emerald-600"></i>
                     {{ doctor.specialization }}
                   </p>
 
                   <!-- Service Type & Location -->
-                  <div class="flex flex-col md:flex-row lg:flex-col xl:flex-row justify-between text-right gap-1 text-md font-bold text-gray-700 mb-2">
+                  <div class="flex flex-col md:flex-row lg:flex-col xl:flex-row justify-between text-right gap-1 text-md font-bold text-gray-700 dark:text-gray-50 mb-2">
                     <span>
                       <i class="fas fa-clinic-medical ml-1 text-emerald-600"></i>
                       {{ doctor.doctorService == "InClinic" ? "في العيادة" : "استشارة اونلاين" }}
