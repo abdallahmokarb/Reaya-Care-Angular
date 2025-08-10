@@ -89,19 +89,35 @@ export class MyPayments implements OnInit {
             next: (deductRes: any) => {
               console.log('تم الخصم من رصيد الدكتور', deductRes);
 
-              // alert('تم إرسال طلب الاسترداد وتم الخصم من الدكتور بنجاح');
-              this.closeRefundModal();
-              this.getAppointments();
+              // refund
+              const updateData = {
+                transactionId: transactionId,
+                status: 3,
+              };
 
-              // race condition
-              setTimeout(() => {
-                this.router.navigateByUrl(
-                  '/dashboard/patient/my-payments/refund-details',
-                  {
-                    state: { refund: res },
-                  }
-                );
-              }, 100);
+              this.http
+                .patch(`http://localhost:5216/api/Payment/update`, updateData)
+                .subscribe({
+                  next: (updateRes) => {
+                    console.log('تم تحديث حالة الدفع إلى مسترد', updateRes);
+
+                    this.closeRefundModal();
+                    this.getAppointments();
+
+                    setTimeout(() => {
+                      this.router.navigateByUrl(
+                        '/dashboard/patient/my-payments/refund-details',
+                        {
+                          state: { refund: res },
+                        }
+                      );
+                    }, 100);
+                  },
+                  error: (err) => {
+                    console.error('فشل تحديث حالة الدفع', err);
+                    alert('تم الاسترداد لكن فشل تحديث حالة الدفع');
+                  },
+                });
             },
 
             error: (err) => {
