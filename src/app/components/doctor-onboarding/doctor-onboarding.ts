@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+
 import { DoctorInfoService } from '../../shared/services/doctor-info-service';
 import { Idoctor } from '../../models/idoctor';
 import { ISpecialization } from '../../models/ispecialization';
@@ -10,10 +10,11 @@ import { AddressService } from '../../shared/services/address-service';
 import { Igovernment } from '../../models/igovernment';
 import { ICity } from '../../models/icity';
 import { MapPicker } from '../map-picker/map-picker';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-doctor-onboarding',
-  imports: [CommonModule, MapPicker,
-    FormsModule,ReactiveFormsModule] ,
+  imports: [ MapPicker,
+    FormsModule,ReactiveFormsModule,CommonModule ] ,
   templateUrl: './doctor-onboarding.html',
   styleUrl: './doctor-onboarding.css'
 })
@@ -24,7 +25,7 @@ export class DoctorOnboarding {
   public governments: Igovernment[] = []; // Initialize to avoid undefined errors
   public cities: ICity[] = []; // Initialize to avoid undefined errors
   private doctorId!: string; // Replace with actual doctor ID
-  private docInfo!: IDocument;
+
   editMode = false;
   editForm: FormGroup;
   public selectedFiles: { [key: string]: File } = {};

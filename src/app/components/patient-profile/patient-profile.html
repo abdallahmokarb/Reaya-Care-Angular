@@ -1,111 +1,134 @@
-<div class="max-w-3xl mx-auto p-6 space-y-6 font-bold tracking-wide" dir="rtl">
+<!-- Import Cairo font in your main index.html or styles.css -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<div class="max-w-5xl mx-auto p-8 space-y-8 font-[Cairo] tracking-wide text-lg" dir="rtl">
+
   <!-- Header with Avatar -->
-  <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
     <!-- Left: Avatar & Info -->
     <div class="flex items-center gap-6">
-      <img src="/assets/images/avatar.jpg" alt="الملف الشخصي" class="w-16 h-16 rounded-full object-cover border-2 border-green-600 dark:border-green-400">
+      <img src="/assets/images/avatar.jpg" alt="الملف الشخصي"
+        class="w-24 h-24 rounded-full object-cover border-4 border-green-600 dark:border-green-400 shadow-md">
       <div>
-        <h2 class="text-xl text-green-600 dark:text-green-400">{{ patient?.fullName || '---' }}</h2>
-        <p class="text-gray-600 dark:text-gray-300">مريض</p>
+        <h2 class="text-3xl font-bold text-green-700 dark:text-green-400">{{ patient?.fullName || '---' }}</h2>
+        <p class="text-gray-600 dark:text-gray-300 text-base">مريض</p>
         <p class="text-sm text-gray-500 dark:text-gray-400">{{ patient?.createdAt | date: 'yyyy-MM-dd' }}</p>
       </div>
     </div>
 
     <!-- Right: Edit Button -->
-    <button (click)="onEditClick()" class="text-green-600 dark:text-green-400 hover:underline flex items-center gap-1">
+    <button (click)="onEditClick()"
+      class="text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-semibold text-lg flex items-center gap-2 transition">
       <span>تعديل</span>
-      <i class="fa fa-edit"></i>
+      <i class="fa fa-edit text-xl"></i>
     </button>
   </div>
 
   <!-- Patient Info Card -->
-  <div *ngIf="patient" class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow space-y-4 text-sm text-gray-700 dark:text-gray-200">
-    <div class="grid grid-cols-2 gap-4">
+  <div *ngIf="patient"
+    class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg space-y-6 text-xl text-gray-800 dark:text-gray-200">
+    <div class="grid grid-cols-2 gap-8">
       <div>
-        <strong>الاسم الكامل</strong>
+        <strong class="block text-green-700 dark:text-green-400">الاسم الكامل</strong>
         <div>{{ patient.fullName }}</div>
       </div>
       <div>
-        <strong>رقم الهاتف</strong>
+        <strong class="block text-green-700 dark:text-green-400">رقم الهاتف</strong>
         <div>{{ patient.phoneNumber }}</div>
       </div>
       <div>
-        <strong>البريد الإلكتروني</strong>
+        <strong class="block text-green-700 dark:text-green-400">البريد الإلكتروني</strong>
         <div>{{ patient.email }}</div>
       </div>
       <div>
-        <strong>تاريخ الميلاد</strong>
+        <strong class="block text-green-700 dark:text-green-400">تاريخ الميلاد</strong>
         <div>{{ patient.dateOfBirth | date: 'yyyy-MM-dd' }}</div>
       </div>
       <div>
-        @if (patient.gender == "0")
-        {
-          <div><strong> النوع:</strong><span >ذكر</span></div>
-        }@else if (patient.gender == "1"){
-          <div><strong>النوع:</strong> <span class="text-pink-600">أنثى</span></div>
+        @if (patient.gender == "0") {
+          <div>
+            <strong class="text-green-700 dark:text-green-400">النوع </strong>
+            <span class="ml-2">ذكر</span>
+          </div>
+        } @else if (patient.gender == "1") {
+          <div>
+            <strong class="text-green-700 dark:text-green-400">النوع </strong>
+            <span class="ml-2 text-pink-600">أنثى</span>
+          </div>
         }
       </div>
       <div>
-        <strong>تاريخ الإنشاء</strong>
+        <strong class="block text-green-700 dark:text-green-400">تاريخ الإنشاء</strong>
         <div>{{ patient.createdAt | date: 'yyyy-MM-dd' }}</div>
       </div>
     </div>
   </div>
 
   <!-- Edit Modal -->
- <div *ngIf="editMode" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-  <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-xl w-full max-w-md space-y-4">
-    <h3 class="text-lg text-green-600 dark:text-green-400 font-semibold mb-2">تعديل معلومات المريض</h3>
-    <form #form="ngForm" (ngSubmit)="save(form)" class="space-y-4">
-      
-      <!-- Full Name -->
-      <div class="space-y-1">
-        <label class="block text-sm">الاسم الكامل</label>
-        <input [(ngModel)]="editedPatient.fullName" name="fullName" required
-          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-      </div>
+  <div *ngIf="editMode"
+    class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4 backdrop-blur-sm">
+    <div
+      class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-2xl w-full max-w-2xl space-y-6 border border-green-300 dark:border-green-700 text-lg">
+      <h3 class="text-2xl text-green-700 dark:text-green-400 font-bold border-b border-gray-200 dark:border-gray-700 pb-3">
+        تعديل معلومات المريض
+      </h3>
+      <form #form="ngForm" (ngSubmit)="save(form)" class="space-y-5">
 
-      <!-- Phone -->
-      <div class="space-y-1">
-        <label class="block text-sm">رقم الهاتف</label>
-        <input [(ngModel)]="editedPatient.phoneNumber" name="phoneNumber" required
-          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-      </div>
-
-      <!-- Email -->
-      <div class="space-y-1">
-        <label class="block text-sm">البريد الإلكتروني</label>
-        <input [(ngModel)]="editedPatient.email" name="email" type="email" required
-          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-      </div>
-
-      <!-- Date of Birth -->
-      <div class="space-y-1">
-        <label class="block text-sm">تاريخ الميلاد</label>
-        <input [(ngModel)]="editedPatient.dateOfBirth" name="dateOfBirth" type="date" required
-          class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-      </div>
-
-      <!-- Gender (Radio Buttons) -->
-      <div class="space-y-1">
-        <label class="block text-sm mb-1">النوع</label>
-        <div class="flex gap-4">
-          <label class="flex items-center gap-1">
-            <input type="radio" [(ngModel)]="editedPatient.gender" name="gender" [value]="0" required />
-            <span>ذكر</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="radio" [(ngModel)]="editedPatient.gender" name="gender" [value]="1" />
-            <span>أنثى</span>
-          </label>
+        <!-- Full Name -->
+        <div>
+          <label class="block text-gray-700 dark:text-gray-300 mb-1">الاسم الكامل</label>
+          <input [(ngModel)]="editedPatient.fullName" name="fullName" required
+            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
         </div>
-      </div>
 
-      <!-- Buttons -->
-      <div class="flex justify-end gap-4 mt-4">
-        <button type="button" (click)="cancel()" class="text-gray-600 hover:underline">إلغاء</button>
-        <button type="submit" class="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700">حفظ</button>
-      </div>
-    </form>
+        <!-- Phone -->
+        <div>
+          <label class="block text-gray-700 dark:text-gray-300 mb-1">رقم الهاتف</label>
+          <input [(ngModel)]="editedPatient.phoneNumber" name="phoneNumber" required
+            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-gray-700 dark:text-gray-300 mb-1">البريد الإلكتروني</label>
+          <input [(ngModel)]="editedPatient.email" name="email" type="email" required
+            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <!-- Date of Birth -->
+        <div>
+          <label class="block text-gray-700 dark:text-gray-300 mb-1">تاريخ الميلاد</label>
+          <input [(ngModel)]="editedPatient.dateOfBirth" name="dateOfBirth" type="date" required
+            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <!-- Gender -->
+        <div>
+          <label class="block text-gray-700 dark:text-gray-300 mb-1">النوع:</label>
+          <div class="flex gap-6">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" [(ngModel)]="editedPatient.gender" name="gender" [value]="0" required
+                class="text-green-600 focus:ring-green-500" />
+              <span>ذكر </span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" [(ngModel)]="editedPatient.gender" name="gender" [value]="1"
+                class="text-green-600 focus:ring-green-500" />
+              <span>أنثى</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-4 mt-8">
+          <button type="button" (click)="cancel()"
+            class="px-5 py-2 text-gray-600 dark:text-gray-300 hover:underline">إلغاء</button>
+          <button type="submit"
+            class="px-8 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-lg">
+            حفظ
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
