@@ -1,119 +1,110 @@
-<div class="flex flex-row-reverse h-screen" dir= "ltr">
+<div class="flex flex-row-reverse h-screen dark:bg-gray-900 dark:text-white" dir="ltr">
 
-  <!-- Doctor List & Status Filters -->
-  <div class="w-1/5 bg-white border-l border-gray-200 flex flex-col text-right" dir="ltr">
+  <!-- Sidebar: Doctor List & Status Filters -->
+  <div class="w-1/5 bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 flex flex-col text-right" dir="ltr">
 
-    <!-- حالة الطبيب -->
-     
-    <div class="p-4 border-b border-gray-300 bg-gray-100">
-    <h2 class="font-bold text-gray-700 mb-2 text-right text-lg"> الحالة</h2>
-    <div class="flex flex-wrap gap-2 justify-end text-sm">
-      <!-- 🕒 معلق -->
-      <button
-        class="px-4 py-1 rounded-md border border-gray-300 transition duration-150"
-        [ngClass]="{
-          'bg-blue-500 text-white': selectedStatus === 0,
-          'bg-white text-gray-700 hover:bg-blue-50': selectedStatus !== 0
-        }"
-        (click)="filterDoctors(0)">
-        🕒 معلق
-      </button>
+    <!-- الحالة -->
+    <div class="p-4 border-b border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700">
+      <h2 class="font-bold text-gray-700 dark:text-white mb-2 text-right text-lg"> الحالة</h2>
 
-      <!-- ✅ مقبول -->
-      <button
-        class="px-4 py-1 rounded-md border border-gray-300 transition duration-150"
-        [ngClass]="{
-          'bg-green-500 text-white': selectedStatus === 1,
-          'bg-white text-gray-700 hover:bg-blue-50': selectedStatus !== 1
-        }"
-        (click)="filterDoctors(1)">
-        ✅ مقبول
-      </button>
+      <div class="flex flex-wrap gap-2 justify-end text-sm">
+        <!-- 🕒 معلق -->
+        <button
+          class="px-4 py-1 rounded-md border transition duration-150"
+          [ngClass]="{
+            'bg-blue-500 text-white': selectedStatus === 0,
+            'bg-white dark:bg-gray-600 dark:text-white text-gray-700 hover:bg-blue-50 dark:hover:bg-gray-500': selectedStatus !== 0
+          }"
+          (click)="filterDoctors(0)">
+          🕒 معلق
+        </button>
 
-      <!-- ❌ مرفوض -->
-      <button
-        class="px-4 py-1 rounded-md border border-gray-300 transition duration-150"
-        [ngClass]="{
-          'bg-red-500 text-white': selectedStatus === 2,
-          'bg-white text-gray-700 hover:bg-blue-50': selectedStatus !== 2
-        }"
-        (click)="filterDoctors(2)">
-        ❌ مرفوض
-      </button>
+        <!-- ✅ مقبول -->
+        <button
+          class="px-4 py-1 rounded-md border transition duration-150"
+          [ngClass]="{
+            'bg-green-500 text-white': selectedStatus === 1,
+            'bg-white dark:bg-gray-600 dark:text-white text-gray-700 hover:bg-blue-50 dark:hover:bg-gray-500': selectedStatus !== 1
+          }"
+          (click)="filterDoctors(1)">
+          ✅ مقبول
+        </button>
 
-      <!-- ⏸️ مؤقت -->
-      <button
-        class="px-4 py-1 rounded-md border border-gray-300 transition duration-150"
-        [ngClass]="{
-          'bg-yellow-500 text-white': selectedStatus === 3,
-          'bg-white text-gray-700 hover:bg-blue-50': selectedStatus !== 3
-        }"
-        (click)="filterDoctors(3)">
-        ⏸️ مؤقت
-      </button>
+        <!-- ❌ مرفوض -->
+        <button
+          class="px-4 py-1 rounded-md border transition duration-150"
+          [ngClass]="{
+            'bg-red-500 text-white': selectedStatus === 2,
+            'bg-white dark:bg-gray-600 dark:text-white text-gray-700 hover:bg-blue-50 dark:hover:bg-gray-500': selectedStatus !== 2
+          }"
+          (click)="filterDoctors(2)">
+          ❌ مرفوض
+        </button>
 
-      <!-- 🔒 غير مفعل -->
-      <button
-        class="px-4 py-1 rounded-md border border-gray-300 transition duration-150"
-        [ngClass]="{
-          'bg-gray-600 text-white': selectedStatus === 4,
-          'bg-white text-gray-700 hover:bg-blue-50': selectedStatus !== 4
-        }"
-        (click)="filterDoctors(4)">
-        🔒 غير مفعل
-      </button>
+        <!-- ⏸️ مؤقت -->
+        <button
+          class="px-4 py-1 rounded-md border transition duration-150"
+          [ngClass]="{
+            'bg-yellow-500 text-white': selectedStatus === 3,
+            'bg-white dark:bg-gray-600 dark:text-white text-gray-700 hover:bg-blue-50 dark:hover:bg-gray-500': selectedStatus !== 3
+          }"
+          (click)="filterDoctors(3)">
+          ⏸️ مؤقت
+        </button>
+
+        <!-- 🔒 غير مفعل -->
+        <button
+          class="px-4 py-1 rounded-md border transition duration-150"
+          [ngClass]="{
+            'bg-gray-600 text-white': selectedStatus === 4,
+            'bg-white dark:bg-gray-600 dark:text-white text-gray-700 hover:bg-blue-50 dark:hover:bg-gray-500': selectedStatus !== 4
+          }"
+          (click)="filterDoctors(4)">
+          🔒 غير مفعل
+        </button>
+      </div>
     </div>
-
-  </div>
-
 
     <!-- Doctor Cards -->
     <div class="flex-1 overflow-y-auto p-4 space-y-2">
       <div
         *ngFor="let doctor of filteredDoctors"
-        class="p-3 bg-gray-100 rounded shadow cursor-pointer hover:bg-gray-200"
+        class="p-3 bg-gray-100 dark:bg-gray-700 rounded shadow cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600"
         (click)="selectDoctor(doctor)"
         [class.bg-blue-100]="doctor.doctorId === selectedDoctor?.doctorId"
       >
-        <p class="font-bold text-gray-800">{{ doctor.fullName }}</p>
-        <p class="text-sm text-gray-600">{{ doctor.specialization }}</p>
+        <p class="font-bold text-gray-800 dark:text-white">{{ doctor.fullName }}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-300">{{ doctor.specialization }}</p>
       </div>
     </div>
   </div>
 
   <!-- Doctor Details View -->
-  <div class="w-4/5 p-6 bg-gray-50 overflow-y-auto text-right">
-
+  <div class="w-4/5 p-6 bg-gray-50 dark:bg-gray-900 overflow-y-auto text-right">
     <div *ngIf="selectedDoctor" class="space-y-6">
-
       <!-- Header -->
       <div class="flex items-center gap-4 flex-row-reverse">
         <img [src]="selectedDoctor.profilePictureUrl" class="w-24 h-24 rounded-full object-cover border" />
         <div>
-          <h2 class="text-2xl font-bold text-gray-800">{{ selectedDoctor.fullName }}</h2>
-          <p class="text-sm text-gray-500">{{ selectedDoctor.specialization }}</p>
-          <p class="text-sm text-gray-500">{{ selectedDoctor.service }}</p>
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white">{{ selectedDoctor.fullName }}</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-300">{{ selectedDoctor.specialization }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-300">{{ selectedDoctor.service }}</p>
         </div>
       </div>
 
       <!-- البيانات الأساسية -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-lg font-bold border-b pb-2 text-gray-700">👤 البيانات الأساسية</h3>
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <h3 class="text-lg font-bold border-b pb-2 text-gray-700 dark:text-white">👤 البيانات الأساسية</h3>
         <p><strong>الاسم:</strong> {{ selectedDoctor.fullName }}</p>
         <p><strong>البريد الإلكتروني:</strong> {{ selectedDoctor.email }}</p>
         <p><strong>رقم الهاتف:</strong> {{ selectedDoctor.phoneNumber }}</p>
         <p><strong>الجنس:</strong> {{ selectedDoctor.gender }}</p>
-        <p>
-          <strong>الحالة:</strong>
-          <span class="text-gray-700">
-            {{ getStatusLabel(selectedDoctor.status) }}
-          </span>
-        </p>
+        <p><strong>الحالة:</strong> {{ getStatusLabel(selectedDoctor.status) }}</p>
       </div>
 
       <!-- المهنة والخدمة -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-lg font-bold border-b pb-2 text-gray-700">🏥 المهنة والخدمة</h3>
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <h3 class="text-lg font-bold border-b pb-2 text-gray-700 dark:text-white">🏥 المهنة والخدمة</h3>
         <p><strong>التخصص:</strong> {{ selectedDoctor.specialization || 'غير محدد' }}</p>
         <p><strong>الخدمة:</strong> {{ selectedDoctor.service }}</p>
         <p><strong>سنوات الخبرة:</strong> {{ selectedDoctor.expYears }} سنة</p>
@@ -123,85 +114,63 @@
       </div>
 
       <!-- العناوين -->
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-lg font-bold border-b pb-2 text-gray-700">📍 الموقع والعناوين</h3>
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <h3 class="text-lg font-bold border-b pb-2 text-gray-700 dark:text-white">📍 الموقع والعناوين</h3>
         <p><strong>الموقع:</strong> {{ selectedDoctor.location }}</p>
         <p><strong>العنوان التفصيلي:</strong> {{ selectedDoctor.detailedAddress || 'غير متوفر' }}</p>
         <p><strong>المدينة:</strong> {{ selectedDoctor.cityName }}</p>
         <p><strong>المحافظة:</strong> {{ selectedDoctor.governmentName }}</p>
         <div>
           <strong>عناوين إضافية:</strong>
-          <ul class="list-disc pr-4 text-sm text-gray-600">
+          <ul class="list-disc pr-4 text-sm text-gray-600 dark:text-gray-300">
             <li *ngFor="let address of selectedDoctor.addresses">{{ address }}</li>
           </ul>
         </div>
       </div>
 
       <!-- المستندات -->
-     <div class="bg-white shadow rounded-lg p-4 space-y-2">
-      <h3 class="text-lg font-bold text-gray-700 border-b pb-1">📄 المستندات</h3>
-      <p><strong>رخصة مزاولة المهنة:</strong>
-        <a *ngIf="selectedDoctor.medicalLicenseUrl" [href]="selectedDoctor.medicalLicenseUrl" target="_blank" class="text-blue-600 underline">عرض</a>
-        <span *ngIf="!selectedDoctor.medicalLicenseUrl" class="text-gray-400">غير متوفر</span>
-      </p>
-      <p><strong>الرقم القومي:</strong>
-        <a *ngIf="selectedDoctor.nationalIdUrl" [href]="selectedDoctor.nationalIdUrl" target="_blank" class="text-blue-600 underline">عرض</a>
-        <span *ngIf="!selectedDoctor.nationalIdUrl" class="text-gray-400">غير متوفر</span>
-      </p>
-      <p><strong>شهادة التخرج:</strong>
-        <a *ngIf="selectedDoctor.graduationCertificateUrl" [href]="selectedDoctor.graduationCertificateUrl" target="_blank" class="text-blue-600 underline">عرض</a>
-        <span *ngIf="!selectedDoctor.graduationCertificateUrl" class="text-gray-400">غير متوفر</span>
-      </p>
-      <p><strong>شهادة الخبرة:</strong>
-        <a *ngIf="selectedDoctor.experienceCertificateUrl" [href]="selectedDoctor.experienceCertificateUrl" target="_blank" class="text-blue-600 underline">عرض</a>
-        <span *ngIf="!selectedDoctor.experienceCertificateUrl" class="text-gray-400">غير متوفر</span>
-      </p>
-    </div>
+      <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 space-y-2">
+        <h3 class="text-lg font-bold text-gray-700 dark:text-white border-b pb-1">📄 المستندات</h3>
+        <p><strong>رخصة مزاولة المهنة:</strong>
+          <a *ngIf="selectedDoctor.medicalLicenseUrl" [href]="selectedDoctor.medicalLicenseUrl" target="_blank" class="text-blue-600 dark:text-blue-400 underline">عرض</a>
+          <span *ngIf="!selectedDoctor.medicalLicenseUrl" class="text-gray-400">غير متوفر</span>
+        </p>
+        <p><strong>الرقم القومي:</strong>
+          <a *ngIf="selectedDoctor.nationalIdUrl" [href]="selectedDoctor.nationalIdUrl" target="_blank" class="text-blue-600 dark:text-blue-400 underline">عرض</a>
+          <span *ngIf="!selectedDoctor.nationalIdUrl" class="text-gray-400">غير متوفر</span>
+        </p>
+        <p><strong>شهادة التخرج:</strong>
+          <a *ngIf="selectedDoctor.graduationCertificateUrl" [href]="selectedDoctor.graduationCertificateUrl" target="_blank" class="text-blue-600 dark:text-blue-400 underline">عرض</a>
+          <span *ngIf="!selectedDoctor.graduationCertificateUrl" class="text-gray-400">غير متوفر</span>
+        </p>
+        <p><strong>شهادة الخبرة:</strong>
+          <a *ngIf="selectedDoctor.experienceCertificateUrl" [href]="selectedDoctor.experienceCertificateUrl" target="_blank" class="text-blue-600 dark:text-blue-400 underline">عرض</a>
+          <span *ngIf="!selectedDoctor.experienceCertificateUrl" class="text-gray-400">غير متوفر</span>
+        </p>
+      </div>
 
+      <!-- Action Buttons -->
+      <div class="flex justify-end gap-4 pt-4" *ngIf="selectedDoctor">
+        <button *ngIf="[0, 2, 3, 4].includes(selectedDoctor.status)" class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md">
+          قبول
+        </button>
+        <button *ngIf="[1].includes(selectedDoctor.status)" class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-md">
+          إلغاء
+        </button>
+        <button *ngIf="selectedDoctor.status === 0" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md">
+          رفض
+        </button>
+        <button *ngIf="[0, 1, 2, 4].includes(selectedDoctor.status)" class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-2 rounded-md">
+          إيقاف
+        </button>
+        <button *ngIf="[1, 2, 3, 4].includes(selectedDoctor.status)" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md">
+          تعليق
+        </button>
+      </div>
 
-    <div class="flex justify-end gap-4 pt-4" *ngIf="selectedDoctor">
-      <!-- ✅ قبول -->
-      <button
-        *ngIf="[0, 2, 3, 4].includes(selectedDoctor.status)"
-        class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md"
-        (click)="approveDoctor(selectedDoctor.doctorId)">
-         قبول
-      </button>
-      <!-- ❌ إلغاء -->
-      <button
-        *ngIf="[1].includes(selectedDoctor.status)"
-        class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-md"
-        (click)="deactivateDoctor(selectedDoctor.doctorId)">
-         إلغاء
-      </button>
-
-      <!-- ❌ رفض -->
-      <button
-        *ngIf="selectedDoctor.status === 0"
-        class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md"
-        (click)="rejectDoctor(selectedDoctor.doctorId)">
-         رفض
-      </button>
-
-      <!-- suspended-->
-      <button
-        *ngIf="[0, 1, 2, 4].includes(selectedDoctor.status)"
-        class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-2 rounded-md"
-        (click)="suspendDoctor(selectedDoctor.doctorId)">
-         إيقاف
-      </button>
-
-      <!-- (Pending) -->
-      <button
-        *ngIf="[1, 2, 3, 4].includes(selectedDoctor.status)"
-        class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md"
-        (click)="pendingDoctor(selectedDoctor.doctorId)">
-         تعليق
-      </button>
-    </div>
-
-    <div *ngIf="!selectedDoctor" class="text-gray-400 italic text-right mt-8">
-      اختر طبيبًا لعرض التفاصيل.
+      <div *ngIf="!selectedDoctor" class="text-gray-400 italic text-right mt-8">
+        اختر طبيبًا لعرض التفاصيل.
+      </div>
     </div>
   </div>
 </div>
