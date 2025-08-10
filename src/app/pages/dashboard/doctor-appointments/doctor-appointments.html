@@ -1,0 +1,57 @@
+<div dir="rtl" class="container my-6">
+  <h2 class="text-2xl font-bold mb-4">مواعيدي</h2>
+
+  <div *ngIf="loading" class="text-center text-gray-500">جاري التحميل...</div>
+
+  <table *ngIf="!loading && appointments.length" class="table table-bordered table-hover text-right">
+    <thead class="table-dark">
+      <tr>
+        <th>المريض</th>
+        <th>رقم الهاتف</th>
+        <th>وقت البداية</th>
+        <th>وقت النهاية</th>
+        <th>الحالة</th>
+        <th>رابط الاجتماع</th>
+        <th>إجراءات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of appointments">
+        <td>{{ a.patientName }}</td>
+        <td>{{ a.patientPhone }}</td>
+        <td>{{ formatTime(a.startTime) }}</td>
+        <td>{{ formatTime(a.endTime) }}</td>
+        <td>
+          <span [ngClass]="{
+            'badge bg-success': a.status === 'Finished',
+            'badge bg-danger': a.status === 'Non-Attendance',
+            'badge bg-warning text-dark': a.status === 'Pending'
+          }">
+            {{ a.status === 'Finished' ? 'تم الحضور' : a.status === 'Non-Attendance' ? 'لم يحضر' : 'قيد الانتظار' }}
+          </span>
+        </td>
+        <td>
+          <a *ngIf="a.serviceType === 'Online' && a.meetingUrl"
+             [href]="a.meetingUrl" target="_blank" class="btn btn-outline-primary btn-sm">
+            رابط الاجتماع
+          </a>
+          <span *ngIf="a.serviceType === 'InClinic'" class="text-muted">—</span>
+        </td>
+        <td>
+          <button class="btn btn-success btn-sm me-1"
+                  (click)="updateStatus(a.appointmentId, 'Finished')">
+            تم الحضور
+          </button>
+          <button class="btn btn-danger btn-sm"
+                  (click)="updateStatus(a.appointmentId, 'Non-Attendance')">
+            لم يحضر
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !appointments.length" class="text-center text-muted mt-4">
+    لا توجد مواعيد حالياً
+  </div>
+</div>
