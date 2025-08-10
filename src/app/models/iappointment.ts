@@ -2,6 +2,9 @@ export interface IAppointment {
   appointmentId: number;
   doctorName: string;
   //patientName: string;
+  doctorLocation?: string;
+  doctorDetailedAddress?: string;
+  doctorPhoneNumber: string;
   specializationName: string;
   startTime: string;
   endTime: string;
