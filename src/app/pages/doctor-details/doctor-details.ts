@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, Pipe } from '@angular/core';
 import { Idoctordetails } from '../../models/idoctordetails';
 import { DoctorService } from '../../shared/services/doctor-service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TimeslotService } from '../../shared/services/timeslot-service';
 import { Itimeslot } from '../../models/itimeslot';
 import { Observable } from 'rxjs';
@@ -16,6 +16,7 @@ import {
 import { PaymentService } from '../../shared/services/payment';
 import { RatingForm } from '../../components/rating-form/rating-form';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../shared/services/auth-service';
 
 @Component({
   selector: 'app-doctor-details',
@@ -44,7 +45,9 @@ export class DoctorDetails implements OnInit {
 
   constructor(
     private paymentService: PaymentService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
   ) {
     // Initialize today's date in YYYY-MM-DD format for the date input
     const todayDate = new Date();
@@ -252,5 +255,10 @@ export class DoctorDetails implements OnInit {
         },
         error: (err) => console.error('Failed to track view:', err),
       });
+  }
+
+  goToLogin() {
+    this.authService.setRedirectUrl(this.router.url); // حفظ الرابط الحالي
+    this.router.navigate(['/auth/login']); // الذهاب لصفحة تسجيل الدخول
   }
 }
