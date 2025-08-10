@@ -31,10 +31,41 @@
               {{ doctor.specialization }}
             </p>
             <div class="text-yellow-500 flex justify-center gap-1">
-              <ng-container
-                *ngFor="let star of [].constructor(doctor.ratingValue)"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <ng-container *ngFor="let star of getStars(doctor.ratingValue)">
+                <svg
+                  class="w-5 h-5 text-yellow-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  *ngIf="star === 'full'"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967h4.173c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.967c.3.921-.755 1.688-1.54 1.118l-3.38-2.455-3.38 2.455c-.785.57-1.84-.197-1.54-1.118l1.287-3.967-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.173L9.049 2.927z"
+                  />
+                </svg>
+
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 20 20"
+                  *ngIf="star === 'half'"
+                >
+                  <defs>
+                    <linearGradient id="halfGrad" x1="1" x2="0" y1="0" y2="0">
+                      <stop offset="50%" stop-color="#facc15" />
+                      <stop offset="50%" stop-color="#d1d5db" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill="url(#halfGrad)"
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967h4.173c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.967c.3.921-.755 1.688-1.54 1.118l-3.38-2.455-3.38 2.455c-.785.57-1.84-.197-1.54-1.118l1.287-3.967-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.173L9.049 2.927z"
+                  />
+                </svg>
+
+                <svg
+                  class="w-5 h-5 text-gray-300"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  *ngIf="star === 'empty'"
+                >
                   <path
                     d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967h4.173c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.967c.3.921-.755 1.688-1.54 1.118l-3.38-2.455-3.38 2.455c-.785.57-1.84-.197-1.54-1.118l1.287-3.967-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.173L9.049 2.927z"
                   />
