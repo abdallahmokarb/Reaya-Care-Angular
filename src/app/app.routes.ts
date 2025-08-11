@@ -66,6 +66,12 @@ export const routes: Routes = [
               import(
                 './pages/dashboard/doctor-timeslots/doctor-timeslots'
               ).then((m) => m.DoctorTimeslots),
+          },{
+            path: 'doctor/Appointments',
+            loadComponent: () =>
+              import(
+                './pages/dashboard/doctor-appointments/doctor-appointments'
+              ).then((m) => m.DoctorAppointments),
           },
         ],
       },
