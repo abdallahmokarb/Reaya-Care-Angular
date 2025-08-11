@@ -38,7 +38,7 @@ export class BookingConfirmation implements OnInit {
   }
 
   updateDoctorBalance() {
-    const apiUrl = `http://localhost:5216/api/Doctor/${this.doctorId}/balance?amount=${this.amount}`;
+    const apiUrl = `https://care.runasp.net/api/Doctor/${this.doctorId}/balance?amount=${this.amount}`;
 
     this.http.put(apiUrl, {}).subscribe({
       next: () => {

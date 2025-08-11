@@ -30,7 +30,7 @@ export class Payments implements OnInit {
 
   ngOnInit() {
     this.http
-      .get<Payment[]>('http://localhost:5216/api/Payment')
+      .get<Payment[]>('https://care.runasp.net/api/Payment')
       .subscribe((data) => {
         this.payments = data;
         this.filteredPayments = data;

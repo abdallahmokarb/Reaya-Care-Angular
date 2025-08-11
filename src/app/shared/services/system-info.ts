@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class SystemInfoService {
-  private apiUrl = 'http://localhost:5216/api/SystemInfo/CalcBalance';
+  private apiUrl = 'https://care.runasp.net/api/SystemInfo/CalcBalance';
 
   constructor(private http: HttpClient) {}
 

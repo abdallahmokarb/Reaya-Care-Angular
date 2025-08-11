@@ -40,7 +40,7 @@ export class MyPayments implements OnInit {
   }
 
   getAppointments(): void {
-    const url = `http://localhost:5216/api/Appointment_/patient/${this.patientId}/appointments`;
+    const url = `https://care.runasp.net/api/Appointment_/patient/${this.patientId}/appointments`;
     this.http.get<any[]>(url).subscribe({
       next: (res) => {
         console.log(res);
@@ -82,7 +82,7 @@ export class MyPayments implements OnInit {
 
         this.http
           .post(
-            `http://localhost:5216/api/doctor/${doctorId}/deduct-balance`,
+            `https://care.runasp.net/api/doctor/${doctorId}/deduct-balance`,
             originalAmount
           )
           .subscribe({
@@ -96,7 +96,7 @@ export class MyPayments implements OnInit {
               };
 
               this.http
-                .patch(`http://localhost:5216/api/Payment/update`, updateData)
+                .patch(`https://care.runasp.net/api/Payment/update`, updateData)
                 .subscribe({
                   next: (updateRes) => {
                     console.log('تم تحديث حالة الدفع إلى مسترد', updateRes);

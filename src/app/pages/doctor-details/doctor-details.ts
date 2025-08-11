@@ -246,7 +246,7 @@ export class DoctorDetails implements OnInit {
   trackDoctorView(id: number) {
     this.http
       .get<{ doctorId: number; views: number }>(
-        `http://localhost:5216/api/doctor/${id}/view`
+        `https://care.runasp.net/api/doctor/${id}/view`
       )
       .subscribe({
         next: (res) => {

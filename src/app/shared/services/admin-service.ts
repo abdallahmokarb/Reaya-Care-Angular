@@ -1,75 +1,91 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth-service';
-import { AdminCreateDTO, AdminDTO, AdminUpdateDTO } from '../../models/Admin/AdminDTOs';
+import {
+  AdminCreateDTO,
+  AdminDTO,
+  AdminUpdateDTO,
+} from '../../models/Admin/AdminDTOs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
-
-  private apiUrl = 'http://localhost:5216/api';
+  private apiUrl = 'https://care.runasp.net/api';
 
   constructor(private http: HttpClient) {}
 
   getAllAdmins(): Observable<AdminDTO[]> {
-    return this.http.get<AdminDTO[]>(`${this.apiUrl}/Admin`).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<AdminDTO[]>(`${this.apiUrl}/Admin`)
+      .pipe(catchError(this.handleError));
   }
 
   createAdmin(admin: Omit<AdminCreateDTO, 'systemId'>): Observable<any> {
     const payload: AdminCreateDTO = { ...admin, systemId: 0 };
-    return this.http.post(`${this.apiUrl}/Account/register-admin`, payload, {
-      responseType: 'text'
-    }).pipe(
-      map(response => {
-        try {
-          return JSON.parse(response);
-        } catch (e) {
-          return { message: response || 'Success' };
-        }
-      }),
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(`${this.apiUrl}/Account/register-admin`, payload, {
+        responseType: 'text',
+      })
+      .pipe(
+        map((response) => {
+          try {
+            return JSON.parse(response);
+          } catch (e) {
+            return { message: response || 'Success' };
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
-  updateAdmin(id: number, admin: Omit<AdminUpdateDTO, 'systemId'>): Observable<any> {
+  updateAdmin(
+    id: number,
+    admin: Omit<AdminUpdateDTO, 'systemId'>
+  ): Observable<any> {
     const payload: AdminUpdateDTO = { ...admin, systemId: 0 };
-    return this.http.put(`${this.apiUrl}/Admin/${id}`, payload, {
-      responseType: 'text'
-    }).pipe(
-      map(response => {
-        try {
-          return JSON.parse(response);
-        } catch (e) {
-          return { message: response || 'Success' };
-        }
-      }),
-      catchError(this.handleError)
-    );
+    return this.http
+      .put(`${this.apiUrl}/Admin/${id}`, payload, {
+        responseType: 'text',
+      })
+      .pipe(
+        map((response) => {
+          try {
+            return JSON.parse(response);
+          } catch (e) {
+            return { message: response || 'Success' };
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
   deleteAdmin(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/Admin/${id}`, {
-      responseType: 'text'
-    }).pipe(
-      map(response => {
-        try {
-          return JSON.parse(response);
-        } catch (e) {
-          return { message: response || 'Success' };
-        }
-      }),
-      catchError(this.handleError)
-    );
+    return this.http
+      .delete(`${this.apiUrl}/Admin/${id}`, {
+        responseType: 'text',
+      })
+      .pipe(
+        map((response) => {
+          try {
+            return JSON.parse(response);
+          } catch (e) {
+            return { message: response || 'Success' };
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'حدث خطأ غير متوقع';
-    
+
     if (error.error instanceof ErrorEvent) {
       errorMessage = `خطأ: ${error.error.message}`;
     } else {

@@ -4,20 +4,17 @@ import { Observable } from 'rxjs';
 import { Irating } from '../../models/irating';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RatingService {
-
-  private baseUrl = 'http://localhost:5216/api/Rating'; // 👈 Update this to your real API URL
+  private baseUrl = 'https://care.runasp.net/api/Rating'; // 👈 Update this to your real API URL
   constructor(private http: HttpClient) {}
 
   getAllDoctorRatings(doctorID: number): Observable<Irating[]> {
     return this.http.get<Irating[]>(`${this.baseUrl}/doctor/${doctorID}`);
   }
 
-
   getRatingAsStars(rating: number | undefined): string[] {
-
     if (rating === undefined || rating < 0) {
       const emptyStars = 5;
       return Array(emptyStars).fill('fas fa-star emptystar');
@@ -36,11 +33,13 @@ export class RatingService {
     const token = sessionStorage.getItem('token');
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
 
-    return this.http.post<Irating>('http://localhost:5216/api/Patient/AddRating', rating, { headers });
+    return this.http.post<Irating>(
+      'https://care.runasp.net/api/Patient/AddRating',
+      rating,
+      { headers }
+    );
   }
-
-  }
-
+}

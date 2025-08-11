@@ -2,19 +2,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VideoCallService {
-
-  private baseUrl = 'http://localhost:5216/api/Appointment_/appointment';
+  private baseUrl = 'https://care.runasp.net/api/Appointment_/appointment';
   constructor(private http: HttpClient) {}
 
-    private getAuthHeaders(): HttpHeaders {
+  private getAuthHeaders(): HttpHeaders {
     const token = sessionStorage.getItem('token');
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
-
   }
 
   joinRoom(appointmentId: number) {
