@@ -9,7 +9,7 @@ import { Idoctorcard } from '../../models/idoctorcard';
   providedIn: 'root',
 })
 export class DoctorService {
-  private baseUrl = 'http://localhost:5216/api/Doctor'; //   Update this to your real API URL
+  private baseUrl = 'https://care.runasp.net/api/Doctor'; //   Update this to your real API URL
 
   constructor(private http: HttpClient) {}
 

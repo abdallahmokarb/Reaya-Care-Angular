@@ -143,7 +143,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   getDoctorRatings(doctorId: number): void {
     this.http
-      .get<any[]>(`http://localhost:5216/api/Rating/doctor/${doctorId}`)
+      .get<any[]>(`https://care.runasp.net/api/Rating/doctor/${doctorId}`)
       .subscribe({
         next: (res) => {
           this.ratings = res;
@@ -171,7 +171,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   getDoctorInfo(): void {
     this.http
-      .get<any>(`http://localhost:5216/api/Doctor/${this.doctorId}`)
+      .get<any>(`https://care.runasp.net/api/Doctor/${this.doctorId}`)
       .subscribe({
         next: (res) => {
           this.balance = res.balance;
@@ -186,7 +186,7 @@ export class Dashboard implements OnInit, AfterViewInit {
   loadViews(doctorId: number) {
     this.http
       .get<{ views: number }>(
-        `http://localhost:5216/api/Doctor/${doctorId}/view`
+        `https://care.runasp.net/api/Doctor/${doctorId}/view`
       )
       .subscribe({
         next: (res) => {
@@ -204,7 +204,7 @@ export class Dashboard implements OnInit, AfterViewInit {
   getAppointments(doctorId: number) {
     this.http
       .get<any[]>(
-        `http://localhost:5216/api/Doctor/doctor/${doctorId}/appointments`
+        `https://care.runasp.net/api/Doctor/doctor/${doctorId}/appointments`
       )
       .subscribe({
         next: (res) => {
@@ -240,7 +240,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   updateDoctorStatus() {
     this.http
-      .get<Doctor>(`http://localhost:5216/api/Doctor/${this.doctorId}`)
+      .get<Doctor>(`https://care.runasp.net/api/Doctor/${this.doctorId}`)
       .subscribe({
         next: (res) => {
           this.statusCode = res.status ?? null;

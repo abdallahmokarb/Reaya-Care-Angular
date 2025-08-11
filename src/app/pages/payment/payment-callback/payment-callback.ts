@@ -47,7 +47,7 @@ export class PaymentCallbackComponent implements OnInit {
 
   sendToBackend(params: HttpParams) {
     const paymobCallbackUrl =
-      'http://localhost:5216/api/payment/paymob-callback';
+      'https://care.runasp.net/api/payment/paymob-callback';
 
     this.http
       .get<{ message: string; paymentId: number }>(paymobCallbackUrl, {
@@ -95,7 +95,8 @@ export class PaymentCallbackComponent implements OnInit {
 
       console.log(payload);
 
-      const bookUrl = 'http://localhost:5216/api/Appointment_/book-appointment';
+      const bookUrl =
+        'https://care.runasp.net/api/Appointment_/book-appointment';
 
       this.http.post(bookUrl, payload).subscribe({
         next: (res: any) => {
