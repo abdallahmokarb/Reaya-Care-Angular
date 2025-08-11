@@ -65,9 +65,9 @@
               <i class="{{star}}"></i>
               }
             </span>
-            <span id="ratingvalue">{{doctor?.ratingValue}} / 5</span>
+            <span id="ratingvalue">{{doctor?.ratingValue | number: '1.0-1'}} / 5</span>
           </div>
-          <a [href]="doctor?.location" class="text-gray-600 dark:text-gray-300">
+          <a [href]="doctor?.location" *ngIf="doctor?.location" class="text-gray-600 dark:text-gray-300">
             <i class="fa-solid fa-location-dot"></i>
             &ThinSpace; {{doctor?.addresses?.[0]}}
           </a>

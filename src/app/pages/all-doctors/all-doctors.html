@@ -221,7 +221,7 @@
                 <div class="doctor-image" [style.backgroundImage]="'url(' + doctor.profilePictureUrl + ')'">
                   <div class="doctor-rating">
                     <span class="stars">
-                      <i class="fas fa-star"></i> {{ doctor.ratingValue }}
+                      <i class="fas fa-star"></i> {{ doctor.ratingValue | number: '1.0-1' }}
                     </span>
                   </div>
                 </div>
