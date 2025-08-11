@@ -151,19 +151,19 @@
 
       <!-- Action Buttons -->
       <div class="flex justify-end gap-4 pt-4" *ngIf="selectedDoctor">
-        <button *ngIf="[0, 2, 3, 4].includes(selectedDoctor.status)" class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md">
+        <button *ngIf="[0, 2, 3, 4].includes(selectedDoctor.status)" class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md" (click)="approveDoctor(selectedDoctor.doctorId)">
           قبول
         </button>
-        <button *ngIf="[1].includes(selectedDoctor.status)" class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-md">
+        <button *ngIf="[1].includes(selectedDoctor.status)" class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-md" (click)="deactivateDoctor(selectedDoctor.doctorId)">
           إلغاء
         </button>
-        <button *ngIf="selectedDoctor.status === 0" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md">
+        <button *ngIf="selectedDoctor.status === 0" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md" (click)="rejectDoctor(selectedDoctor.doctorId)">
           رفض
         </button>
-        <button *ngIf="[0, 1, 2, 4].includes(selectedDoctor.status)" class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-2 rounded-md">
+        <button *ngIf="[0, 1, 2, 4].includes(selectedDoctor.status)" class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-2 rounded-md" (click)="suspendDoctor(selectedDoctor.doctorId)">
           إيقاف
         </button>
-        <button *ngIf="[1, 2, 3, 4].includes(selectedDoctor.status)" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md">
+        <button *ngIf="[1, 2, 3, 4].includes(selectedDoctor.status)" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md" (click)="pendingDoctor(selectedDoctor.doctorId)">
           تعليق
         </button>
       </div>

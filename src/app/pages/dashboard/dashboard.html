@@ -570,6 +570,7 @@
             >
               <tr>
                 <th class="px-4 py-3 font-semibold">رقم الدفع</th>
+                <th class="px-4 py-3 font-semibold">رقم الحجز</th>
                 <th class="px-4 py-3 font-semibold">رقم مرجع عملية الدفع</th>
 
                 <th class="px-4 py-3 font-semibold">التاريخ</th>
@@ -585,24 +586,67 @@
                 class="hover:bg-green-50 dark:hover:bg-green-700 transition-colors"
               >
                 <td class="px-4 py-2">{{ appt.paymentId}}</td>
+                <td class="px-4 py-2">{{ appt.appointmentId}}</td>
                 <td class="px-4 py-2">{{ appt.transactionId}}</td>
 
                 <td class="px-4 py-2">{{ appt.date | date: 'dd/MM/yyyy' }}</td>
                 <td class="px-4 py-2">{{ appt.patientName }}</td>
-                <td class="px-4 py-2 text-center align-middle">
-                  <div
-                    class="inline-flex items-center justify-center gap-1 bg-green-100/50 text-green-700 dark:bg-green-200/20 dark:text-green-300 font-semibold rounded-3xl px-2 py-1"
+                <td
+                  class="px-6 py-4 w-fit align-middle justify-center flex mx-auto"
+                >
+                  <span
+                    class="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm w-fit font-semibold"
+                    [ngClass]="{
+      'bg-green-100/50 text-green-700 dark:bg-green-200/20 dark:text-green-300': appt.paymentStatus == 1,
+      'bg-red-300/50 text-red-700 dark:bg-red-300/50 dark:text-red-700': appt.paymentStatus == 2,
+      'bg-yellow-400/20 text-yellow-600 dark:bg-yellow-200/20 dark:text-yellow-300': appt.paymentStatus == 3
+    }"
                   >
                     <svg
-                      class="w-4 h-4 fill-green-600 dark:fill-green-300"
+                      xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
+                      fill="currentColor"
+                      *ngIf="appt.paymentStatus == 1"
+                      class="w-4 h-4 fill-green-600 dark:fill-green-300"
                     >
                       <path
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5l5-5-1.4-1.4L9 10.2 7.4 8.6 6 10l3 3z"
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                        clip-rule="evenodd"
                       />
                     </svg>
-                    <span>ناجحة</span>
-                  </div>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      *ngIf="appt.paymentStatus == 2"
+                      class="w-4 h-4 fill-red-600 dark:fill-red-600"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      *ngIf="appt.paymentStatus == 3"
+                      class="w-4 h-4 fill-yellow-600 dark:fill-yellow-300"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+
+                    {{ appt.paymentStatus == 1 ? 'ناجحة' : appt.paymentStatus ==
+                    2 ? 'فشلت' : 'تم الاسترداد - عملية معكوسة' }}
+                  </span>
                 </td>
               </tr>
               <tr *ngIf="appointments.length === 0">

@@ -20,7 +20,8 @@ export class AuthService {
     return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
       tap((res) => {
         const role = res.roles?.[0]?.toLowerCase();
-
+        const redirectUrl = this.getRedirectUrl();
+        this.clearRedirectUrl();
         const user = {
           id: res.id,
           userName: res.userName,
@@ -32,17 +33,20 @@ export class AuthService {
           patientId: res.patientinfo,
         };
 
-        // مسح البيانات السابقة
         localStorage.clear();
         sessionStorage.clear();
 
-        // حفظ البيانات حسب تفضيل المستخدم
         const storage = remember ? localStorage : sessionStorage;
         storage.setItem('token', res.token);
         storage.setItem('user', JSON.stringify(user));
 
-        // توجيه حسب الدور
-        setTimeout(() => this.redirectByRole(role));
+        setTimeout(() => {
+          if (redirectUrl) {
+            this.router.navigateByUrl(redirectUrl);
+          } else {
+            this.redirectByRole(role);
+          }
+        });
       })
     );
   }
@@ -83,5 +87,21 @@ export class AuthService {
       default:
         this.router.navigate(['/auth/login']);
     }
+  }
+
+  private redirectUrl: string | null = null;
+
+  setRedirectUrl(url: string) {
+    this.redirectUrl = url;
+    sessionStorage.setItem('redirectUrl', url);
+  }
+
+  getRedirectUrl(): string | null {
+    return this.redirectUrl || sessionStorage.getItem('redirectUrl');
+  }
+
+  clearRedirectUrl() {
+    this.redirectUrl = null;
+    sessionStorage.removeItem('redirectUrl');
   }
 }

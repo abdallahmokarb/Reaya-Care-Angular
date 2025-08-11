@@ -18,7 +18,7 @@ export class StickContent implements OnInit {
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
         console.log(data);
-        this.doctors = data.filter((doctor) => doctor.ratingValue >= 4);
+        this.doctors = data.filter((doctor) => doctor.ratingValue >= 3);
         this.isLoading = false;
       },
       error: (err) => {
@@ -26,5 +26,18 @@ export class StickContent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  getStars(rating: number): ('full' | 'half' | 'empty')[] {
+    const stars: ('full' | 'half' | 'empty')[] = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    for (let i = 0; i < fullStars; i++) stars.push('full');
+    if (hasHalfStar) stars.push('half');
+    for (let i = 0; i < emptyStars; i++) stars.push('empty');
+
+    return stars;
   }
 }
