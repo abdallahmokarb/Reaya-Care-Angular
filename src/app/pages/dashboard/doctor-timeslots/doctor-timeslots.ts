@@ -268,10 +268,10 @@ export class DoctorTimeslots implements OnInit {
     const selectedDate = new Date(this.formData.selectedDate);
     const now = new Date();
     
-    if (selectedDate < now) {
-      alert('لا يمكن إنشاء موعد في تاريخ سابق');
-      return false;
-    }
+    // if (selectedDate < now) {
+    //   alert('لا يمكن إنشاء موعد في تاريخ سابق');
+    //   return false;
+    // }
 
     const startTime = this.timeToMinutes(this.formData.startTime);
     const endTime = this.timeToMinutes(this.formData.endTime);
